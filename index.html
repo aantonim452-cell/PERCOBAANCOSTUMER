@@ -18,7 +18,7 @@
             --glass: blur(20px);
         }
         body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: #ffffff; min-height: 100vh; overflow-x: hidden; }
-        /* BACKGROUND SYSTEM */
+        /* BACKGROUND SYSTEM - Animasi penuh */
         .bg-master { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden; }
         .nebula-1 { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 20% 30%, #0a0a2a, #000); animation: pulseNebula 8s ease-in-out infinite; }
         .nebula-2 { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 80% 70%, #1a0a2a, transparent); animation: pulseNebula2 10s ease-in-out infinite alternate; }
@@ -33,13 +33,17 @@
         .particle-zone { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -5; }
         .particle { position: absolute; background: radial-gradient(circle, #fbbf24, transparent); border-radius: 50%; animation: flyParticle linear infinite; }
         .particle-purple { background: radial-gradient(circle, #a855f7, transparent); }
-        @keyframes flyParticle { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
+        @keyframes flyParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
         /* LOADING SCREEN */
         .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a1a; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s; }
         .loader-single { text-align: center; }
         .loader-ring-single { width: 60px; height: 60px; border: 3px solid rgba(245,158,11,0.2); border-top: 3px solid #f59e0b; border-radius: 50%; animation: spinSingle 1s linear infinite; margin: 0 auto 15px auto; }
         @keyframes spinSingle { to { transform: rotate(360deg); } }
-        .loader-single p { color: #f59e0b; font-size: 14px; letter-spacing: 3px; }
         /* TOAST */
         .toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; transition: 0.3s; border-left: 4px solid #f59e0b; opacity: 0; font-size: 13px; }
         .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -49,7 +53,6 @@
         .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 35px; padding-bottom: 15px; border-bottom: 1px solid rgba(245,158,11,0.3); }
         .sidebar-header h3 { color: #fbbf24; }
         .close-sidebar { background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
-        .close-sidebar:hover { color: #f59e0b; transform: rotate(90deg); }
         .sidebar-link { display: flex; align-items: center; gap: 14px; padding: 12px 16px; color: #cbd5e1; text-decoration: none; border-radius: 14px; margin: 6px 0; transition: 0.2s; }
         .sidebar-link:hover, .sidebar-link.active { background: rgba(245,158,11,0.2); color: #fbbf24; transform: translateX(5px); }
         .sidebar-footer { position: absolute; bottom: 25px; left: 25px; font-size: 11px; color: #64748b; }
@@ -75,7 +78,7 @@
         .online-number { font-size: 44px; font-weight: 800; background: linear-gradient(135deg, white, #fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .online-label { font-size: 13px; color: #94a3b8; margin-top: 8px; }
         .peak-time { font-size: 11px; color: #fbbf24; margin-top: 10px; }
-        /* QUICK MENU - 3 baris lebih compact */
+        /* QUICK MENU - 3 baris compact */
         .quick-menu { display: flex; flex-direction: column; gap: 12px; margin: 25px 0; }
         .quick-card { background: rgba(10,20,35,0.5); backdrop-filter: blur(10px); border-radius: 1rem; padding: 12px 20px; text-decoration: none; color: white; transition: 0.3s; border: 1px solid rgba(245,158,11,0.2); display: flex; align-items: center; gap: 15px; }
         .quick-card i { font-size: 22px; color: #f59e0b; width: 32px; text-align: center; }
@@ -99,9 +102,10 @@
         .section-title-premium h2 { font-size: 1.4rem; color: #fbbf24; border-left: 4px solid #f59e0b; padding-left: 15px; }
         .game-grid-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
         .card-game-premium { background: rgba(10,20,35,0.6); backdrop-filter: blur(18px); border-radius: 1.8rem; border: 1px solid rgba(245,158,11,0.25); overflow: hidden; transition: 0.4s; }
-        .card-game-premium:hover { transform: translateY(-10px); border-color: #f59e0b; }
+        .card-game-premium:hover { transform: translateY(-10px); border-color: #f59e0b; box-shadow: 0 25px 40px -20px rgba(245,158,11,0.5); }
         .card-header-premium { padding: 16px 18px; background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98)); border-bottom: 2px solid #f59e0b; display: flex; align-items: center; gap: 15px; }
-        .logo-game { width: 60px; height: 60px; background: #0f172a; border-radius: 1rem; border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-game { width: 60px; height: 60px; background: #0f172a; border-radius: 1rem; border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: 0.3s; }
+        .card-game-premium:hover .logo-game { transform: scale(1.05) rotate(3deg); border-color: #fbbf24; }
         .logo-game img { width: 100%; height: 100%; object-fit: cover; }
         .game-name-premium h2 { font-size: 1.2rem; font-weight: 800; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .table-premium { padding: 0 16px 16px 16px; overflow-x: auto; }
@@ -110,11 +114,15 @@
         .price-table td { padding: 10px 10px; border-bottom: 1px solid rgba(51,65,85,0.5); }
         .jumlah-col { font-weight: 700; color: #fbbf24; width: 30%; }
         .beli-col, .jual-col { font-weight: 600; cursor: pointer; width: 35%; transition: 0.1s; }
+        .beli-col:active, .jual-col:active { transform: scale(0.96); }
         .btn-action-group { display: flex; gap: 12px; padding: 0 16px 20px 16px; flex-wrap: wrap; }
-        .btn-order-premium, .btn-download-premium, .btn-tutorial-premium { flex: 1; padding: 10px; border-radius: 50px; font-weight: 700; font-size: 11px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+        .btn-order-premium, .btn-download-premium, .btn-tutorial-premium { flex: 1; padding: 10px; border-radius: 50px; font-weight: 700; font-size: 11px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; position: relative; overflow: hidden; }
         .btn-order-premium { background: linear-gradient(95deg, #4f46e5, #7c3aed); color: white; }
         .btn-download-premium { background: linear-gradient(95deg, #0284c7, #0369a1); color: white; }
         .btn-tutorial-premium { background: linear-gradient(95deg, #dc2626, #ef4444); color: white; }
+        .btn-order-premium::before, .btn-download-premium::before, .btn-tutorial-premium::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transition: left 0.5s; }
+        .btn-order-premium:hover::before, .btn-download-premium:hover::before, .btn-tutorial-premium:hover::before { left: 100%; }
+        .btn-order-premium:hover, .btn-download-premium:hover, .btn-tutorial-premium:hover { transform: translateY(-2px); filter: brightness(1.1); }
         /* MODAL VIDEO */
         .modal-video { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 3000; justify-content: center; align-items: center; }
         .modal-video-content { background: #1e293b; max-width: 90%; width: 800px; border-radius: 1.5rem; padding: 20px; border: 2px solid #f59e0b; }
@@ -124,6 +132,7 @@
         .info-premium-section { background: rgba(15,25,45,0.55); backdrop-filter: blur(15px); border-radius: 1.8rem; padding: 25px; margin: 30px 0; }
         .info-grid-premium { display: flex; flex-wrap: wrap; gap: 15px; }
         .info-card-premium { flex: 1; min-width: 200px; background: rgba(0,0,0,0.35); border-radius: 1rem; padding: 15px; transition: 0.3s; }
+        .info-card-premium:hover { background: rgba(245,158,11,0.15); transform: translateY(-4px); }
         /* FOOTER */
         .footer-premium { background: linear-gradient(135deg, rgba(30,41,59,0.5), rgba(15,23,42,0.7)); backdrop-filter: blur(15px); border-radius: 1.5rem; padding: 25px; text-align: center; margin: 30px 0 20px; }
         /* MODAL ORDER */
@@ -148,9 +157,9 @@
 
 <div id="loadingScreen" class="loading-screen"><div class="loader-single"><div class="loader-ring-single"></div><p>LLC STORE</p></div></div>
 <div id="toastMsg" class="toast-msg">✅ Pesan disalin!</div>
-<div id="videoModal" class="modal-video"><div class="modal-video-content"><div class="modal-video-header" style="display:flex; justify-content:space-between;"><h3><i class="fas fa-play-circle"></i> Video Tutorial</h3><button class="close-video" onclick="closeVideoModal()" style="background:none; border:none; font-size:28px; color:white;">&times;</button></div><div class="video-container"><iframe id="videoFrame" src="" allowfullscreen></iframe></div></div></div>
+<div id="videoModal" class="modal-video"><div class="modal-video-content"><div style="display:flex; justify-content:space-between;"><h3><i class="fas fa-play-circle"></i> Video Tutorial</h3><button class="close-video" onclick="closeVideoModal()" style="background:none; border:none; font-size:28px; color:white;">&times;</button></div><div class="video-container"><iframe id="videoFrame" src="" allowfullscreen></iframe></div></div></div>
 <div id="modalPayment" class="modal-payment"><div class="modal-payment-content"><h3 id="paymentTitle">QRIS</h3><div id="paymentDetail"></div><button class="close-payment" onclick="closePaymentModal()">Tutup</button></div></div>
-<div id="sidebar" class="sidebar-premium"><div class="sidebar-header"><i class="fas fa-crown" style="color:#fbbf24"></i><h3>LLC STORE</h3><button class="close-sidebar" id="closeSidebarBtn">&times;</button></div><div class="sidebar-menu"><a href="#" class="sidebar-link active"><i class="fas fa-home"></i> Beranda</a><a href="#" class="sidebar-link"><i class="fas fa-history"></i> Riwayat</a><a href="#" class="sidebar-link"><i class="fas fa-book"></i> Panduan</a><a href="#" class="sidebar-link"><i class="fas fa-user"></i> Dashboard</a></div><div class="sidebar-footer"><p>© 2026 LLC STORE</p><p>Version 3.0</p></div></div>
+<div id="sidebar" class="sidebar-premium"><div class="sidebar-header"><i class="fas fa-crown" style="color:#fbbf24"></i><h3>LLC STORE</h3><button class="close-sidebar" id="closeSidebarBtn">&times;</button></div><div class="sidebar-menu"><a href="#" class="sidebar-link active"><i class="fas fa-home"></i> Beranda</a><a href="#" class="sidebar-link"><i class="fas fa-history"></i> Riwayat</a><a href="#" class="sidebar-link"><i class="fas fa-book"></i> Panduan</a><a href="#" class="sidebar-link"><i class="fas fa-user"></i> Dashboard</a></div><div class="sidebar-footer"><p>© 2026 LLC STORE</p></div></div>
 <div id="overlay" class="overlay-premium"></div>
 <div class="bg-master"><div class="nebula-1"></div><div class="nebula-2"></div><div class="nebula-3"></div><div class="nebula-4"></div><div class="nebula-5"></div></div>
 <div class="particle-zone" id="particleZone"></div>
@@ -165,86 +174,147 @@
     
     <div class="section-title-premium"><h2><i class="fas fa-gamepad"></i> Daftar Game Premium</h2></div>
     <div class="game-grid-premium" id="gameGrid"></div>
-    <div class="info-premium-section"><div class="info-header-premium" style="display:flex; gap:10px; margin-bottom:15px;"><i class="fas fa-store" style="font-size:1.6rem; color:#f59e0b;"></i><h3>📋 INFO LLC STORE</h3></div><div class="info-grid-premium" id="infoGrid"></div></div>
+    <div class="info-premium-section"><div style="display:flex; gap:10px; margin-bottom:15px;"><i class="fas fa-store" style="font-size:1.6rem; color:#f59e0b;"></i><h3>📋 INFO LLC STORE</h3></div><div class="info-grid-premium" id="infoGrid"></div></div>
     <div class="footer-premium"><div class="footer-logo-premium"><i class="fas fa-crown"></i> LLC STORE <i class="fas fa-bolt"></i></div><div class="footer-stats-premium" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;"><span><i class="fas fa-clock"></i> Proses 1-3 Menit</span><span><i class="fas fa-shield-alt"></i> Garansi Penuh</span><span><i class="fas fa-headset"></i> 24 Jam Nonstop</span></div><div class="copyright-premium">© 2026 <strong>LLC STORE</strong> | TopUp Sultan Se-Indonesia</div></div>
 </div>
 
-<div id="orderModal" class="modal-ultimate"><div class="modal-content-ultimate"><div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3><span class="modal-close" onclick="closeModal()">&times;</span></div><div class="form-group-ultimate"><label>Game</label><input type="text" id="gameNameDisplay" readonly style="background:#334155;"></div><div class="form-group-ultimate"><label>Jenis Transaksi</label><select id="transaksiType"><option value="">-- Pilih --</option><option value="BELI">🔰 BELI - Saya beli dari LLC</option><option value="JUAL">💰 JUAL - Saya jual ke LLC</option></select></div><div class="form-group-ultimate"><label>Jumlah Koin/Chip</label><input type="text" id="jumlahKoin" placeholder="Contoh: 100M, 1B, 10B"></div><div class="form-group-ultimate"><label>ID Game</label><input type="text" id="idGame" placeholder="ID Game Anda"></div><div class="form-group-ultimate"><label>Metode Transfer / E-Wallet</label><select id="bankTransfer"><option value="">Pilih Metode Pembayaran</option><option value="QRIS (Scan)">QRIS (Scan)</option><option value="DANA">DANA</option><option value="OVO">OVO</option><option value="BRI">BRI</option><option value="BNI">BNI</option><option value="BCA">BCA</option></select></div><div class="preview-msg" id="previewBox">⚡ Isi data di atas</div><button class="btn-copy-ultimate" id="copyBtn"><i class="fas fa-copy"></i> Salin Pesanan</button><button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat APK</button><div class="step-info"><i class="fas fa-info-circle"></i> Salin Pesanan → Buka Chat APK → Paste → Kirim ke Admin</div></div></div>
+<div id="orderModal" class="modal-ultimate"><div class="modal-content-ultimate"><div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3><span class="modal-close" onclick="closeModal()">&times;</span></div><div class="form-group-ultimate"><label>Game</label><input type="text" id="gameNameDisplay" readonly style="background:#334155;"></div><div class="form-group-ultimate"><label>Jenis Transaksi</label><select id="transaksiType"><option value="">-- Pilih --</option><option value="BELI">🔰 BELI - Saya beli dari LLC</option><option value="JUAL">💰 JUAL - Saya jual ke LLC</option></select></div><div class="form-group-ultimate"><label>Jumlah Koin/Chip</label><input type="text" id="jumlahKoin" placeholder="Contoh: 100M, 500M, 1B"></div><div class="form-group-ultimate"><label>ID Game</label><input type="text" id="idGame" placeholder="ID Game Anda"></div><div class="form-group-ultimate"><label>Metode Transfer / E-Wallet</label><select id="bankTransfer"><option value="">Pilih Metode Pembayaran</option><option value="QRIS (Scan)">QRIS (Scan)</option><option value="DANA">DANA</option><option value="OVO">OVO</option><option value="BRI">BRI</option><option value="BNI">BNI</option><option value="BCA">BCA</option></select></div><div class="preview-msg" id="previewBox">⚡ Isi data di atas</div><button class="btn-copy-ultimate" id="copyBtn"><i class="fas fa-copy"></i> Salin Pesanan</button><button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat APK</button><div class="step-info"><i class="fas fa-info-circle"></i> Salin Pesanan → Buka Chat APK → Paste → Kirim ke Admin</div></div></div>
 
 <script>
     setTimeout(() => { document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 500); }, 1500);
     function showToast(msg) { let t = document.getElementById('toastMsg'); t.innerHTML = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
-    function showPaymentDetail(method) { const modal = document.getElementById('modalPayment'); const title = document.getElementById('paymentTitle'); const detail = document.getElementById('paymentDetail'); let content = ''; if(method==='qris') { title.innerHTML='QRIS'; content=`<div class="qris-img" style="background:#fff; border-radius:20px; padding:10px;"><img src="https://placehold.co/250x250?text=QRIS+CODE" width="100%"></div><p style="font-size:12px;">Scan QRIS via mobile banking / e-wallet</p>`; } else if(method==='dana') { title.innerHTML='DANA'; content=`<div class="nomor-besar">081234567890</div><button class="copy-btn-besar" onclick="copyNumber('081234567890','DANA')">Salin Nomor</button>`; } else if(method==='ovo') { title.innerHTML='OVO'; content=`<div class="nomor-besar">085678912345</div><button class="copy-btn-besar" onclick="copyNumber('085678912345','OVO')">Salin Nomor</button>`; } else if(method==='bri') { title.innerHTML='BRI'; content=`<div class="nomor-besar">88810123456789</div><button class="copy-btn-besar" onclick="copyNumber('88810123456789','BRI')">Salin No Rek</button>`; } else if(method==='bni') { title.innerHTML='BNI'; content=`<div class="nomor-besar">1234567890</div><button class="copy-btn-besar" onclick="copyNumber('1234567890','BNI')">Salin No Rek</button>`; } else if(method==='bca') { title.innerHTML='BCA'; content=`<div class="nomor-besar">3940123456</div><button class="copy-btn-besar" onclick="copyNumber('3940123456','BCA')">Salin No Rek</button>`; } detail.innerHTML=content; modal.style.display='flex'; document.body.style.overflow='hidden'; }
+    
+    // Payment Methods
+    function showPaymentDetail(method) { 
+        const modal = document.getElementById('modalPayment'); 
+        const title = document.getElementById('paymentTitle'); 
+        const detail = document.getElementById('paymentDetail'); 
+        let content = ''; 
+        if(method==='qris') { title.innerHTML='QRIS'; content=`<div style="background:#fff; border-radius:20px; padding:10px;"><img src="https://placehold.co/250x250?text=QRIS+CODE" width="100%"></div><p style="font-size:12px;">Scan QRIS via mobile banking / e-wallet</p>`; } 
+        else if(method==='dana') { title.innerHTML='DANA'; content=`<div class="nomor-besar">081234567890</div><button class="copy-btn-besar" onclick="copyNumber('081234567890','DANA')">Salin Nomor</button>`; } 
+        else if(method==='ovo') { title.innerHTML='OVO'; content=`<div class="nomor-besar">085678912345</div><button class="copy-btn-besar" onclick="copyNumber('085678912345','OVO')">Salin Nomor</button>`; } 
+        else if(method==='bri') { title.innerHTML='BRI'; content=`<div class="nomor-besar">88810123456789</div><button class="copy-btn-besar" onclick="copyNumber('88810123456789','BRI')">Salin No Rek</button>`; } 
+        else if(method==='bni') { title.innerHTML='BNI'; content=`<div class="nomor-besar">1234567890</div><button class="copy-btn-besar" onclick="copyNumber('1234567890','BNI')">Salin No Rek</button>`; } 
+        else if(method==='bca') { title.innerHTML='BCA'; content=`<div class="nomor-besar">3940123456</div><button class="copy-btn-besar" onclick="copyNumber('3940123456','BCA')">Salin No Rek</button>`; } 
+        detail.innerHTML=content; modal.style.display='flex'; document.body.style.overflow='hidden'; 
+    }
     function closePaymentModal() { document.getElementById('modalPayment').style.display='none'; document.body.style.overflow=''; }
     function copyNumber(num, bank) { navigator.clipboard.writeText(num); showToast(`✅ Nomor ${bank} disalin!`); }
     function closeVideoModal() { document.getElementById('videoModal').style.display='none'; document.getElementById('videoFrame').src=''; document.body.style.overflow=''; }
-    // Particle
-    const particleZone = document.getElementById('particleZone'); for (let i=0;i<150;i++) { let p=document.createElement('div'); p.classList.add('particle'); if(Math.random()>0.8) p.classList.add('particle-purple'); let size=Math.random()*4+1; p.style.width=size+'px'; p.style.height=size+'px'; p.style.left=Math.random()*100+'%'; p.style.animationDuration=Math.random()*(15-7)+7+'s'; p.style.animationDelay=Math.random()*15+'s'; particleZone.appendChild(p); }
     
-    // DATA HARGA: 10 BARIS (kecuali Bos khusus 10B-100B)
-    const generatePrices = (baseBuyPerB, baseSellPerB, isBos=false) => {
-        if(isBos) return [["10B","Rp 40.000","Rp 30.000"],["25B","Rp 100.000","Rp 75.000"],["50B","Rp 200.000","Rp 150.000"],["75B","Rp 300.000","Rp 225.000"],["100B","Rp 400.000","Rp 300.000"],["150B","Rp 600.000","Rp 450.000"],["200B","Rp 800.000","Rp 600.000"],["250B","Rp 1.000.000","Rp 750.000"],["300B","Rp 1.200.000","Rp 900.000"],["500B","Rp 2.000.000","Rp 1.500.000"]];
-        const levels = ["100M","250M","500M","750M","1B","2B","5B","10B","20B","50B"];
-        const multipliers = [0.1,0.25,0.5,0.75,1,2,5,10,20,50];
-        return levels.map((lvl,idx) => {
+    // Particles
+    const particleZone = document.getElementById('particleZone'); 
+    for (let i=0;i<180;i++) { let p=document.createElement('div'); p.classList.add('particle'); if(Math.random()>0.8) p.classList.add('particle-purple'); let size=Math.random()*4+1; p.style.width=size+'px'; p.style.height=size+'px'; p.style.left=Math.random()*100+'%'; p.style.animationDuration=Math.random()*(15-7)+7+'s'; p.style.animationDelay=Math.random()*15+'s'; particleZone.appendChild(p); }
+    
+    // HARGA: Untuk game non-Bos: 10 baris dari 100M -> 1B (step 100M)
+    // Keuntungan lebih besar di nominal kecil (harga beli lebih tinggi per B di nominal kecil)
+    // Patokan 1B: Higgs 60K, Royal 64K, Berfist 35K
+    // Rumus: harga beli = basePricePerB * (1 + (1B / nominal) * 0.15) tapi dibatasi
+    function generateNormalPrices(baseBuyPerB, baseSellPerB) {
+        // 10 baris: 100M, 200M, 300M, 400M, 500M, 600M, 700M, 800M, 900M, 1B
+        const levels = ["100M", "200M", "300M", "400M", "500M", "600M", "700M", "800M", "900M", "1B"];
+        const multipliers = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+        return levels.map((lvl, idx) => {
             let mult = multipliers[idx];
-            let buyVal = Math.floor(baseBuyPerB * mult);
-            let sellVal = Math.floor(baseSellPerB * mult);
+            // Semakin kecil nominal, semakin besar markup (untung lebih besar)
+            // Faktor markup: di 100M markup 25%, di 1B markup 0%
+            let markupFactor = 1 + (1 - mult) * 0.25; // 100M (mult 0.1) -> 1.225, 1B (mult 1) -> 1.0
+            let buyVal = Math.floor(baseBuyPerB * mult * markupFactor);
+            let sellVal = Math.floor(baseSellPerB * mult * (1 - (1 - mult) * 0.08)); // jual juga sedikit lebih rendah di nominal kecil
+            if(lvl === "100M") { buyVal = Math.floor(baseBuyPerB * 0.1 * 1.25); sellVal = Math.floor(baseSellPerB * 0.1 * 0.92); }
+            if(lvl === "1B") { buyVal = baseBuyPerB; sellVal = baseSellPerB; }
             return [lvl, `Rp ${buyVal.toLocaleString()}`, `Rp ${sellVal.toLocaleString()}`];
         });
-    };
+    }
+    
+    // BOS DOMINO: 10 baris dari 10B sampai 100B
+    function generateBosPrices() {
+        const levels = ["10B", "20B", "30B", "40B", "50B", "60B", "70B", "80B", "90B", "100B"];
+        const multipliers = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        // Patokan 10B = 40K beli, 30K jual. Semakin besar nominal, harga per B lebih murah
+        return levels.map((lvl, idx) => {
+            let multB = multipliers[idx];
+            let buyPerB = 4000 - (idx * 20); // 4000, 3980, 3960... -> 3820 di 100B
+            let sellPerB = 3000 - (idx * 15);
+            if(buyPerB < 3500) buyPerB = 3500;
+            if(sellPerB < 2600) sellPerB = 2600;
+            let buyVal = buyPerB * multB;
+            let sellVal = sellPerB * multB;
+            return [lvl, `Rp ${buyVal.toLocaleString()}`, `Rp ${sellVal.toLocaleString()}`];
+        });
+    }
+    
     const games = [
         { name:"HIGGS DOMINO", sub:"Beli 60K/B · Jual 56K/B", img:"https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY", key:"higgs", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:60000, baseSell:56000, isBos:false },
         { name:"ROYAL DOMINO", sub:"Beli 64K/B · Jual 61K/B", img:"https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO", key:"royal", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:64000, baseSell:61000, isBos:false },
-        { name:"BOS DOMINO", sub:"Beli 4K/B · Jual 3K/B (Min 10B)", img:"https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", key:"bos", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:4000, baseSell:3000, isBos:true },
+        { name:"BOS DOMINO", sub:"Beli 4K/B · Jual 3K/B (Min 10B)", img:"https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", key:"bos", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", isBos:true },
         { name:"BERFIST", sub:"Beli 35K/B · Jual 31K/B", img:"https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg", key:"berfist", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:35000, baseSell:31000, isBos:false }
     ];
+    
     const downloadLinks = { higgs:"#", royal:"#", bos:"#", berfist:"#" };
+    
     function renderGames() {
         let grid = document.getElementById('gameGrid'); grid.innerHTML='';
         games.forEach(game => {
-            let priceList = generatePrices(game.baseBuy, game.baseSell, game.isBos);
-            let rows=''; priceList.forEach(p=>{ rows+=`<tr><td class="jumlah-col">${p[0]}</td><td class="beli-col"><span>${p[1]}</span></td><td class="jual-col"><span>${p[2]}</span></td></tr>`; });
-            grid.innerHTML += `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${game.img}" onerror="this.src='https://via.placeholder.com/60'"></div><div class="game-name-premium"><h2>${game.name}</h2><div class="price-sub">${game.sub}</div></div></div><div class="table-premium"><table class="price-table"><thead><tr><th>Jumlah</th><th>Beli</th><th>Jual</th></tr></thead><tbody>${rows}</tbody></table></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${game.name}')"><i class="fas fa-cart-shopping"></i> Beli/Jual</button><button class="btn-download-premium" onclick="window.open('${downloadLinks[game.key]}','_blank')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${game.tutorialUrl}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
+            let priceList = game.isBos ? generateBosPrices() : generateNormalPrices(game.baseBuy, game.baseSell);
+            let rows=''; 
+            priceList.forEach(p => { rows += `<tr><td class="jumlah-col">${p[0]}</td><td class="beli-col"><span>${p[1]}</span></td><td class="jual-col"><span>${p[2]}</span></td></tr>`; });
+            grid.innerHTML += `<div class="card-game-premium">
+                <div class="card-header-premium"><div class="logo-game"><img src="${game.img}" onerror="this.src='https://via.placeholder.com/60'"></div><div class="game-name-premium"><h2>${game.name}</h2><div class="price-sub">${game.sub}</div></div></div>
+                <div class="table-premium"><table class="price-table"><thead><tr><th>Jumlah</th><th>Beli</th><th>Jual</th></tr></thead><tbody>${rows}</tbody></table></div>
+                <div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${game.name}')"><i class="fas fa-cart-shopping"></i> Beli/Jual</button><button class="btn-download-premium" onclick="window.open('${downloadLinks[game.key]}','_blank')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${game.tutorialUrl}')"><i class="fas fa-play-circle"></i> Tutorial</button></div>
+            </div>`;
         });
     }
+    
     function openVideoTutorial(url) { document.getElementById('videoFrame').src=url; document.getElementById('videoModal').style.display='flex'; document.body.style.overflow='hidden'; }
-    function renderInfo() { document.getElementById('infoGrid').innerHTML = `<div class="info-card-premium"><h4><i class="fas fa-gamepad"></i> Higgs Domino</h4><p>💰 1B: Beli 60K / Jual 56K<br>✅ 100M s/d 50B (untung makin besar di nominal kecil)</p></div><div class="info-card-premium"><h4><i class="fas fa-chess-queen"></i> Royal Domino</h4><p>💰 1B: Beli 64K / Jual 61K<br>✅ harga kompetitif untuk semua nominal</p></div><div class="info-card-premium"><h4><i class="fas fa-crown"></i> Bos Domino</h4><p>💰 10B: Beli 40K / Jual 30K<br>✅ khusus order besar minimal 10B</p></div><div class="info-card-premium"><h4><i class="fas fa-fist-raised"></i> Berfist</h4><p>💰 1B: Beli 35K / Jual 31K<br>✅ 100M s/d 50B untung bertahap</p></div>`; }
+    function renderInfo() { 
+        document.getElementById('infoGrid').innerHTML = `<div class="info-card-premium"><h4><i class="fas fa-gamepad"></i> Higgs Domino</h4><p>💰 1B: Beli 60K / Jual 56K<br>✅ Semakin kecil nominal, untung semakin besar (100M: Beli ~7.5K)</p></div>
+        <div class="info-card-premium"><h4><i class="fas fa-chess-queen"></i> Royal Domino</h4><p>💰 1B: Beli 64K / Jual 61K<br>✅ Keuntungan premium di nominal kecil</p></div>
+        <div class="info-card-premium"><h4><i class="fas fa-crown"></i> Bos Domino</h4><p>💰 10B: Beli 40K / Jual 30K<br>✅ 10B - 100B dengan harga per B menurun</p></div>
+        <div class="info-card-premium"><h4><i class="fas fa-fist-raised"></i> Berfist</h4><p>💰 1B: Beli 35K / Jual 31K<br>✅ Harga terbaik dengan untung progresif</p></div>`; 
+    }
     renderGames(); renderInfo();
     
-    // FORM DAN MODAL
-    let currentMsg="";
+    // Form & Modal
+    let currentMsg = "";
     function generateMessage() {
-        let g=document.getElementById("gameNameDisplay").value, t=document.getElementById("transaksiType").value, j=document.getElementById("jumlahKoin").value.trim(), u=document.getElementById("idGame").value.trim(), b=document.getElementById("bankTransfer").value;
+        let g = document.getElementById("gameNameDisplay").value, t = document.getElementById("transaksiType").value, j = document.getElementById("jumlahKoin").value.trim(), u = document.getElementById("idGame").value.trim(), b = document.getElementById("bankTransfer").value;
         if(!t) return "⚠️ Pilih jenis transaksi"; if(!j) return "⚠️ Masukkan jumlah"; if(!u) return "⚠️ Masukkan ID Game"; if(!b) return "⚠️ Pilih metode pembayaran";
         return `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📌 Jenis: ${t}\n💰 Jumlah: ${j}\n🆔 ID Game: ${u}\n🏦 Metode Bayar: ${b}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
     }
-    function updatePreview() { let m=generateMessage(); currentMsg=m; let b=document.getElementById("previewBox"); if(m.startsWith("⚠️")) { b.innerHTML=`<i class="fas fa-exclamation-triangle"></i> ${m}`; } else { b.innerHTML=m.replace(/\n/g,'<br>'); } }
+    function updatePreview() { let m = generateMessage(); currentMsg = m; let box = document.getElementById("previewBox"); if(m.startsWith("⚠️")) { box.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${m}`; } else { box.innerHTML = m.replace(/\n/g,'<br>'); } }
     function copyMessage() { if(currentMsg && !currentMsg.startsWith("⚠️")) { navigator.clipboard.writeText(currentMsg); showToast("✅ Pesanan disalin! Buka Chat APK dan paste."); } else showToast("❌ Lengkapi data!"); }
-    function sendMessage() { if(currentMsg && !currentMsg.startsWith("⚠️")) { let riwayat=JSON.parse(localStorage.getItem('llc_riwayat')||'[]'); riwayat.unshift({ tanggal:new Date().toLocaleString('id-ID'), game:document.getElementById("gameNameDisplay").value, jenis:document.getElementById("transaksiType").value, jumlah:document.getElementById("jumlahKoin").value, idGame:document.getElementById("idGame").value, status:'proses' }); if(riwayat.length>50) riwayat.pop(); localStorage.setItem('llc_riwayat',JSON.stringify(riwayat)); showToast("✅ Pesanan dikirim ke Admin!"); closeModal(); } else showToast("❌ Lengkapi data!"); }
-    function openModal(gameName) { document.getElementById("gameNameDisplay").value=gameName; document.getElementById("transaksiType").value=""; document.getElementById("jumlahKoin").value=""; document.getElementById("idGame").value=""; document.getElementById("bankTransfer").value=""; updatePreview(); document.getElementById("orderModal").style.display="flex"; }
-    function closeModal() { document.getElementById("orderModal").style.display="none"; }
-    document.getElementById("transaksiType")?.addEventListener("change",updatePreview); document.getElementById("jumlahKoin")?.addEventListener("input",updatePreview); document.getElementById("idGame")?.addEventListener("input",updatePreview); document.getElementById("bankTransfer")?.addEventListener("change",updatePreview);
-    document.getElementById("copyBtn")?.addEventListener("click",copyMessage); document.getElementById("sendBtn")?.addEventListener("click",sendMessage);
-    document.getElementById("riwayatBtn")?.addEventListener("click",(e)=>{ e.preventDefault(); showToast("📋 Lihat riwayat order di menu samping"); });
-    document.getElementById("panduanBtn")?.addEventListener("click",(e)=>{ e.preventDefault(); showToast("📖 Cara order: pilih game, isi form, kirim ke admin"); });
-    document.getElementById("dashboardBtn")?.addEventListener("click",(e)=>{ e.preventDefault(); showToast("👤 Dashboard: total order & saldo segera hadir"); });
+    function sendMessage() { if(currentMsg && !currentMsg.startsWith("⚠️")) { let riwayat = JSON.parse(localStorage.getItem('llc_riwayat')||'[]'); riwayat.unshift({ tanggal:new Date().toLocaleString('id-ID'), game:document.getElementById("gameNameDisplay").value, jenis:document.getElementById("transaksiType").value, jumlah:document.getElementById("jumlahKoin").value, idGame:document.getElementById("idGame").value, status:'proses' }); if(riwayat.length>50) riwayat.pop(); localStorage.setItem('llc_riwayat',JSON.stringify(riwayat)); showToast("✅ Pesanan dikirim ke Admin!"); closeModal(); } else showToast("❌ Lengkapi data!"); }
+    function openModal(gameName) { document.getElementById("gameNameDisplay").value = gameName; document.getElementById("transaksiType").value = ""; document.getElementById("jumlahKoin").value = ""; document.getElementById("idGame").value = ""; document.getElementById("bankTransfer").value = ""; updatePreview(); document.getElementById("orderModal").style.display = "flex"; }
+    function closeModal() { document.getElementById("orderModal").style.display = "none"; }
+    document.getElementById("transaksiType")?.addEventListener("change", updatePreview);
+    document.getElementById("jumlahKoin")?.addEventListener("input", updatePreview);
+    document.getElementById("idGame")?.addEventListener("input", updatePreview);
+    document.getElementById("bankTransfer")?.addEventListener("change", updatePreview);
+    document.getElementById("copyBtn")?.addEventListener("click", copyMessage);
+    document.getElementById("sendBtn")?.addEventListener("click", sendMessage);
+    document.getElementById("riwayatBtn")?.addEventListener("click", (e) => { e.preventDefault(); showToast("📋 Lihat riwayat order di menu samping"); });
+    document.getElementById("panduanBtn")?.addEventListener("click", (e) => { e.preventDefault(); showToast("📖 Cara order: pilih game, isi form, kirim ke admin"); });
+    document.getElementById("dashboardBtn")?.addEventListener("click", (e) => { e.preventDefault(); showToast("👤 Dashboard: total order & saldo segera hadir"); });
     
-    // SIDEBAR & DARKMODE
+    // Sidebar & Dark Mode
     document.getElementById('menuBtn').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); };
     document.getElementById('closeSidebarBtn').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
     document.getElementById('overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
-    let darkMode=false; document.getElementById('darkModeBtn').onclick=()=>{ darkMode=!darkMode; if(darkMode){ document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerHTML='<i class="fas fa-sun"></i>'; }else{ document.body.classList.remove('dark-mode'); document.getElementById('darkModeBtn').innerHTML='<i class="fas fa-moon"></i>'; } };
-    const styleDark=document.createElement('style'); styleDark.textContent='.dark-mode .card-game-premium, .dark-mode .online-card, .dark-mode .hero-premium, .dark-mode .info-premium-section, .dark-mode .footer-premium, .dark-mode .payment-section { background: rgba(5,10,25,0.9); } .dark-mode { filter: brightness(0.95); }'; document.head.appendChild(styleDark);
+    let darkMode = false; 
+    document.getElementById('darkModeBtn').onclick = () => { darkMode = !darkMode; if(darkMode){ document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerHTML='<i class="fas fa-sun"></i>'; }else{ document.body.classList.remove('dark-mode'); document.getElementById('darkModeBtn').innerHTML='<i class="fas fa-moon"></i>'; } };
+    const styleDark = document.createElement('style'); styleDark.textContent = '.dark-mode .card-game-premium, .dark-mode .online-card, .dark-mode .hero-premium, .dark-mode .info-premium-section, .dark-mode .footer-premium, .dark-mode .payment-section { background: rgba(5,10,25,0.9); } .dark-mode { filter: brightness(0.95); }'; document.head.appendChild(styleDark);
     
-    // ONLINE STATS
-    let currentOnline=1482, targetOnline=1482;
+    // Online Stats
+    let currentOnline = 1482, targetOnline = 1482;
     function getTargetByHour(){ let h=new Date().getHours(); if(h>=19&&h<=22) return Math.floor(Math.random()*(2500-1900+1)+1900); if(h>=23||h<=4) return Math.floor(Math.random()*(750-450+1)+450); if(h>=5&&h<=10) return Math.floor(Math.random()*(1150-750+1)+750); return Math.floor(Math.random()*(1700-1150+1)+1150); }
     function loadStoredOnline(){ let stored=localStorage.getItem('llc_online_smooth'), ts=localStorage.getItem('llc_online_time'); if(stored&&ts&&(Date.now()-parseInt(ts))<3600000){ currentOnline=parseInt(stored); targetOnline=currentOnline; }else{ currentOnline=getTargetByHour(); targetOnline=currentOnline; localStorage.setItem('llc_online_smooth',currentOnline); localStorage.setItem('llc_online_time',Date.now()); } document.getElementById('onlineCount').innerHTML=Math.floor(currentOnline).toLocaleString(); }
     function smoothUpdate(){ if(Math.random()<0.3) targetOnline=getTargetByHour(); let diff=targetOnline-currentOnline; let step=Math.min(Math.max(diff,-12),12); currentOnline+=step; if(Math.abs(diff)<5) currentOnline=targetOnline; localStorage.setItem('llc_online_smooth',Math.floor(currentOnline)); localStorage.setItem('llc_online_time',Date.now()); document.getElementById('onlineCount').innerHTML=Math.floor(currentOnline).toLocaleString(); }
     function updatePeakTime(){ let h=new Date().getHours(); let peakText=""; if(h>=19&&h<=22) peakText="🔥 Jam sibuk! 🔥"; else if(h>=23||h<=4) peakText="🌙 Sepi, chat admin tetap aktif"; else if(h>=5&&h<=10) peakText="☀️ Pagi hari, mulai ramai"; else peakText="⭐ Waktu normal, pelayanan cepat"; document.getElementById('peakTimeInfo').innerHTML=`${peakText} | ${h.toString().padStart(2,'0')}:00`; }
     loadStoredOnline(); updatePeakTime(); setInterval(smoothUpdate,10000); setInterval(updatePeakTime,60000);
-    window.onclick = e=>{ if(e.target===document.getElementById("orderModal")) closeModal(); if(e.target===document.getElementById("videoModal")) closeVideoModal(); if(e.target===document.getElementById("modalPayment")) closePaymentModal(); };
+    
+    window.onclick = e => { if(e.target === document.getElementById("orderModal")) closeModal(); if(e.target === document.getElementById("videoModal")) closeVideoModal(); if(e.target === document.getElementById("modalPayment")) closePaymentModal(); };
 </script>
 </body>
 </html>

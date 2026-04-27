@@ -2,438 +2,249 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>LLC Store | Hubungi Kami - WhatsApp & Telegram</title>
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>LLC STORE | PREMIUM TOPUP HIGGS · ROYAL · BOS · BERFIST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --gold: #f59e0b;
+            --gold-light: #fbbf24;
+            --gold-dark: #ea580c;
+            --purple: #8b5cf6;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(15, 25, 45, 0.65);
+            --glass: blur(20px);
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b2e 100%);
-            color: #f1f5f9;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1.5rem;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* === ANIMASI BACKGROUND SAMA DENGAN INDEX === */
-        .stars, .twinkling {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            pointer-events: none;
-            z-index: -2;
-        }
-        .stars {
-            background: #000 url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxLjUiIGZpbGw9IndoaXRlIi8+PC9zdmc+') repeat;
-            background-size: 200px 200px;
-            animation: starMove 60s linear infinite;
-            opacity: 0.6;
-        }
-        @keyframes starMove {
-            from { transform: translateY(0); }
-            to { transform: translateY(-200px); }
-        }
-        .twinkling {
-            background: transparent url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+PGNpcmNsZSBjeD0iMjAiIGN5PSIzMCIgcj0iMSIgZmlsbD0iI2ZmZGI1YyIvPjwvc3ZnPg==') repeat;
-            background-size: 150px 150px;
-            animation: twinkle 3s infinite alternate;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.2; }
-            100% { opacity: 0.9; }
-        }
-
-        .particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-            border-radius: 10px;
-        }
-
-        /* Card utama - glassmorphism premium */
-        .card {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            max-width: 550px;
-            width: 100%;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            animation: fadeInUp 0.8s ease-out, borderGlow 3s infinite alternate;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(245,158,11,0.08), transparent 70%);
-            animation: rotateSlow 20s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes rotateSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes borderGlow {
-            0% { border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 0 5px rgba(245,158,11,0.2);}
-            100% { border-color: rgba(245, 158, 11, 0.9); box-shadow: 0 0 30px rgba(245,158,11,0.4);}
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: #f59e0b;
-            box-shadow: 0 30px 50px -15px rgba(245,158,11,0.3);
-        }
-
-        .icon-header {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: iconPulse 2s infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); text-shadow: 0 0 5px rgba(245,158,11,0.3);}
-            50% { transform: scale(1.05); text-shadow: 0 0 15px rgba(245,158,11,0.6);}
-        }
-
-        h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ea580c);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-            animation: textShine 2s infinite;
-        }
-
-        @keyframes textShine {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-        }
-
-        /* Tombol gaya premium */
-        .btn-wa, .btn-tg {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            padding: 1rem 1.8rem;
-            border: none;
-            border-radius: 60px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-wa::before, .btn-tg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-wa:hover::before, .btn-tg:hover::before {
-            left: 100%;
-        }
-
-        .btn-wa {
-            background: linear-gradient(95deg, #25d366, #128c7e);
-            color: white;
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-wa:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(37, 211, 102, 0.4);
-            filter: brightness(1.02);
-        }
-
-        .btn-tg {
-            background: linear-gradient(95deg, #0088cc, #006699);
-            color: white;
-            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3);
-        }
-
-        .btn-tg:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(0, 136, 204, 0.4);
-            filter: brightness(1.02);
-        }
-
-        .btn-wa:active, .btn-tg:active {
-            transform: translateY(1px);
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Info box - versi baru dengan teks layanan pelanggan */
-        .info {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(4px);
-            border-radius: 1.2rem;
-            padding: 1.5rem;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            margin-top: 1.5rem;
-            text-align: center;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            transition: all 0.3s;
-            line-height: 1.5;
-        }
-
-        .info:hover {
-            border-color: rgba(245, 158, 11, 0.5);
-            background: rgba(15, 23, 42, 0.85);
-        }
-
-        .info i {
-            color: #fbbf24;
-            margin-right: 8px;
-        }
-
-        .info .highlight {
-            color: #fbbf24;
-            font-weight: 600;
-        }
-
-        .info p {
-            margin: 0.8rem 0;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 1rem 0;
-            color: #475569;
-            font-size: 0.75rem;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #334155;
-        }
-
-        .divider::before {
-            margin-right: 1rem;
-        }
-
-        .divider::after {
-            margin-left: 1rem;
-        }
-
-        footer {
-            margin-top: 1.5rem;
-            font-size: 0.7rem;
-            color: #64748b;
-            text-align: center;
-        }
-
-        /* Animasi untuk ikon tombol */
-        .btn-wa i, .btn-tg i {
-            font-size: 1.3rem;
-            transition: transform 0.2s;
-        }
-        .btn-wa:hover i, .btn-tg:hover i {
-            transform: scale(1.1);
-        }
-
-        @media (max-width: 480px) {
-            body { padding: 1rem; }
-            .card { padding: 1.8rem 1.2rem; }
-            h1 { font-size: 1.6rem; }
-            .btn-wa, .btn-tg { font-size: 0.95rem; padding: 0.8rem 1.2rem; }
-            .icon-header { font-size: 3rem; }
-            .info { font-size: 0.75rem; padding: 1.2rem; }
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: #ffffff; min-height: 100vh; overflow-x: hidden; }
+        /* BACKGROUND SYSTEM */
+        .bg-master { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden; }
+        .nebula-1 { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 20% 30%, #0a0a2a, #000); animation: pulseNebula 8s ease-in-out infinite; }
+        .nebula-2 { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 80% 70%, #1a0a2a, transparent); animation: pulseNebula2 10s ease-in-out infinite alternate; }
+        .nebula-3 { position: absolute; width: 150%; height: 150%; top: -25%; left: -25%; background: conic-gradient(from 0deg, rgba(139,92,246,0.15), rgba(245,158,11,0.15), rgba(139,92,246,0.15)); border-radius: 50%; animation: spinGalaxy 30s linear infinite; }
+        .nebula-4 { position: absolute; width: 100%; height: 100%; background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(245,158,11,0.04) 2px, rgba(245,158,11,0.04) 8px); }
+        .nebula-5 { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(245,158,11,0.1), transparent 70%); animation: glowCenter 5s ease-in-out infinite; }
+        @keyframes pulseNebula { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes pulseNebula2 { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.2); opacity: 0.8; } }
+        @keyframes spinGalaxy { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes glowCenter { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+        /* PARTICLES */
+        .particle-zone { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -5; }
+        .particle { position: absolute; background: radial-gradient(circle, #fbbf24, transparent); border-radius: 50%; animation: flyParticle linear infinite; }
+        .particle-purple { background: radial-gradient(circle, #a855f7, transparent); }
+        @keyframes flyParticle { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
+        /* LOADING SCREEN */
+        .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a0a1a; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s; }
+        .loader-single { text-align: center; }
+        .loader-ring-single { width: 60px; height: 60px; border: 3px solid rgba(245,158,11,0.2); border-top: 3px solid #f59e0b; border-radius: 50%; animation: spinSingle 1s linear infinite; margin: 0 auto 15px auto; }
+        @keyframes spinSingle { to { transform: rotate(360deg); } }
+        .loader-single p { color: #f59e0b; font-size: 14px; letter-spacing: 3px; }
+        /* TOAST */
+        .toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; transition: 0.3s; border-left: 4px solid #f59e0b; opacity: 0; font-size: 13px; }
+        .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        /* SIDEBAR */
+        .sidebar-premium { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: rgba(10,20,35,0.97); backdrop-filter: blur(25px); z-index: 1001; transition: 0.3s; padding: 25px; border-right: 1px solid rgba(245,158,11,0.4); }
+        .sidebar-premium.open { left: 0; }
+        .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 35px; padding-bottom: 15px; border-bottom: 1px solid rgba(245,158,11,0.3); }
+        .sidebar-header h3 { color: #fbbf24; }
+        .close-sidebar { background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
+        .close-sidebar:hover { color: #f59e0b; transform: rotate(90deg); }
+        .sidebar-link { display: flex; align-items: center; gap: 14px; padding: 12px 16px; color: #cbd5e1; text-decoration: none; border-radius: 14px; margin: 6px 0; transition: 0.2s; }
+        .sidebar-link:hover, .sidebar-link.active { background: rgba(245,158,11,0.2); color: #fbbf24; transform: translateX(5px); }
+        .sidebar-footer { position: absolute; bottom: 25px; left: 25px; font-size: 11px; color: #64748b; }
+        .overlay-premium { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; }
+        .overlay-premium.show { display: block; }
+        /* TOP BAR */
+        .top-bar-premium { display: flex; justify-content: space-between; align-items: center; padding: 12px 22px; background: rgba(15,25,45,0.5); backdrop-filter: blur(12px); border-radius: 50px; margin-bottom: 25px; border: 1px solid rgba(245,158,11,0.2); }
+        .menu-btn, .dark-toggle { background: rgba(255,255,255,0.08); border: none; width: 42px; height: 42px; border-radius: 50%; color: #fbbf24; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .top-logo-premium { font-weight: 800; background: linear-gradient(135deg, #fbbf24, #f59e0b, #ea580c); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 1.3rem; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 18px; }
+        /* HERO */
+        .hero-premium { background: var(--card-bg); backdrop-filter: var(--glass); border-radius: 2rem; padding: 2rem; margin: 20px 0; text-align: center; border: 1px solid rgba(245,158,11,0.35); animation: glowHero 3s infinite alternate; position: relative; overflow: hidden; }
+        .hero-premium::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(245,158,11,0.08), transparent 70%); animation: rotateHero 20s linear infinite; }
+        @keyframes rotateHero { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes glowHero { 0% { box-shadow: 0 0 15px rgba(245,158,11,0.15); } 100% { box-shadow: 0 0 45px rgba(245,158,11,0.35); } }
+        .logo-ultimate { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #ffd700, #f59e0b, #ea580c, #ffd700); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: flowGradient 3s ease infinite, floatLogo 2s ease-in-out infinite alternate; display: inline-block; }
+        @keyframes flowGradient { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes floatLogo { 0% { transform: translateY(0px); } 100% { transform: translateY(-4px); } }
+        .badge-collection { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+        .badge-premium { background: rgba(51,65,85,0.5); backdrop-filter: blur(8px); padding: 6px 16px; border-radius: 60px; font-size: 12px; font-weight: 600; border-left: 3px solid #f59e0b; transition: 0.3s; cursor: default; }
+        .stats-smart { margin: 25px 0; }
+        .online-card { background: linear-gradient(135deg, rgba(15,25,45,0.8), rgba(10,20,35,0.9)); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 25px; text-align: center; border: 1px solid rgba(245,158,11,0.25); transition: 0.3s; }
+        .online-number { font-size: 44px; font-weight: 800; background: linear-gradient(135deg, white, #fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .online-label { font-size: 13px; color: #94a3b8; margin-top: 8px; }
+        .peak-time { font-size: 11px; color: #fbbf24; margin-top: 10px; }
+        /* QUICK MENU - 3 baris lebih compact */
+        .quick-menu { display: flex; flex-direction: column; gap: 12px; margin: 25px 0; }
+        .quick-card { background: rgba(10,20,35,0.5); backdrop-filter: blur(10px); border-radius: 1rem; padding: 12px 20px; text-decoration: none; color: white; transition: 0.3s; border: 1px solid rgba(245,158,11,0.2); display: flex; align-items: center; gap: 15px; }
+        .quick-card i { font-size: 22px; color: #f59e0b; width: 32px; text-align: center; }
+        .quick-card span { font-size: 14px; font-weight: 600; }
+        .quick-card:hover { transform: translateX(8px); border-color: #f59e0b; background: rgba(245,158,11,0.1); }
+        /* PAYMENT SECTION */
+        .payment-section { background: rgba(15,25,45,0.6); backdrop-filter: blur(15px); border-radius: 1.8rem; padding: 20px; margin: 30px 0; border: 1px solid rgba(245,158,11,0.3); }
+        .payment-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .payment-header h3 { color: #fbbf24; font-size: 1.1rem; }
+        .payment-methods { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; }
+        .payment-chip { background: rgba(0,0,0,0.4); border-radius: 50px; padding: 8px 16px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; border: 1px solid rgba(245,158,11,0.3); }
+        .payment-chip:hover { background: rgba(245,158,11,0.2); transform: translateY(-2px); }
+        /* MODAL PEMBAYARAN */
+        .modal-payment { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); backdrop-filter: blur(25px); z-index: 5000; justify-content: center; align-items: center; }
+        .modal-payment-content { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 380px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; text-align: center; }
+        .nomor-besar { background: #0f172a; padding: 12px; border-radius: 50px; font-size: 18px; font-weight: bold; margin: 15px 0; word-break: break-all; }
+        .copy-btn-besar { background: #f59e0b; border: none; padding: 12px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .close-payment { background: #334155; border: none; padding: 10px 20px; border-radius: 40px; color: white; cursor: pointer; margin-top: 15px; width: 100%; }
+        /* GAME GRID */
+        .section-title-premium { margin: 35px 0 20px 0; }
+        .section-title-premium h2 { font-size: 1.4rem; color: #fbbf24; border-left: 4px solid #f59e0b; padding-left: 15px; }
+        .game-grid-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
+        .card-game-premium { background: rgba(10,20,35,0.6); backdrop-filter: blur(18px); border-radius: 1.8rem; border: 1px solid rgba(245,158,11,0.25); overflow: hidden; transition: 0.4s; }
+        .card-game-premium:hover { transform: translateY(-10px); border-color: #f59e0b; }
+        .card-header-premium { padding: 16px 18px; background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98)); border-bottom: 2px solid #f59e0b; display: flex; align-items: center; gap: 15px; }
+        .logo-game { width: 60px; height: 60px; background: #0f172a; border-radius: 1rem; border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-game img { width: 100%; height: 100%; object-fit: cover; }
+        .game-name-premium h2 { font-size: 1.2rem; font-weight: 800; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .table-premium { padding: 0 16px 16px 16px; overflow-x: auto; }
+        .price-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .price-table th { text-align: left; padding: 12px 10px 10px 10px; color: #fbbf24; border-bottom: 2px solid #f59e0b; }
+        .price-table td { padding: 10px 10px; border-bottom: 1px solid rgba(51,65,85,0.5); }
+        .jumlah-col { font-weight: 700; color: #fbbf24; width: 30%; }
+        .beli-col, .jual-col { font-weight: 600; cursor: pointer; width: 35%; transition: 0.1s; }
+        .btn-action-group { display: flex; gap: 12px; padding: 0 16px 20px 16px; flex-wrap: wrap; }
+        .btn-order-premium, .btn-download-premium, .btn-tutorial-premium { flex: 1; padding: 10px; border-radius: 50px; font-weight: 700; font-size: 11px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+        .btn-order-premium { background: linear-gradient(95deg, #4f46e5, #7c3aed); color: white; }
+        .btn-download-premium { background: linear-gradient(95deg, #0284c7, #0369a1); color: white; }
+        .btn-tutorial-premium { background: linear-gradient(95deg, #dc2626, #ef4444); color: white; }
+        /* MODAL VIDEO */
+        .modal-video { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 3000; justify-content: center; align-items: center; }
+        .modal-video-content { background: #1e293b; max-width: 90%; width: 800px; border-radius: 1.5rem; padding: 20px; border: 2px solid #f59e0b; }
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        /* INFO STORE */
+        .info-premium-section { background: rgba(15,25,45,0.55); backdrop-filter: blur(15px); border-radius: 1.8rem; padding: 25px; margin: 30px 0; }
+        .info-grid-premium { display: flex; flex-wrap: wrap; gap: 15px; }
+        .info-card-premium { flex: 1; min-width: 200px; background: rgba(0,0,0,0.35); border-radius: 1rem; padding: 15px; transition: 0.3s; }
+        /* FOOTER */
+        .footer-premium { background: linear-gradient(135deg, rgba(30,41,59,0.5), rgba(15,23,42,0.7)); backdrop-filter: blur(15px); border-radius: 1.5rem; padding: 25px; text-align: center; margin: 30px 0 20px; }
+        /* MODAL ORDER */
+        .modal-ultimate { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content-ultimate { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 500px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; animation: modalPop 0.3s ease; }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .modal-header-ultimate { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .modal-header-ultimate h3 { color: #fbbf24; }
+        .modal-close { font-size: 26px; cursor: pointer; color: #94a3b8; }
+        .form-group-ultimate { margin-bottom: 15px; }
+        .form-group-ultimate label { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 5px; }
+        .form-group-ultimate input, .form-group-ultimate select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; font-size: 13px; }
+        .preview-msg { background: #0f172a; padding: 12px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #f59e0b; font-size: 11px; font-family: monospace; white-space: pre-wrap; }
+        .btn-copy-ultimate, .btn-send-ultimate { width: 100%; padding: 12px; border-radius: 40px; font-weight: 800; margin: 8px 0; cursor: pointer; border: none; }
+        .btn-copy-ultimate { background: #334155; color: white; }
+        .btn-send-ultimate { background: linear-gradient(95deg, #f59e0b, #fbbf24); color: #0f172a; }
+        .step-info { font-size: 10px; text-align: center; color: #94a3b8; margin-top: 15px; }
+        @media (max-width: 768px) { .game-grid-premium { grid-template-columns: 1fr; } .logo-ultimate { font-size: 2rem; } .btn-action-group { flex-direction: column; } }
     </style>
 </head>
 <body>
-    <canvas id="particleCanvas" class="particle-canvas"></canvas>
-    <div class="stars"></div>
-    <div class="twinkling"></div>
 
-    <div class="card">
-        <div class="icon-header">
-            <i class="fas fa-headset"></i>
-        </div>
-        <h1>Hubungi Kami</h1>
-        <div class="subtitle">Tim LLC Store siap membantu Anda 24/7</div>
+<div id="loadingScreen" class="loading-screen"><div class="loader-single"><div class="loader-ring-single"></div><p>LLC STORE</p></div></div>
+<div id="toastMsg" class="toast-msg">✅ Pesan disalin!</div>
+<div id="videoModal" class="modal-video"><div class="modal-video-content"><div class="modal-video-header" style="display:flex; justify-content:space-between;"><h3><i class="fas fa-play-circle"></i> Video Tutorial</h3><button class="close-video" onclick="closeVideoModal()" style="background:none; border:none; font-size:28px; color:white;">&times;</button></div><div class="video-container"><iframe id="videoFrame" src="" allowfullscreen></iframe></div></div></div>
+<div id="modalPayment" class="modal-payment"><div class="modal-payment-content"><h3 id="paymentTitle">QRIS</h3><div id="paymentDetail"></div><button class="close-payment" onclick="closePaymentModal()">Tutup</button></div></div>
+<div id="sidebar" class="sidebar-premium"><div class="sidebar-header"><i class="fas fa-crown" style="color:#fbbf24"></i><h3>LLC STORE</h3><button class="close-sidebar" id="closeSidebarBtn">&times;</button></div><div class="sidebar-menu"><a href="#" class="sidebar-link active"><i class="fas fa-home"></i> Beranda</a><a href="#" class="sidebar-link"><i class="fas fa-history"></i> Riwayat</a><a href="#" class="sidebar-link"><i class="fas fa-book"></i> Panduan</a><a href="#" class="sidebar-link"><i class="fas fa-user"></i> Dashboard</a></div><div class="sidebar-footer"><p>© 2026 LLC STORE</p><p>Version 3.0</p></div></div>
+<div id="overlay" class="overlay-premium"></div>
+<div class="bg-master"><div class="nebula-1"></div><div class="nebula-2"></div><div class="nebula-3"></div><div class="nebula-4"></div><div class="nebula-5"></div></div>
+<div class="particle-zone" id="particleZone"></div>
+<div class="container">
+    <div class="top-bar-premium"><button id="menuBtn" class="menu-btn"><i class="fas fa-bars"></i></button><div class="top-logo-premium">✦ LLC STORE ✦</div><button id="darkModeBtn" class="dark-toggle"><i class="fas fa-moon"></i></button></div>
+    <div class="hero-premium"><h1><span class="logo-ultimate"><i class="fas fa-crown"></i> LLC STORE <i class="fas fa-bolt"></i></span></h1><div class="badge-collection"><span class="badge-premium"><i class="fas fa-gamepad"></i> Higgs Domino</span><span class="badge-premium"><i class="fas fa-chess-queen"></i> Royal Domino</span><span class="badge-premium"><i class="fas fa-crown"></i> Bos Domino</span><span class="badge-premium"><i class="fas fa-fist-raised"></i> Berfist</span><span class="badge-premium"><i class="fas fa-clock"></i> 24/7</span><span class="badge-premium"><i class="fas fa-exchange-alt"></i> Beli & Jual</span></div></div>
+    <div class="stats-smart"><div class="online-card"><div class="online-icon"><i class="fas fa-users"></i></div><div class="online-number" id="onlineCount">1,482</div><div class="online-label">Online Sekarang</div><div class="peak-time" id="peakTimeInfo">⭐ Waktu normal, pelayanan cepat</div></div></div>
+    
+    <div class="payment-section"><div class="payment-header"><i class="fas fa-credit-card" style="color:#f59e0b;"></i><h3>Metode Pembayaran</h3></div><div class="payment-methods"><div class="payment-chip" onclick="showPaymentDetail('qris')"><i class="fas fa-qrcode"></i><span>QRIS</span></div><div class="payment-chip" onclick="showPaymentDetail('dana')"><i class="fab fa-android"></i><span>DANA</span></div><div class="payment-chip" onclick="showPaymentDetail('ovo')"><i class="fab fa-android"></i><span>OVO</span></div><div class="payment-chip" onclick="showPaymentDetail('bri')"><i class="fas fa-university"></i><span>BRI</span></div><div class="payment-chip" onclick="showPaymentDetail('bni')"><i class="fas fa-university"></i><span>BNI</span></div><div class="payment-chip" onclick="showPaymentDetail('bca')"><i class="fas fa-university"></i><span>BCA</span></div></div></div>
+    
+    <div class="quick-menu"><a href="#" class="quick-card" id="riwayatBtn"><i class="fas fa-history"></i><span>Riwayat Transaksi</span></a><a href="#" class="quick-card" id="panduanBtn"><i class="fas fa-book"></i><span>Panduan Topup</span></a><a href="#" class="quick-card" id="dashboardBtn"><i class="fas fa-user"></i><span>Dashboard Saya</span></a></div>
+    
+    <div class="section-title-premium"><h2><i class="fas fa-gamepad"></i> Daftar Game Premium</h2></div>
+    <div class="game-grid-premium" id="gameGrid"></div>
+    <div class="info-premium-section"><div class="info-header-premium" style="display:flex; gap:10px; margin-bottom:15px;"><i class="fas fa-store" style="font-size:1.6rem; color:#f59e0b;"></i><h3>📋 INFO LLC STORE</h3></div><div class="info-grid-premium" id="infoGrid"></div></div>
+    <div class="footer-premium"><div class="footer-logo-premium"><i class="fas fa-crown"></i> LLC STORE <i class="fas fa-bolt"></i></div><div class="footer-stats-premium" style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;"><span><i class="fas fa-clock"></i> Proses 1-3 Menit</span><span><i class="fas fa-shield-alt"></i> Garansi Penuh</span><span><i class="fas fa-headset"></i> 24 Jam Nonstop</span></div><div class="copyright-premium">© 2026 <strong>LLC STORE</strong> | TopUp Sultan Se-Indonesia</div></div>
+</div>
 
-        <div class="button-group">
-            <!-- Tombol WhatsApp -->
-            <a href="https://wa.me/6285823710815" 
-               class="btn-wa" 
-               target="_blank" 
-               rel="noopener noreferrer">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
+<div id="orderModal" class="modal-ultimate"><div class="modal-content-ultimate"><div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3><span class="modal-close" onclick="closeModal()">&times;</span></div><div class="form-group-ultimate"><label>Game</label><input type="text" id="gameNameDisplay" readonly style="background:#334155;"></div><div class="form-group-ultimate"><label>Jenis Transaksi</label><select id="transaksiType"><option value="">-- Pilih --</option><option value="BELI">🔰 BELI - Saya beli dari LLC</option><option value="JUAL">💰 JUAL - Saya jual ke LLC</option></select></div><div class="form-group-ultimate"><label>Jumlah Koin/Chip</label><input type="text" id="jumlahKoin" placeholder="Contoh: 100M, 1B, 10B"></div><div class="form-group-ultimate"><label>ID Game</label><input type="text" id="idGame" placeholder="ID Game Anda"></div><div class="form-group-ultimate"><label>Metode Transfer / E-Wallet</label><select id="bankTransfer"><option value="">Pilih Metode Pembayaran</option><option value="QRIS (Scan)">QRIS (Scan)</option><option value="DANA">DANA</option><option value="OVO">OVO</option><option value="BRI">BRI</option><option value="BNI">BNI</option><option value="BCA">BCA</option></select></div><div class="preview-msg" id="previewBox">⚡ Isi data di atas</div><button class="btn-copy-ultimate" id="copyBtn"><i class="fas fa-copy"></i> Salin Pesanan</button><button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat APK</button><div class="step-info"><i class="fas fa-info-circle"></i> Salin Pesanan → Buka Chat APK → Paste → Kirim ke Admin</div></div></div>
 
-            <!-- Tombol Telegram -->
-            <a href="https://t.me/llc_store" 
-               class="btn-tg" 
-               target="_blank" 
-               rel="noopener noreferrer">
-                <i class="fab fa-telegram-plane"></i> Telegram
-            </a>
-        </div>
-
-        <!-- Info Layanan Pelanggan - versi baru tanpa panduan teknis -->
-        <div class="info">
-            <i class="fas fa-info-circle"></i> <span class="highlight">Layanan Pelanggan</span>
-            <p>📞 Silakan hubungi kami jika ada kendala atau ingin melaporkan masalah pelayanan.</p>
-            <div class="divider"></div>
-            <p>⚠️ <span class="highlight">Kontak ini khusus untuk:</span><br>
-            Jika Anda memiliki kendala seperti <strong>uang belum masuk</strong> atau ada kendala lainnya,<br>
-            silahkan menghubungi kami segera.</p>
-            <p><i class="fas fa-clock"></i> Kami siap membantu 24 jam nonstop.</p>
-        </div>
-        <footer>
-            <i class="fas fa-bolt"></i> LLC STORE 2026 • Fast Response 24/7 <i class="fas fa-crown"></i>
-        </footer>
-    </div>
-
-    <script>
-        // PARTIKEL CANVAS - SAMA SEPERTI INDEX UNTUK KONSISTENSI
-        const canvas = document.getElementById('particleCanvas');
-        let ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        
-        function resizeCanvas() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-        
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.3 + 0.2;
-                this.color = `rgba(245, 158, 11, ${Math.random() * 0.5 + 0.2})`;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if(this.x > width) this.x = 0;
-                if(this.x < 0) this.x = width;
-                if(this.y > height) this.y = 0;
-                if(this.y < 0) this.y = height;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-        }
-        
-        function initParticles() {
-            particles = [];
-            let num = Math.min(100, Math.floor(width * height / 10000));
-            for(let i=0; i<num; i++) {
-                particles.push(new Particle());
-            }
-        }
-        
-        function animateParticles() {
-            if(!ctx) return;
-            ctx.clearRect(0, 0, width, height);
-            for(let p of particles) {
-                p.update();
-                p.draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-        
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initParticles();
+<script>
+    setTimeout(() => { document.getElementById('loadingScreen').style.opacity = '0'; setTimeout(() => { document.getElementById('loadingScreen').style.display = 'none'; }, 500); }, 1500);
+    function showToast(msg) { let t = document.getElementById('toastMsg'); t.innerHTML = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+    function showPaymentDetail(method) { const modal = document.getElementById('modalPayment'); const title = document.getElementById('paymentTitle'); const detail = document.getElementById('paymentDetail'); let content = ''; if(method==='qris') { title.innerHTML='QRIS'; content=`<div class="qris-img" style="background:#fff; border-radius:20px; padding:10px;"><img src="https://placehold.co/250x250?text=QRIS+CODE" width="100%"></div><p style="font-size:12px;">Scan QRIS via mobile banking / e-wallet</p>`; } else if(method==='dana') { title.innerHTML='DANA'; content=`<div class="nomor-besar">081234567890</div><button class="copy-btn-besar" onclick="copyNumber('081234567890','DANA')">Salin Nomor</button>`; } else if(method==='ovo') { title.innerHTML='OVO'; content=`<div class="nomor-besar">085678912345</div><button class="copy-btn-besar" onclick="copyNumber('085678912345','OVO')">Salin Nomor</button>`; } else if(method==='bri') { title.innerHTML='BRI'; content=`<div class="nomor-besar">88810123456789</div><button class="copy-btn-besar" onclick="copyNumber('88810123456789','BRI')">Salin No Rek</button>`; } else if(method==='bni') { title.innerHTML='BNI'; content=`<div class="nomor-besar">1234567890</div><button class="copy-btn-besar" onclick="copyNumber('1234567890','BNI')">Salin No Rek</button>`; } else if(method==='bca') { title.innerHTML='BCA'; content=`<div class="nomor-besar">3940123456</div><button class="copy-btn-besar" onclick="copyNumber('3940123456','BCA')">Salin No Rek</button>`; } detail.innerHTML=content; modal.style.display='flex'; document.body.style.overflow='hidden'; }
+    function closePaymentModal() { document.getElementById('modalPayment').style.display='none'; document.body.style.overflow=''; }
+    function copyNumber(num, bank) { navigator.clipboard.writeText(num); showToast(`✅ Nomor ${bank} disalin!`); }
+    function closeVideoModal() { document.getElementById('videoModal').style.display='none'; document.getElementById('videoFrame').src=''; document.body.style.overflow=''; }
+    // Particle
+    const particleZone = document.getElementById('particleZone'); for (let i=0;i<150;i++) { let p=document.createElement('div'); p.classList.add('particle'); if(Math.random()>0.8) p.classList.add('particle-purple'); let size=Math.random()*4+1; p.style.width=size+'px'; p.style.height=size+'px'; p.style.left=Math.random()*100+'%'; p.style.animationDuration=Math.random()*(15-7)+7+'s'; p.style.animationDelay=Math.random()*15+'s'; particleZone.appendChild(p); }
+    
+    // DATA HARGA: 10 BARIS (kecuali Bos khusus 10B-100B)
+    const generatePrices = (baseBuyPerB, baseSellPerB, isBos=false) => {
+        if(isBos) return [["10B","Rp 40.000","Rp 30.000"],["25B","Rp 100.000","Rp 75.000"],["50B","Rp 200.000","Rp 150.000"],["75B","Rp 300.000","Rp 225.000"],["100B","Rp 400.000","Rp 300.000"],["150B","Rp 600.000","Rp 450.000"],["200B","Rp 800.000","Rp 600.000"],["250B","Rp 1.000.000","Rp 750.000"],["300B","Rp 1.200.000","Rp 900.000"],["500B","Rp 2.000.000","Rp 1.500.000"]];
+        const levels = ["100M","250M","500M","750M","1B","2B","5B","10B","20B","50B"];
+        const multipliers = [0.1,0.25,0.5,0.75,1,2,5,10,20,50];
+        return levels.map((lvl,idx) => {
+            let mult = multipliers[idx];
+            let buyVal = Math.floor(baseBuyPerB * mult);
+            let sellVal = Math.floor(baseSellPerB * mult);
+            return [lvl, `Rp ${buyVal.toLocaleString()}`, `Rp ${sellVal.toLocaleString()}`];
         });
-        resizeCanvas();
-        initParticles();
-        animateParticles();
-    </script>
+    };
+    const games = [
+        { name:"HIGGS DOMINO", sub:"Beli 60K/B · Jual 56K/B", img:"https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY", key:"higgs", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:60000, baseSell:56000, isBos:false },
+        { name:"ROYAL DOMINO", sub:"Beli 64K/B · Jual 61K/B", img:"https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO", key:"royal", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:64000, baseSell:61000, isBos:false },
+        { name:"BOS DOMINO", sub:"Beli 4K/B · Jual 3K/B (Min 10B)", img:"https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", key:"bos", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:4000, baseSell:3000, isBos:true },
+        { name:"BERFIST", sub:"Beli 35K/B · Jual 31K/B", img:"https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg", key:"berfist", tutorialUrl:"https://www.youtube.com/embed/jRm7sxFUdFk", baseBuy:35000, baseSell:31000, isBos:false }
+    ];
+    const downloadLinks = { higgs:"#", royal:"#", bos:"#", berfist:"#" };
+    function renderGames() {
+        let grid = document.getElementById('gameGrid'); grid.innerHTML='';
+        games.forEach(game => {
+            let priceList = generatePrices(game.baseBuy, game.baseSell, game.isBos);
+            let rows=''; priceList.forEach(p=>{ rows+=`<tr><td class="jumlah-col">${p[0]}</td><td class="beli-col"><span>${p[1]}</span></td><td class="jual-col"><span>${p[2]}</span></td></tr>`; });
+            grid.innerHTML += `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${game.img}" onerror="this.src='https://via.placeholder.com/60'"></div><div class="game-name-premium"><h2>${game.name}</h2><div class="price-sub">${game.sub}</div></div></div><div class="table-premium"><table class="price-table"><thead><tr><th>Jumlah</th><th>Beli</th><th>Jual</th></tr></thead><tbody>${rows}</tbody></table></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${game.name}')"><i class="fas fa-cart-shopping"></i> Beli/Jual</button><button class="btn-download-premium" onclick="window.open('${downloadLinks[game.key]}','_blank')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${game.tutorialUrl}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
+        });
+    }
+    function openVideoTutorial(url) { document.getElementById('videoFrame').src=url; document.getElementById('videoModal').style.display='flex'; document.body.style.overflow='hidden'; }
+    function renderInfo() { document.getElementById('infoGrid').innerHTML = `<div class="info-card-premium"><h4><i class="fas fa-gamepad"></i> Higgs Domino</h4><p>💰 1B: Beli 60K / Jual 56K<br>✅ 100M s/d 50B (untung makin besar di nominal kecil)</p></div><div class="info-card-premium"><h4><i class="fas fa-chess-queen"></i> Royal Domino</h4><p>💰 1B: Beli 64K / Jual 61K<br>✅ harga kompetitif untuk semua nominal</p></div><div class="info-card-premium"><h4><i class="fas fa-crown"></i> Bos Domino</h4><p>💰 10B: Beli 40K / Jual 30K<br>✅ khusus order besar minimal 10B</p></div><div class="info-card-premium"><h4><i class="fas fa-fist-raised"></i> Berfist</h4><p>💰 1B: Beli 35K / Jual 31K<br>✅ 100M s/d 50B untung bertahap</p></div>`; }
+    renderGames(); renderInfo();
+    
+    // FORM DAN MODAL
+    let currentMsg="";
+    function generateMessage() {
+        let g=document.getElementById("gameNameDisplay").value, t=document.getElementById("transaksiType").value, j=document.getElementById("jumlahKoin").value.trim(), u=document.getElementById("idGame").value.trim(), b=document.getElementById("bankTransfer").value;
+        if(!t) return "⚠️ Pilih jenis transaksi"; if(!j) return "⚠️ Masukkan jumlah"; if(!u) return "⚠️ Masukkan ID Game"; if(!b) return "⚠️ Pilih metode pembayaran";
+        return `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📌 Jenis: ${t}\n💰 Jumlah: ${j}\n🆔 ID Game: ${u}\n🏦 Metode Bayar: ${b}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+    }
+    function updatePreview() { let m=generateMessage(); currentMsg=m; let b=document.getElementById("previewBox"); if(m.startsWith("⚠️")) { b.innerHTML=`<i class="fas fa-exclamation-triangle"></i> ${m}`; } else { b.innerHTML=m.replace(/\n/g,'<br>'); } }
+    function copyMessage() { if(currentMsg && !currentMsg.startsWith("⚠️")) { navigator.clipboard.writeText(currentMsg); showToast("✅ Pesanan disalin! Buka Chat APK dan paste."); } else showToast("❌ Lengkapi data!"); }
+    function sendMessage() { if(currentMsg && !currentMsg.startsWith("⚠️")) { let riwayat=JSON.parse(localStorage.getItem('llc_riwayat')||'[]'); riwayat.unshift({ tanggal:new Date().toLocaleString('id-ID'), game:document.getElementById("gameNameDisplay").value, jenis:document.getElementById("transaksiType").value, jumlah:document.getElementById("jumlahKoin").value, idGame:document.getElementById("idGame").value, status:'proses' }); if(riwayat.length>50) riwayat.pop(); localStorage.setItem('llc_riwayat',JSON.stringify(riwayat)); showToast("✅ Pesanan dikirim ke Admin!"); closeModal(); } else showToast("❌ Lengkapi data!"); }
+    function openModal(gameName) { document.getElementById("gameNameDisplay").value=gameName; document.getElementById("transaksiType").value=""; document.getElementById("jumlahKoin").value=""; document.getElementById("idGame").value=""; document.getElementById("bankTransfer").value=""; updatePreview(); document.getElementById("orderModal").style.display="flex"; }
+    function closeModal() { document.getElementById("orderModal").style.display="none"; }
+    document.getElementById("transaksiType")?.addEventListener("change",updatePreview); document.getElementById("jumlahKoin")?.addEventListener("input",updatePreview); document.getElementById("idGame")?.addEventListener("input",updatePreview); document.getElementById("bankTransfer")?.addEventListener("change",updatePreview);
+    document.getElementById("copyBtn")?.addEventListener("click",copyMessage); document.getElementById("sendBtn")?.addEventListener("click",sendMessage);
+    document.getElementById("riwayatBtn")?.addEventListener("click",(e)=>{ e.preventDefault(); showToast("📋 Lihat riwayat order di menu samping"); });
+    document.getElementById("panduanBtn")?.addEventListener("click",(e)=>{ e.preventDefault(); showToast("📖 Cara order: pilih game, isi form, kirim ke admin"); });
+    document.getElementById("dashboardBtn")?.addEventListener("click",(e)=>{ e.preventDefault(); showToast("👤 Dashboard: total order & saldo segera hadir"); });
+    
+    // SIDEBAR & DARKMODE
+    document.getElementById('menuBtn').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); };
+    document.getElementById('closeSidebarBtn').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
+    document.getElementById('overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
+    let darkMode=false; document.getElementById('darkModeBtn').onclick=()=>{ darkMode=!darkMode; if(darkMode){ document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerHTML='<i class="fas fa-sun"></i>'; }else{ document.body.classList.remove('dark-mode'); document.getElementById('darkModeBtn').innerHTML='<i class="fas fa-moon"></i>'; } };
+    const styleDark=document.createElement('style'); styleDark.textContent='.dark-mode .card-game-premium, .dark-mode .online-card, .dark-mode .hero-premium, .dark-mode .info-premium-section, .dark-mode .footer-premium, .dark-mode .payment-section { background: rgba(5,10,25,0.9); } .dark-mode { filter: brightness(0.95); }'; document.head.appendChild(styleDark);
+    
+    // ONLINE STATS
+    let currentOnline=1482, targetOnline=1482;
+    function getTargetByHour(){ let h=new Date().getHours(); if(h>=19&&h<=22) return Math.floor(Math.random()*(2500-1900+1)+1900); if(h>=23||h<=4) return Math.floor(Math.random()*(750-450+1)+450); if(h>=5&&h<=10) return Math.floor(Math.random()*(1150-750+1)+750); return Math.floor(Math.random()*(1700-1150+1)+1150); }
+    function loadStoredOnline(){ let stored=localStorage.getItem('llc_online_smooth'), ts=localStorage.getItem('llc_online_time'); if(stored&&ts&&(Date.now()-parseInt(ts))<3600000){ currentOnline=parseInt(stored); targetOnline=currentOnline; }else{ currentOnline=getTargetByHour(); targetOnline=currentOnline; localStorage.setItem('llc_online_smooth',currentOnline); localStorage.setItem('llc_online_time',Date.now()); } document.getElementById('onlineCount').innerHTML=Math.floor(currentOnline).toLocaleString(); }
+    function smoothUpdate(){ if(Math.random()<0.3) targetOnline=getTargetByHour(); let diff=targetOnline-currentOnline; let step=Math.min(Math.max(diff,-12),12); currentOnline+=step; if(Math.abs(diff)<5) currentOnline=targetOnline; localStorage.setItem('llc_online_smooth',Math.floor(currentOnline)); localStorage.setItem('llc_online_time',Date.now()); document.getElementById('onlineCount').innerHTML=Math.floor(currentOnline).toLocaleString(); }
+    function updatePeakTime(){ let h=new Date().getHours(); let peakText=""; if(h>=19&&h<=22) peakText="🔥 Jam sibuk! 🔥"; else if(h>=23||h<=4) peakText="🌙 Sepi, chat admin tetap aktif"; else if(h>=5&&h<=10) peakText="☀️ Pagi hari, mulai ramai"; else peakText="⭐ Waktu normal, pelayanan cepat"; document.getElementById('peakTimeInfo').innerHTML=`${peakText} | ${h.toString().padStart(2,'0')}:00`; }
+    loadStoredOnline(); updatePeakTime(); setInterval(smoothUpdate,10000); setInterval(updatePeakTime,60000);
+    window.onclick = e=>{ if(e.target===document.getElementById("orderModal")) closeModal(); if(e.target===document.getElementById("videoModal")) closeVideoModal(); if(e.target===document.getElementById("modalPayment")) closePaymentModal(); };
+</script>
 </body>
 </html>

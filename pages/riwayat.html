@@ -18,6 +18,7 @@
         .status-proses { color: #f59e0b; }
         .status-selesai { color: #10b981; }
         .empty-state { text-align: center; padding: 50px; color: #64748b; }
+        .clear-btn { background: #ef4444; border: none; padding: 10px; border-radius: 40px; color: white; margin-top: 20px; width: 100%; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -27,6 +28,7 @@
     </button>
     <h2 style="color:#fbbf24; margin-bottom:20px;"><i class="fas fa-history"></i> Riwayat Transaksi</h2>
     <div id="riwayatList"></div>
+    <button class="clear-btn" id="clearRiwayatBtn"><i class="fas fa-trash"></i> Hapus Semua Riwayat</button>
 </div>
 <script>
     function loadRiwayat() {
@@ -40,11 +42,19 @@
             <div class="riwayat-card">
                 <div class="riwayat-date"><i class="far fa-calendar-alt"></i> ${r.tanggal}</div>
                 <div class="riwayat-game">🎮 ${r.game}</div>
-                <div class="riwayat-detail">📌 ${r.jenis} | 💰 ${r.jumlah} | 🆔 ${r.idGame}</div>
+                <div class="riwayat-detail">📦 ${r.paket} | 🆔 ${r.idGame || '-'} | 💳 ${r.metode || '-'}</div>
                 <div class="riwayat-detail">Status: <span class="status-${r.status === 'Selesai' ? 'selesai' : 'proses'}">${r.status || 'Diproses'}</span></div>
             </div>
         `).join('');
     }
+    
+    document.getElementById('clearRiwayatBtn')?.addEventListener('click', () => {
+        if (confirm('Hapus semua riwayat transaksi?')) {
+            localStorage.removeItem('llc_riwayat');
+            loadRiwayat();
+        }
+    });
+    
     loadRiwayat();
 </script>
 </body>

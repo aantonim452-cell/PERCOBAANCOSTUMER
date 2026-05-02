@@ -1,61 +1,26 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Transaksi - LLC STORE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        body { background: #0a0a1a; padding: 20px; }
-        .riwayat-container { max-width: 600px; margin: 0 auto; }
-        .back-btn { background: #f59e0b; border: none; padding: 12px 20px; border-radius: 50px; color: #0f172a; font-weight: bold; cursor: pointer; margin-bottom: 20px; width: 100%; }
-        .riwayat-card { background: rgba(15,25,45,0.8); border-radius: 1rem; padding: 15px; margin-bottom: 12px; border-left: 3px solid #f59e0b; }
-        .riwayat-date { font-size: 11px; color: #94a3b8; margin-bottom: 8px; }
-        .riwayat-game { font-weight: bold; color: #fbbf24; }
-        .riwayat-detail { font-size: 12px; color: #cbd5e1; margin-top: 8px; }
-        .status-proses { color: #f59e0b; }
-        .status-selesai { color: #10b981; }
-        .empty-state { text-align: center; padding: 50px; color: #64748b; }
-        .clear-btn { background: #ef4444; border: none; padding: 10px; border-radius: 40px; color: white; margin-top: 20px; width: 100%; cursor: pointer; }
-    </style>
-</head>
-<body>
-<div class="riwayat-container">
-    <button class="back-btn" onclick="window.location.href='../index.html'">
-        <i class="fas fa-arrow-left"></i> Kembali ke Beranda
-    </button>
-    <h2 style="color:#fbbf24; margin-bottom:20px;"><i class="fas fa-history"></i> Riwayat Transaksi</h2>
+<html>
+<head><meta charset="UTF-8"><title>Riwayat Transaksi</title><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></head>
+<body style="background:#0a0a1a; padding:20px">
+<div style="max-width:600px; margin:auto">
+    <button class="back-btn" onclick="location.href='../index.html'">← Kembali</button>
+    <h2 style="color:#fbbf24"><i class="fas fa-history"></i> Riwayat Order MOD</h2>
     <div id="riwayatList"></div>
-    <button class="clear-btn" id="clearRiwayatBtn"><i class="fas fa-trash"></i> Hapus Semua Riwayat</button>
+    <button class="clear-btn" onclick="localStorage.removeItem('llc_riwayat'); location.reload()">Hapus Semua</button>
 </div>
 <script>
-    function loadRiwayat() {
-        let riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
-        let container = document.getElementById('riwayatList');
-        if (riwayat.length === 0) {
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart" style="font-size:48px; margin-bottom:15px;"></i><p>Belum ada transaksi</p><p style="font-size:12px;">Silakan lakukan transaksi melalui halaman utama</p></div>';
-            return;
-        }
-        container.innerHTML = riwayat.map(r => `
-            <div class="riwayat-card">
-                <div class="riwayat-date"><i class="far fa-calendar-alt"></i> ${r.tanggal}</div>
-                <div class="riwayat-game">🎮 ${r.game}</div>
-                <div class="riwayat-detail">📦 ${r.paket} | 🆔 ${r.idGame || '-'} | 💳 ${r.metode || '-'}</div>
-                <div class="riwayat-detail">Status: <span class="status-${r.status === 'Selesai' ? 'selesai' : 'proses'}">${r.status || 'Diproses'}</span></div>
-            </div>
-        `).join('');
-    }
-    
-    document.getElementById('clearRiwayatBtn')?.addEventListener('click', () => {
-        if (confirm('Hapus semua riwayat transaksi?')) {
-            localStorage.removeItem('llc_riwayat');
-            loadRiwayat();
-        }
-    });
-    
-    loadRiwayat();
+    const r = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
+    const container = document.getElementById('riwayatList');
+    if(r.length===0) container.innerHTML = '<div class="empty-state">Belum ada transaksi</div>';
+    else container.innerHTML = r.map(t => `
+        <div class="riwayat-card">
+            <div class="riwayat-date">${t.tanggal}</div>
+            <div class="riwayat-game">🎮 ${t.game}</div>
+            <div class="riwayat-detail">📦 ${t.paket} | 💰 ${t.harga} | 💳 ${t.metode}</div>
+            <div class="riwayat-detail">Status: <span class="status-proses">${t.status}</span></div>
+        </div>
+    `).join('');
 </script>
+<style>.back-btn,.clear-btn{background:#f59e0b;border:none;padding:10px;border-radius:40px;width:100%;margin:10px 0;color:#0f172a;font-weight:bold}.riwayat-card{background:#0f172a;border-radius:16px;padding:15px;margin-bottom:12px}.empty-state{text-align:center;padding:40px;color:#64748b}</style>
 </body>
 </html>

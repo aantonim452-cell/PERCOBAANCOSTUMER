@@ -12,7 +12,9 @@ function renderPricing() {
 function renderPaymentMethods() {
     const container = document.getElementById("paymentMethods");
     if (!container) return;
-    container.innerHTML = PAYMENT_METHODS.map(m => `<div class="payment-method-item"><i class="fas fa-check-circle"></i> ${m}</div>`).join('');
+    container.innerHTML = PAYMENT_METHODS.map(m => `
+        <div class="payment-method-item"><i class="fas fa-check-circle"></i> ${m}</div>
+    `).join('');
 }
 
 function renderGameSections() {
@@ -24,9 +26,14 @@ function renderGameSections() {
             <div class="game-card-premium">
                 <div class="game-info">
                     <img class="game-img" src="${game.img}" alt="${game.name}" onerror="this.src='https://via.placeholder.com/55x55?text=${game.name.charAt(0)}'">
-                    <div><div class="game-name">${game.name}</div><div class="game-price">${game.desc}</div></div>
+                    <div>
+                        <div class="game-name">${game.name}</div>
+                        <div class="game-price">${game.desc}</div>
+                    </div>
                 </div>
-                <button class="btn-order" onclick="openOrderModal('${game.id}', '${game.name}')"><i class="fas fa-shopping-cart"></i> Beli Mod</button>
+                <button class="btn-order" onclick="openOrderModal('${game.id}', '${game.name}')">
+                    <i class="fas fa-shopping-cart"></i> Beli Mod
+                </button>
             </div>
         </div>
     `).join('');
@@ -55,7 +62,7 @@ window.openOrderModal = function(gameId, gameName) {
     renderMetodeOptions();
     document.getElementById("orderModal").style.display = "flex";
     updatePreview();
-}
+};
 
 function closeModal() {
     document.getElementById("orderModal").style.display = "none";
@@ -75,34 +82,22 @@ function updatePreview() {
     window.currentOrderData = { game, paket: paketText, paketObj, metode };
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const paketSelect = document.getElementById("paketSelect");
-    const metodeSelect = document.getElementById("bankTransfer");
-    if (paketSelect) paketSelect.addEventListener("change", updatePreview);
-    if (metodeSelect) metodeSelect.addEventListener("change", updatePreview);
+document.getElementById("copyBtn")?.addEventListener("click", () => {
+    navigator.clipboard.writeText(document.getElementById("previewBox").innerText);
+    showToast("✅ Pesanan disalin!");
+});
 
-    document.getElementById("copyBtn")?.addEventListener("click", () => {
-        const text = document.getElementById("previewBox").innerText;
-        navigator.clipboard.writeText(text);
-        showToast("✅ Pesanan disalin!");
-    });
-
-    document.getElementById("sendBtn")?.addEventListener("click", async () => {
-        const data = window.currentOrderData;
-        if (!data || !data.game || !data.paketObj) {
-            showToast("⚠️ Pilih game dan paket terlebih dahulu!");
-            return;
-        }
-        const msg = `📋 *ORDER MOD BARU*\n🎮 Game: ${data.game}\n📦 Paket: ${data.paket}\n💳 Metode: ${data.metode || "-"}\n💰 Total: ${data.paketObj.priceFormatted}`;
-        if (db && isFirebaseReady) {
-            await db.collection("chat_llc").add({ text: msg, timestamp: new Date(), sender: "user", type: "order" });
-            showToast("✅ Pesanan terkirim ke chat support!");
-            saveTransaction(data.game, data.paketObj, data.metode);
-            closeModal();
-        } else {
-            showToast("⚠️ Chat offline, silakan copy pesan dan kirim manual ke Telegram");
-        }
-    });
+document.getElementById("sendBtn")?.addEventListener("click", async () => {
+    const data = window.currentOrderData;
+    if (!data?.paketObj) { showToast("⚠️ Pilih game dan paket!"); return; }
+    const msg = `📋 ORDER MOD BARU\n🎮 Game: ${data.game}\n📦 Paket: ${data.paket}\n💳 Metode: ${data.metode || "-"}\n💰 Total: ${data.paketObj.priceFormatted}`;
+    if (db && isFirebaseReady) {
+        await db.collection("chat_llc").add({ text: msg, timestamp: new Date(), sender: "user", type: "order" });
+        showToast("✅ Pesanan terkirim ke chat support!");
+        closeModal();
+    } else {
+        showToast("⚠️ Chat offline, silakan copy pesan");
+    }
 });
 
 // Sidebar & dark mode
@@ -117,7 +112,3 @@ document.getElementById("darkModeBtn")?.addEventListener("click", () => {
     document.body.style.background = document.body.style.background === "#0a0a1a" ? "#f0f2f5" : "#0a0a1a";
     showToast("Mode berubah");
 });
-setTimeout(() => {
-    const loader = document.getElementById("loadingScreen");
-    if (loader) loader.style.display = "none";
-}, 1000);

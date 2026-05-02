@@ -1,3 +1,4 @@
+// GANTI DENGAN KONFIGURASI FIREBASE MILIK ANDA
 const firebaseConfig = {
     apiKey: "AIzaSyDummyKeyExampleReplaceWithYourOwn12345",
     authDomain: "llc-store-mod.firebaseapp.com",

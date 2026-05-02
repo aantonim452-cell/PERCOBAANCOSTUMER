@@ -1,109 +1,172 @@
-// ==================== INISIALISASI & API ====================
+// ==================== FIREBASE CHAT FUNCTIONS ====================
 
-// Close modal ketika klik di luar
-function initModalClickOutside() {
-    window.onclick = e => {
-        const orderModal = document.getElementById("orderModal");
-        const videoModal = document.getElementById("videoModal");
-        const paymentModal = document.getElementById("modalPayment");
-        
-        if (e.target === orderModal) closeModal();
-        if (e.target === videoModal) closeVideoModal();
-        if (e.target === paymentModal) closePaymentModal();
-    };
-}
-
-// Navigasi sidebar (mencegah default)
-function initSidebarNavigation() {
-    // Sidebar links
-    const sidebarHome = document.getElementById('sidebarHome');
-    const sidebarRiwayat = document.getElementById('sidebarRiwayat');
-    const sidebarPanduan = document.getElementById('sidebarPanduan');
-    const sidebarDashboard = document.getElementById('sidebarDashboard');
+// Load chat messages dari Firestore
+async function loadChatMessages() {
+    const chatContainer = document.getElementById("chatMessages");
+    if (!chatContainer) return;
     
-    // Quick menu buttons
-    const riwayatBtn = document.getElementById('riwayatBtn');
-    const panduanBtn = document.getElementById('panduanBtn');
-    const dashboardBtn = document.getElementById('dashboardBtn');
-    
-    const overlay = document.getElementById('overlay');
-    const sidebar = document.getElementById('sidebar');
-    
-    const closeSidebar = () => {
-        if (sidebar) sidebar.classList.remove('open');
-        if (overlay) overlay.classList.remove('show');
-    };
-    
-    if (sidebarHome) {
-        sidebarHome.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            closeSidebar();
-        });
+    if (!db || !isFirebaseReady) {
+        chatContainer.innerHTML = '<div class="chat-bubble admin">⚠️ Chat offline. Silakan refresh atau hubungi admin via Telegram.</div>';
+        return;
     }
     
-    if (sidebarRiwayat) {
-        sidebarRiwayat.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'pages/riwayat.html';
-        });
-    }
-    
-    if (sidebarPanduan) {
-        sidebarPanduan.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'pages/panduan.html';
-        });
-    }
-    
-    if (sidebarDashboard) {
-        sidebarDashboard.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'pages/dashboard.html';
-        });
-    }
-    
-    if (riwayatBtn) {
-        riwayatBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'pages/riwayat.html';
-        });
-    }
-    
-    if (panduanBtn) {
-        panduanBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'pages/panduan.html';
-        });
-    }
-    
-    if (dashboardBtn) {
-        dashboardBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'pages/dashboard.html';
-        });
+    try {
+        const snapshot = await db.collection("chat_llc").orderBy("timestamp", "asc").limit(100).get();
+        if (snapshot.empty) {
+            chatContainer.innerHTML = '<div class="chat-bubble admin">💬 Selamat datang! Silakan tanyakan harga mod atau kendala anda.</div>';
+        } else {
+            chatContainer.innerHTML = "";
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const msgDiv = document.createElement("div");
+                msgDiv.className = `chat-bubble ${data.sender === "user" ? "user" : "admin"}`;
+                msgDiv.innerText = data.text || "...";
+                if (data.type === "order") {
+                    msgDiv.style.borderLeft = "3px solid #f59e0b";
+                }
+                chatContainer.appendChild(msgDiv);
+            });
+        }
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    } catch(err) {
+        console.error("Gagal load chat:", err);
+        chatContainer.innerHTML = '<div class="chat-bubble admin">⚠️ Gagal memuat chat. Periksa koneksi internet dan konfigurasi Firebase.</div>';
     }
 }
 
-// Simpan versi ke localStorage
-function saveAppVersion() {
-    if (typeof APP_VERSION !== 'undefined') {
-        localStorage.setItem('llc_version', APP_VERSION);
+// Send chat message ke Firestore
+async function sendChatMessage(message) {
+    if (!message.trim()) {
+        showToast("Pesan tidak boleh kosong!");
+        return;
+    }
+    
+    if (!db || !isFirebaseReady) {
+        showToast("⚠️ Chat offline. Silakan refresh halaman.");
+        return;
+    }
+    
+    try {
+        await db.collection("chat_llc").add({
+            text: message,
+            timestamp: new Date(),
+            sender: "user",
+            type: "message"
+        });
+        document.getElementById("chatInput").value = "";
+        loadChatMessages();
+        showToast("✅ Pesan terkirim!");
+    } catch(e) {
+        console.error("Gagal kirim chat:", e);
+        showToast("❌ Gagal mengirim pesan");
     }
 }
 
-// Inisialisasi utama
-function init() {
+// Inisialisasi chat listener realtime
+function initChatListener() {
+    if (!db || !isFirebaseReady) return;
+    
+    db.collection("chat_llc").orderBy("timestamp", "asc").onSnapshot(() => {
+        loadChatMessages();
+    }, (error) => {
+        console.error("Listener error:", error);
+    });
+}
+
+// Bind chat events
+function bindChatEvents() {
+    const sendBtn = document.getElementById("sendChatBtn");
+    const chatInput = document.getElementById("chatInput");
+    
+    if (sendBtn) {
+        sendBtn.addEventListener("click", () => sendChatMessage(chatInput.value));
+    }
+    if (chatInput) {
+        chatInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendChatMessage(chatInput.value);
+        });
+    }
+}
+
+// ==================== INITIALIZATION ====================
+document.addEventListener("DOMContentLoaded", function() {
+    // Render UI
+    renderPricing();
     renderPaymentMethods();
-    renderAllGames();
-    initFormListeners();
-    initUI();
-    initModalClickOutside();
-    initSidebarNavigation();
-    saveAppVersion();
+    renderGameSections();
     
-    console.log("✅ LLC STORE - Inisialisasi selesai");
+    // Setup event listeners
+    const menuBtn = document.getElementById("menuBtn");
+    const closeSidebarBtn = document.getElementById("closeSidebarBtn");
+    const overlay = document.getElementById("overlay");
+    
+    if (menuBtn) menuBtn.addEventListener("click", toggleSidebar);
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", toggleSidebar);
+    if (overlay) overlay.addEventListener("click", toggleSidebar);
+    
+    // Dark mode
+    initDarkMode();
+    
+    // Online counter
+    updateOnlineCount();
+    setInterval(updateOnlineCount, 30000);
+    
+    // Firebase chat
+    if (db && isFirebaseReady) {
+        initChatListener();
+        bindChatEvents();
+        loadChatMessages();
+        
+        // Update status
+        const statusEl = document.getElementById("chatStatus");
+        if (statusEl) {
+            statusEl.innerHTML = "● Online";
+            statusEl.style.color = "#10b981";
+        }
+    } else {
+        const statusEl = document.getElementById("chatStatus");
+        if (statusEl) {
+            statusEl.innerHTML = "● Offline";
+            statusEl.style.color = "#ef4444";
+        }
+        const chatContainer = document.getElementById("chatMessages");
+        if (chatContainer) {
+            chatContainer.innerHTML = '<div class="chat-bubble admin">⚠️ Firebase belum terkonfigurasi. Ganti firebaseConfig di js/config.js dengan project Anda yang asli!</div>';
+        }
+    }
+    
+    // Close modal with outside click
+    window.onclick = function(event) {
+        const modal = document.getElementById("orderModal");
+        if (event.target === modal) closeModal();
+        const videoModal = document.getElementById("videoModal");
+        if (event.target === videoModal) closeVideoModal();
+        const paymentModal = document.getElementById("modalPayment");
+        if (event.target === paymentModal) closePaymentModal();
+    }
+    
+    // APK Free Link
+    const freeApkLink = document.getElementById("freeApkLink");
+    if (freeApkLink) {
+        freeApkLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            showToast("Hubungi admin di chat untuk mendapat APK trial");
+        });
+    }
+    
+    // Hide loading screen
+    hideLoadingScreen();
+});
+
+// Modal functions
+window.closeVideoModal = function() {
+    const modal = document.getElementById("videoModal");
+    if (modal) modal.style.display = "none";
+    const frame = document.getElementById("videoFrame");
+    if (frame) frame.src = "";
 }
 
-// Jalankan setelah DOM loaded
-document.addEventListener('DOMContentLoaded', init);
+window.closePaymentModal = function() {
+    const modal = document.getElementById("modalPayment");
+    if (modal) modal.style.display = "none";
+}

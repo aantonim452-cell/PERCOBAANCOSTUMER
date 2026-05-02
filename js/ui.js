@@ -1,157 +1,185 @@
-// ==================== UI & ANIMASI ====================
+// ==================== UI RENDER FUNCTIONS ====================
 
-// Particles
-function initParticles() {
-    const pz = document.getElementById('particleZone');
-    if (!pz) return;
+function renderPricing() {
+    const container = document.getElementById("pricingGrid");
+    if (!container) return;
+    container.innerHTML = PRICE_PLANS.map(plan => `
+        <div class="pricing-card">
+            <div class="pricing-duration">📅 ${plan.label}</div>
+            <div class="pricing-price">${plan.priceFormatted}</div>
+            <div style="font-size:10px; color:#94a3b8;">semua game</div>
+        </div>
+    `).join('');
+}
+
+function renderPaymentMethods() {
+    const container = document.getElementById("paymentMethods");
+    if (!container) return;
+    container.innerHTML = PAYMENT_METHODS.map(method => `
+        <div class="payment-method-item">
+            <i class="fas fa-check-circle" style="color:#10b981; font-size:10px;"></i>
+            ${method}
+        </div>
+    `).join('');
+}
+
+function renderGameSections() {
+    const container = document.getElementById("gameSections");
+    if (!container) return;
     
-    for (let i = 0; i < 150; i++) {
-        let p = document.createElement('div');
-        p.classList.add('particle');
-        let s = Math.random() * 4 + 1;
-        p.style.width = s + 'px';
-        p.style.height = s + 'px';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDuration = Math.random() * (14 - 6) + 6 + 's';
-        p.style.animationDelay = Math.random() * 15 + 's';
-        pz.appendChild(p);
+    container.innerHTML = GAMES.map(game => `
+        <div class="section-title-premium">
+            <h2><i class="${game.icon}" style="color:#f59e0b"></i> ${game.name}</h2>
+        </div>
+        <div class="game-grid-premium">
+            <div class="game-card-premium" data-game="${game.id}" data-game-name="${game.name}">
+                <div class="game-info">
+                    <img class="game-img" src="${game.img}" alt="${game.name}" 
+                         onerror="this.src='${game.imgFallback}'; this.onerror=null; this.src='https://via.placeholder.com/55x55?text=${game.name.charAt(0)}'">
+                    <div>
+                        <div class="game-name">${game.name}</div>
+                        <div class="game-price">${game.desc}</div>
+                    </div>
+                </div>
+                <button class="btn-order" onclick="openOrderModal('${game.id}', '${game.name}')">
+                    <i class="fas fa-shopping-cart"></i> Beli Mod
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderPaketOptions() {
+    const select = document.getElementById("paketSelect");
+    if (!select) return;
+    select.innerHTML = '<option value="">-- Pilih Paket --</option>' + 
+        PRICE_PLANS.map(plan => `<option value='${JSON.stringify(plan)}'>${plan.label} - ${plan.priceFormatted}</option>`).join('');
+}
+
+// Modal Order
+let currentGame = {};
+
+window.openOrderModal = function(gameId, gameName) {
+    currentGame = { id: gameId, name: gameName };
+    document.getElementById("gameNameDisplay").value = gameName;
+    renderPaketOptions();
+    document.getElementById("orderModal").style.display = "flex";
+    updatePreview();
+}
+
+function closeModal() {
+    document.getElementById("orderModal").style.display = "none";
+}
+
+function updatePreview() {
+    const gameName = document.getElementById("gameNameDisplay").value;
+    const paketSelect = document.getElementById("paketSelect");
+    const idGame = document.getElementById("idGame").value;
+    const metode = document.getElementById("bankTransfer").value;
+    
+    let paketText = "";
+    let paketObj = null;
+    if (paketSelect.value) {
+        paketObj = JSON.parse(paketSelect.value);
+        paketText = `${paketObj.label} - ${paketObj.priceFormatted}`;
     }
-}
-
-// Online counter smooth
-let curOn = 1482, tarOn = 1482;
-
-function getTar() {
-    let h = new Date().getHours();
-    if (h >= 19 && h <= 22) return Math.floor(Math.random() * (2500 - 1900 + 1) + 1900);
-    if (h >= 23 || h <= 4) return Math.floor(Math.random() * (750 - 450 + 1) + 450);
-    if (h >= 5 && h <= 10) return Math.floor(Math.random() * (1150 - 750 + 1) + 750);
-    return Math.floor(Math.random() * (1700 - 1150 + 1) + 1150);
-}
-
-function loadStored() {
-    let s = localStorage.getItem('llc_online_smooth');
-    let ts = localStorage.getItem('llc_online_time');
     
-    if (s && ts && (Date.now() - parseInt(ts)) < 3600000) {
-        curOn = parseInt(s);
-        tarOn = curOn;
-    } else {
-        curOn = getTar();
-        tarOn = curOn;
-        localStorage.setItem('llc_online_smooth', curOn);
-        localStorage.setItem('llc_online_time', Date.now());
-    }
-    const onlineCount = document.getElementById('onlineCount');
-    if (onlineCount) onlineCount.innerHTML = Math.floor(curOn).toLocaleString();
-}
-
-function smoothUp() {
-    if (Math.random() < 0.3) tarOn = getTar();
-    let d = tarOn - curOn;
-    let stp = Math.min(Math.max(d, -10), 10);
-    curOn += stp;
-    if (Math.abs(d) < 5) curOn = tarOn;
-    localStorage.setItem('llc_online_smooth', Math.floor(curOn));
-    localStorage.setItem('llc_online_time', Date.now());
-    const onlineCount = document.getElementById('onlineCount');
-    if (onlineCount) onlineCount.innerHTML = Math.floor(curOn).toLocaleString();
-}
-
-function updateTime() {
-    let h = new Date().getHours();
-    let txt = "";
-    if (h >= 19 && h <= 22) txt = "🔥 Jam sibuk! 🔥";
-    else if (h >= 23 || h <= 4) txt = "🌙 Sepi, chat admin tetap aktif";
-    else if (h >= 5 && h <= 10) txt = "☀️ Pagi hari, mulai ramai";
-    else txt = "⭐ Waktu normal, pelayanan cepat";
-    const peakTimeInfo = document.getElementById('peakTimeInfo');
-    if (peakTimeInfo) peakTimeInfo.innerHTML = `${txt} | ${h.toString().padStart(2, '0')}:00`;
-}
-
-// Dark mode
-function initDarkMode() {
-    let dark = false;
-    const darkBtn = document.getElementById('darkModeBtn');
-    if (!darkBtn) return;
+    const preview = `📋 ORDER MOD LLC STORE\n\n🎮 Game: ${gameName}\n📦 Paket: ${paketText || "Belum pilih"}\n🆔 ID: ${idGame || "Belum diisi"}\n💳 Metode: ${metode || "Belum pilih"}\n💰 Total: ${paketObj ? paketObj.priceFormatted : "-"}\n\n⏰ Mohon konfirmasi ke admin\n📱 Chat support sudah terhubung!`;
     
-    darkBtn.onclick = () => {
-        dark = !dark;
-        if (dark) {
-            document.body.classList.add('dark-mode');
-            darkBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            document.body.classList.remove('dark-mode');
-            darkBtn.innerHTML = '<i class="fas fa-moon"></i>';
-        }
+    document.getElementById("previewBox").innerHTML = preview.replace(/\n/g, '<br>');
+    
+    // Store for send
+    window.currentOrderData = {
+        game: gameName,
+        paket: paketText,
+        paketObj: paketObj,
+        idGame: idGame,
+        metode: metode
     };
 }
 
-// Sidebar
-function initSidebar() {
-    const menuBtn = document.getElementById('menuBtn');
-    const closeBtn = document.getElementById('closeSidebarBtn');
-    const overlay = document.getElementById('overlay');
-    const sidebar = document.getElementById('sidebar');
+// Event listeners untuk form
+document.addEventListener("DOMContentLoaded", function() {
+    const paketSelect = document.getElementById("paketSelect");
+    const idGameInput = document.getElementById("idGame");
+    const bankSelect = document.getElementById("bankTransfer");
     
-    if (menuBtn) {
-        menuBtn.onclick = () => {
-            if (sidebar) sidebar.classList.add('open');
-            if (overlay) overlay.classList.add('show');
-        };
+    if (paketSelect) paketSelect.addEventListener("change", updatePreview);
+    if (idGameInput) idGameInput.addEventListener("input", updatePreview);
+    if (bankSelect) bankSelect.addEventListener("change", updatePreview);
+    
+    const copyBtn = document.getElementById("copyBtn");
+    if (copyBtn) {
+        copyBtn.addEventListener("click", function() {
+            const previewText = document.getElementById("previewBox").innerText;
+            navigator.clipboard.writeText(previewText).then(() => {
+                showToast("✅ Pesanan disalin!");
+            });
+        });
     }
     
-    if (closeBtn) {
-        closeBtn.onclick = () => {
-            if (sidebar) sidebar.classList.remove('open');
-            if (overlay) overlay.classList.remove('show');
-        };
-    }
-    
-    if (overlay) {
-        overlay.onclick = () => {
-            if (sidebar) sidebar.classList.remove('open');
-            if (overlay) overlay.classList.remove('show');
-        };
-    }
-}
-
-// Badge scroll ke game section
-function initBadgeScroll() {
-    document.querySelectorAll('.badge-premium[data-game]').forEach(badge => {
-        badge.addEventListener('click', () => {
-            let game = badge.dataset.game;
-            const section = document.getElementById(`section-${game}`);
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const sendBtn = document.getElementById("sendBtn");
+    if (sendBtn) {
+        sendBtn.addEventListener("click", function() {
+            const orderData = window.currentOrderData;
+            if (!orderData || !orderData.game || !orderData.paketObj) {
+                showToast("⚠️ Lengkapi data pesanan terlebih dahulu!");
+                return;
+            }
+            
+            // Kirim ke Firebase Chat
+            const message = `📋 *ORDER BARU*\n🎮 Game: ${orderData.game}\n📦 Paket: ${orderData.paket}\n🆔 ID: ${orderData.idGame || "-"}\n💳 Metode: ${orderData.metode || "-"}\n💰 Total: ${orderData.paketObj.priceFormatted}`;
+            
+            if (db && isFirebaseReady) {
+                db.collection("chat_llc").add({
+                    text: message,
+                    timestamp: new Date(),
+                    sender: "user",
+                    type: "order"
+                }).then(() => {
+                    showToast("✅ Pesanan terkirim ke chat support!");
+                    saveTransaction(orderData.game, orderData.paket, orderData.idGame, orderData.metode);
+                    closeModal();
+                    document.getElementById("idGame").value = "";
+                }).catch(e => {
+                    console.error(e);
+                    showToast("Gagal kirim, coba lagi");
+                });
+            } else {
+                showToast("⚠️ Chat offline, silakan copy pesan dan kirim manual");
             }
         });
-    });
+    }
+});
+
+// Sidebar
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("overlay").classList.toggle("show");
 }
 
-// Sembunyikan loading screen
+// Dark mode
+let isDark = true;
+function initDarkMode() {
+    const btn = document.getElementById("darkModeBtn");
+    if (btn) {
+        btn.addEventListener("click", () => {
+            isDark = !isDark;
+            document.body.style.background = isDark ? "#0a0a1a" : "#f0f2f5";
+            showToast(isDark ? "Mode Gelap" : "Mode Terang");
+        });
+    }
+}
+
+// Loading screen hide
 function hideLoadingScreen() {
     setTimeout(() => {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.style.opacity = '0';
+        const loader = document.getElementById("loadingScreen");
+        if (loader) {
+            loader.style.opacity = "0";
             setTimeout(() => {
-                loadingScreen.style.display = 'none';
+                if (loader) loader.style.display = "none";
             }, 500);
         }
-    }, 1500);
-}
-
-// Inisialisasi semua UI
-function initUI() {
-    hideLoadingScreen();
-    initParticles();
-    loadStored();
-    updateTime();
-    initDarkMode();
-    initSidebar();
-    initBadgeScroll();
-    
-    setInterval(smoothUp, 12000);
-    setInterval(updateTime, 60000);
+    }, 800);
 }

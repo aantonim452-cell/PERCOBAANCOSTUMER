@@ -1,269 +1,105 @@
-// ==================== FUNGSI UTAMA ====================
+// ==================== DATA HARGA ====================
+const PRICE_PLANS = [
+    { days: 14, price: 50000, label: "14 Hari", priceFormatted: "Rp 50.000" },
+    { days: 30, price: 70000, label: "30 Hari", priceFormatted: "Rp 70.000" },
+    { days: 60, price: 100000, label: "60 Hari", priceFormatted: "Rp 100.000" }
+];
 
-let currentMsg = "";
+// Daftar Game dengan GAMBAR ASLI (ambil dari URL resmi)
+const GAMES = [
+    { 
+        id: "pubg", 
+        name: "PUBG Mobile", 
+        icon: "fab fa-android", 
+        img: "https://images.cdn4.stockunlimited.net/preview1300/pubg-mobile-game-logo_2058505.jpg",
+        imgFallback: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/PUBG_Mobile_app_logo.jpg/200px-PUBG_Mobile_app_logo.jpg",
+        desc: "ESP, Aimbot, No Recoil, Anti-Ban"
+    },
+    { 
+        id: "freefire", 
+        name: "Free Fire", 
+        icon: "fab fa-android", 
+        img: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/FreeFireLogo.png/200px-FreeFireLogo.png",
+        imgFallback: "https://play-lh.googleusercontent.com/YKRv_etfsqnFZ8bU7yUiqCSC0o6N99iFKIhx3Gg7nX8FjEo2NLpDgNdx4U0H6pHzJHM=w240-h480",
+        desc: "Diamond Hack, Wallhack, Damage Mod"
+    },
+    { 
+        id: "mlbb", 
+        name: "Mobile Legends", 
+        icon: "fab fa-android", 
+        img: "https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Mobile_Legends_Bang_Bang_logo.png/200px-Mobile_Legends_Bang_Bang_logo.png",
+        imgFallback: "https://play-lh.googleusercontent.com/0FZQFQ7c7U_u0hDnC1kZ2KvTkFdQJxpZQonM6z5h6QZQmY6wDnL8DqQvMvRnP5k=w240-h480",
+        desc: "Map Hack, Skin Unlocker, Drill"
+    },
+    { 
+        id: "codm", 
+        name: "Call of Duty Mobile", 
+        icon: "fab fa-android", 
+        img: "https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Call_of_Duty_Mobile_logo.png/200px-Call_of_Duty_Mobile_logo.png",
+        imgFallback: "https://play-lh.googleusercontent.com/ILgjfOHz0qX97YlQvQqKZxw0KjXtFjQzLq8L8L8L8L8=w240-h480",
+        desc: "Radar, Aim Assist, Magic Bullet"
+    },
+    { 
+        id: "genshin", 
+        name: "Genshin Impact", 
+        icon: "fab fa-android", 
+        img: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Genshin_Impact_logo.svg/200px-Genshin_Impact_logo.svg.png",
+        imgFallback: "https://play-lh.googleusercontent.com/0FZQFQ7c7U_u0hDnC1kZ2KvTkFdQJxpZQonM6z5h6QZQmY6wDnL8DqQvMvRnP5k=w240-h480",
+        desc: "God Mode, Damage Multiplier, No CD"
+    },
+    { 
+        id: "valorant", 
+        name: "Valorant", 
+        icon: "fab fa-windows", 
+        img: "https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Valorant_logo.png/200px-Valorant_logo.png",
+        imgFallback: "https://play-lh.googleusercontent.com/0FZQFQ7c7U_u0hDnC1kZ2KvTkFdQJxpZQonM6z5h6QZQmY6wDnL8DqQvMvRnP5k=w240-h480",
+        desc: "TriggerBot, ESP, Radar"
+    },
+    { 
+        id: "farlight", 
+        name: "Farlight 84", 
+        icon: "fab fa-android", 
+        img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1882280/header.jpg",
+        imgFallback: "https://play-lh.googleusercontent.com/0FZQFQ7c7U_u0hDnC1kZ2KvTkFdQJxpZQonM6z5h6QZQmY6wDnL8DqQvMvRnP5k=w240-h480",
+        desc: "Aimbot, ESP, Vehicle Hack"
+    }
+];
+
+// Metode Pembayaran
+const PAYMENT_METHODS = ["QRIS", "DANA", "OVO", "BRI", "BCA", "Mandiri"];
 
 // Toast notification
 function showToast(msg) {
-    let t = document.getElementById('toastMsg');
-    if (!t) return;
-    t.innerHTML = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
+    const toast = document.getElementById("toastMsg");
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2000);
 }
 
-// Copy nomor rekening
-function copyNumber(num, bank) {
-    navigator.clipboard.writeText(num);
-    showToast(`✅ Nomor ${bank} disalin!`);
+// Format Rupiah
+function formatRupiah(angka) {
+    return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-// Generate pesanan
-function generateMessage() {
-    let g = document.getElementById("gameNameDisplay").value;
-    let t = document.getElementById("transaksiType").value;
-    let j = document.getElementById("jumlahKoin").value.trim();
-    let u = document.getElementById("idGame").value.trim();
-    let b = document.getElementById("bankTransfer").value;
-    
-    if (!t) return "⚠️ Pilih jenis transaksi";
-    if (!j) return "⚠️ Masukkan jumlah";
-    if (!u) return "⚠️ Masukkan ID Game";
-    if (!b) return "⚠️ Pilih metode pembayaran";
-    
-    return `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📌 Jenis: ${t}\n💰 Jumlah: ${j}\n🆔 ID Game: ${u}\n🏦 Metode Bayar: ${b}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
-}
-
-// Update preview
-function updatePreview() {
-    let m = generateMessage();
-    currentMsg = m;
-    let box = document.getElementById("previewBox");
-    if (!box) return;
-    if (m.startsWith("⚠️")) {
-        box.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${m}`;
-    } else {
-        box.innerHTML = m.replace(/\n/g, '<br>');
-    }
-}
-
-// Copy pesanan
-function copyMessage() {
-    if (currentMsg && !currentMsg.startsWith("⚠️")) {
-        navigator.clipboard.writeText(currentMsg);
-        showToast("✅ Pesanan disalin! Buka Chat APK dan paste.");
-    } else {
-        showToast("❌ Lengkapi data!");
-    }
-}
-
-// Send message ke Admin via APK
-function sendMessage() {
-    if (currentMsg && !currentMsg.startsWith("⚠️")) {
-        // Simpan ke localStorage untuk riwayat
-        let riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
-        riwayat.unshift({
-            tanggal: new Date().toLocaleString('id-ID'),
-            game: document.getElementById("gameNameDisplay").value,
-            jenis: document.getElementById("transaksiType").value,
-            jumlah: document.getElementById("jumlahKoin").value,
-            idGame: document.getElementById("idGame").value,
-            status: 'Diproses'
-        });
-        if (riwayat.length > 50) riwayat.pop();
-        localStorage.setItem('llc_riwayat', JSON.stringify(riwayat));
-        
-        // Kirim ke Android
-        if (window.Android && window.Android.sendMessageToAdmin) {
-            window.Android.sendMessageToAdmin(currentMsg);
-            showToast("✅ Pesanan dikirim ke Admin!");
-            closeModal();
-        } else {
-            window.location.href = `llcstore://customer_chat?message=${encodeURIComponent(currentMsg)}`;
-            showToast("✅ Membuka Chat APK...");
-            setTimeout(() => closeModal(), 500);
-        }
-    } else {
-        showToast("❌ Lengkapi data!");
-    }
-}
-
-// Open/Close modal order
-function openModal(gameName) {
-    const modal = document.getElementById("orderModal");
-    if (!modal) return;
-    
-    document.getElementById("gameNameDisplay").value = gameName;
-    document.getElementById("transaksiType").value = "";
-    document.getElementById("jumlahKoin").value = "";
-    document.getElementById("idGame").value = "";
-    document.getElementById("bankTransfer").value = "";
-    updatePreview();
-    modal.style.display = "flex";
-    document.body.style.overflow = "hidden";
-}
-
-function closeModal() {
-    const modal = document.getElementById("orderModal");
-    if (!modal) return;
-    modal.style.display = "none";
-    document.body.style.overflow = "";
-}
-
-// Payment modal
-function showPaymentDetail(method) {
-    const modal = document.getElementById('modalPayment');
-    const title = document.getElementById('paymentTitle');
-    const detail = document.getElementById('paymentDetail');
-    if (!modal || !title || !detail) return;
-    
-    let content = '';
-    
-    if (method === 'qris') {
-        title.innerHTML = 'QRIS';
-        content = `<div style="background:#fff; border-radius:20px; padding:20px; text-align:center;">
-                    <i class="fas fa-qrcode" style="font-size:100px; color:#000;"></i>
-                    <p style="margin-top:10px; color:#000;">Scan QRIS via mobile banking/e-wallet</p>
-                    <p style="font-size:11px; color:#666;">Kode QR akan muncul setelah scan</p>
-                   </div>`;
-    } else {
-        let bankName = method.toUpperCase();
-        let bankNumber = bankNumbers[method] || "Nomor tidak tersedia";
-        title.innerHTML = bankName;
-        content = `<div class="nomor-besar">${bankNumber}</div>
-                   <button class="copy-btn-besar" onclick="copyNumber('${bankNumber}','${bankName}')">
-                   <i class="fas fa-copy"></i> Salin Nomor ${bankName}
-                   </button>`;
-    }
-    
-    detail.innerHTML = content;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-function closePaymentModal() {
-    const modal = document.getElementById('modalPayment');
-    if (!modal) return;
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-}
-
-// Video modal
-function openVideoTutorial(url) {
-    const modal = document.getElementById('videoModal');
-    const frame = document.getElementById('videoFrame');
-    if (!modal || !frame) return;
-    
-    frame.src = url;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-function closeVideoModal() {
-    const modal = document.getElementById('videoModal');
-    const frame = document.getElementById('videoFrame');
-    if (!modal) return;
-    
-    if (frame) frame.src = '';
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-}
-
-// Download game
-function downloadGame(gameKey) {
-    let link = gameData[gameKey]?.downloadLink;
-    if (link && link !== '#') {
-        window.open(link, '_blank');
-    } else {
-        showToast("Link download belum tersedia");
-    }
-}
-
-// Render game grid
-function renderGame(gridId, gameKey) {
-    let g = gameData[gameKey];
-    if (!g) return;
-    
-    let rows = '';
-    g.prices.forEach(p => {
-        rows += `<tr>
-                    <td class="jumlah-col">${p[0]}</td>
-                    <td class="beli-col"><span>${p[1]}</span></td>
-                    <td class="jual-col"><span>${p[2]}</span></td>
-                 </tr>`;
+// Simpan transaksi ke localStorage
+function saveTransaction(game, paket, idGame, metode) {
+    const riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
+    riwayat.unshift({
+        id: Date.now(),
+        game: game,
+        paket: paket,
+        idGame: idGame,
+        metode: metode,
+        tanggal: new Date().toLocaleString('id-ID'),
+        status: 'Diproses'
     });
-    
-    const grid = document.getElementById(gridId);
-    if (!grid) return;
-    
-    grid.innerHTML = `
-        <div class="card-game-premium" id="card-${gameKey}">
-            <div class="card-header-premium">
-                <div class="logo-game"><img src="${g.img}" onerror="this.src='https://via.placeholder.com/55'"></div>
-                <div class="game-name-premium">
-                    <h2>${g.name}</h2>
-                    <div class="price-sub">${g.sub}</div>
-                </div>
-            </div>
-            <div class="table-premium">
-                <table class="price-table">
-                    <thead>
-                        <tr>
-                            <th>Jumlah</th>
-                            <th>Beli</th>
-                            <th>Jual</th>
-                        </tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-            </div>
-            <div class="btn-action-group">
-                <button class="btn-order-premium" onclick="openModal('${g.name}')">
-                    <i class="fas fa-cart-shopping"></i> Beli/Jual
-                </button>
-                <button class="btn-download-premium" onclick="downloadGame('${gameKey}')">
-                    <i class="fas fa-download"></i> Download
-                </button>
-                <button class="btn-tutorial-premium" onclick="openVideoTutorial('${g.tutorialLink}')">
-                    <i class="fas fa-play-circle"></i> Tutorial
-                </button>
-            </div>
-        </div>
-    `;
+    localStorage.setItem('llc_riwayat', JSON.stringify(riwayat.slice(0, 30)));
 }
 
-// Render semua game
-function renderAllGames() {
-    renderGame('grid-higgs', 'higgs');
-    renderGame('grid-royal', 'royal');
-    renderGame('grid-bos', 'bos');
-    renderGame('grid-berfist', 'berfist');
-}
-
-// Render payment methods
-function renderPaymentMethods() {
-    const container = document.getElementById('paymentMethods');
-    if (!container) return;
-    
-    container.innerHTML = paymentMethods.map(m => `
-        <div class="payment-chip" onclick="showPaymentDetail('${m.id}')">
-            <i class="fas ${m.icon}"></i><span>${m.name}</span>
-        </div>
-    `).join('');
-}
-
-// Event listeners untuk form
-function initFormListeners() {
-    const transaksiType = document.getElementById("transaksiType");
-    const jumlahKoin = document.getElementById("jumlahKoin");
-    const idGame = document.getElementById("idGame");
-    const bankTransfer = document.getElementById("bankTransfer");
-    const copyBtn = document.getElementById("copyBtn");
-    const sendBtn = document.getElementById("sendBtn");
-    
-    if (transaksiType) transaksiType.addEventListener("change", updatePreview);
-    if (jumlahKoin) jumlahKoin.addEventListener("input", updatePreview);
-    if (idGame) idGame.addEventListener("input", updatePreview);
-    if (bankTransfer) bankTransfer.addEventListener("change", updatePreview);
-    if (copyBtn) copyBtn.addEventListener("click", copyMessage);
-    if (sendBtn) sendBtn.addEventListener("click", sendMessage);
+// Update online count random
+function updateOnlineCount() {
+    const count = Math.floor(1200 + Math.random() * 500);
+    const onlineEl = document.getElementById("onlineCount");
+    if (onlineEl) onlineEl.innerHTML = count.toLocaleString();
 }

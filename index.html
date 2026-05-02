@@ -13,13 +13,19 @@
 <body>
 
 <div id="loadingScreen" class="loading-screen">
-    <div class="loader-single"><div class="loader-ring-single"></div><p>LLC STORE</p></div>
+    <div class="loader-single">
+        <div class="loader-ring-single"></div>
+        <p>LLC STORE</p>
+    </div>
 </div>
 <div id="toastMsg" class="toast-msg">✅ Pesan disalin!</div>
 
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar-premium">
-    <div class="sidebar-header"><i class="fas fa-crown"></i><h3>LLC STORE</h3><button class="close-sidebar" id="closeSidebarBtn">&times;</button></div>
+    <div class="sidebar-header">
+        <i class="fas fa-crown"></i><h3>LLC STORE</h3>
+        <button class="close-sidebar" id="closeSidebarBtn">&times;</button>
+    </div>
     <div class="sidebar-menu">
         <a href="index.html" class="sidebar-link active"><i class="fas fa-home"></i> Beranda</a>
         <a href="pages/riwayat.html" class="sidebar-link"><i class="fas fa-history"></i> Riwayat</a>
@@ -30,7 +36,9 @@
 </div>
 <div id="overlay" class="overlay-premium"></div>
 
-<div class="bg-master"><div class="nebula-1"></div><div class="nebula-2"></div><div class="nebula-3"></div></div>
+<div class="bg-master">
+    <div class="nebula-1"></div><div class="nebula-2"></div><div class="nebula-3"></div>
+</div>
 
 <div class="container">
     <div class="top-bar-premium">
@@ -39,57 +47,83 @@
         <button id="darkModeBtn" class="dark-toggle"><i class="fas fa-moon"></i></button>
     </div>
 
-    <!-- Badge -->
-    <div class="hero-premium"><div class="badge-collection">
-        <span class="badge-premium"><i class="fas fa-gamepad"></i> Mod Premium</span>
-        <span class="badge-premium"><i class="fas fa-shield-alt"></i> Anti Ban</span>
-        <span class="badge-premium"><i class="fas fa-clock"></i> 24/7</span>
-        <span class="badge-premium"><i class="fas fa-sync-alt"></i> Auto Update</span>
-    </div></div>
+    <div class="hero-premium">
+        <div class="badge-collection">
+            <span class="badge-premium"><i class="fas fa-gamepad"></i> Mod Premium</span>
+            <span class="badge-premium"><i class="fas fa-shield-alt"></i> Anti Ban</span>
+            <span class="badge-premium"><i class="fas fa-clock"></i> 24/7</span>
+            <span class="badge-premium"><i class="fas fa-sync-alt"></i> Auto Update</span>
+        </div>
+    </div>
 
-    <!-- Harga Paket -->
+    <!-- Harga Mod -->
     <div class="pricing-section">
         <div class="payment-header"><i class="fas fa-tag"></i><h3>💎 Harga MOD (Semua Game)</h3></div>
         <div class="pricing-grid" id="pricingGrid"></div>
     </div>
 
-    <!-- Online stats -->
-    <div class="stats-smart"><div class="online-card"><div class="online-icon"><i class="fas fa-users"></i></div><div class="online-number" id="onlineCount">1.482</div><div class="online-label">Online Sekarang</div></div></div>
+    <div class="stats-smart">
+        <div class="online-card">
+            <div class="online-icon"><i class="fas fa-users"></i></div>
+            <div class="online-number" id="onlineCount">1.482</div>
+            <div class="online-label">Online Sekarang</div>
+        </div>
+    </div>
 
-    <!-- Metode Pembayaran -->
-    <div class="payment-section"><div class="payment-header"><i class="fas fa-credit-card"></i><h3>Metode Pembayaran</h3></div><div class="payment-methods" id="paymentMethods"></div></div>
+    <div class="payment-section">
+        <div class="payment-header"><i class="fas fa-credit-card"></i><h3>Metode Pembayaran</h3></div>
+        <div class="payment-methods" id="paymentMethods"></div>
+    </div>
 
-    <!-- Quick menu -->
     <div class="quick-menu">
         <a href="pages/riwayat.html" class="quick-card"><i class="fas fa-history"></i><span>Riwayat</span></a>
         <a href="pages/panduan.html" class="quick-card"><i class="fas fa-book"></i><span>Panduan</span></a>
         <a href="pages/dashboard.html" class="quick-card"><i class="fas fa-user"></i><span>Dashboard</span></a>
     </div>
 
-    <!-- DAFTAR GAME (dengan gambar asli) -->
+    <!-- Daftar Game -->
     <div id="gameSections"></div>
 
-    <!-- APK Trial Gratis -->
-    <div class="free-apk-section"><h3><i class="fas fa-download"></i> APK Trial Gratis</h3><p>Coba fitur mod sebelum beli!</p><a href="#" id="freeApkLink" class="btn-free"><i class="fab fa-android"></i> Download APK Trial</a></div>
+    <!-- APK Trial -->
+    <div class="free-apk-section">
+        <h3><i class="fas fa-download"></i> APK Trial Gratis</h3>
+        <p>Coba fitur mod sebelum beli!</p>
+        <a href="#" id="freeApkLink" class="btn-free"><i class="fab fa-android"></i> Download APK Trial</a>
+    </div>
 
-    <!-- Grup Telegram (komunitas) -->
-    <div class="telegram-section"><h3><i class="fab fa-telegram"></i> Grup Komunitas</h3><p>Diskusi & update mod</p><a href="https://t.me/llc_store" target="_blank" class="telegram-btn"><i class="fab fa-telegram-plane"></i> @llc_store</a></div>
+    <!-- Telegram Komunitas -->
+    <div class="telegram-section">
+        <h3><i class="fab fa-telegram"></i> Grup Komunitas</h3>
+        <p>Diskusi & update mod</p>
+        <a href="https://t.me/llc_store" target="_blank" class="telegram-btn"><i class="fab fa-telegram-plane"></i> @llc_store</a>
+    </div>
 
-    <!-- CHAT FIREBASE (terhubung ke APK) -->
+    <!-- Chat Firebase -->
     <div class="chat-firebase-section">
-        <div class="chat-header"><i class="fas fa-comment-dots"></i><h3>Live Chat Support</h3><span class="chat-status" id="chatStatus">● Online</span></div>
-        <div class="chat-messages" id="chatMessages"><div class="chat-bubble admin">💬 Selamat datang! Tanyakan harga mod atau kendala anda.</div></div>
-        <div class="chat-input-area"><input type="text" id="chatInput" class="chat-input" placeholder="Tulis pesan..."><button id="sendChatBtn" class="chat-send"><i class="fas fa-paper-plane"></i></button></div>
+        <div class="chat-header">
+            <i class="fas fa-comment-dots"></i><h3>Live Chat Support</h3>
+            <span class="chat-status" id="chatStatus">● Online</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble admin">💬 Selamat datang! Tanyakan harga mod atau kendala anda.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Tulis pesan...">
+            <button id="sendChatBtn" class="chat-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
         <p class="chat-note">Pesan tersimpan di database & terhubung ke APK Anda</p>
     </div>
 
     <div class="simple-footer">© 2026 LLC STORE | MOD PUBG · FREE FIRE · MLBB & More</div>
 </div>
 
-<!-- MODAL ORDER (tanpa ID game & jumlah koin) -->
+<!-- Modal Order -->
 <div id="orderModal" class="modal-ultimate">
     <div class="modal-content-ultimate">
-        <div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Order MOD</h3><span class="modal-close" onclick="closeModal()">&times;</span></div>
+        <div class="modal-header-ultimate">
+            <h3><i class="fas fa-file-invoice"></i> Form Order MOD</h3>
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+        </div>
         <div class="form-group-ultimate"><label>Game</label><input type="text" id="gameNameDisplay" readonly></div>
         <div class="form-group-ultimate"><label>Paket Masa Aktif</label><select id="paketSelect"></select></div>
         <div class="form-group-ultimate"><label>Metode Pembayaran</label><select id="bankTransfer"></select></div>

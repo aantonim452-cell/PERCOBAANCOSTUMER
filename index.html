@@ -20,36 +20,41 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; padding: 12px 24px; border-radius: 50px; z-index: 1000; transition: 0.3s; border-left: 4px solid #f59e0b; opacity: 0; font-size: 13px; }
         .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
+        .container { max-width: 650px; margin: 0 auto; padding: 20px 16px 40px; }
         .hero { background: rgba(15,25,45,0.65); backdrop-filter: blur(12px); border-radius: 1.5rem; padding: 1rem; text-align: center; margin-bottom: 20px; border: 1px solid rgba(245,158,11,0.3); }
         .badge { background: rgba(51,65,85,0.5); padding: 6px 14px; border-radius: 50px; font-size: 12px; display: inline-block; margin: 4px; border-left: 3px solid #f59e0b; }
-        .price-section, .payment-section { background: rgba(15,25,45,0.6); border-radius: 1.5rem; padding: 16px; margin: 20px 0; border: 1px solid rgba(245,158,11,0.3); }
-        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
-        .price-card { background: #1e293b; border-radius: 1rem; padding: 12px; text-align: center; }
-        .price-duration { font-size: 14px; font-weight: 600; color: #fbbf24; }
-        .price-value { font-size: 16px; font-weight: 800; margin-top: 5px; }
-        .payment-methods { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-        .payment-chip { background: #0f172a; padding: 6px 12px; border-radius: 50px; font-size: 12px; border: 1px solid rgba(245,158,11,0.3); }
-        .game-grid { display: flex; flex-direction: column; gap: 15px; margin: 20px 0; }
-        .game-card { background: rgba(10,20,35,0.6); backdrop-filter: blur(12px); border-radius: 1.2rem; border: 1px solid rgba(245,158,11,0.25); overflow: hidden; transition: 0.2s; }
-        .game-card:active { transform: scale(0.98); }
-        .game-header { display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(30,41,59,0.9); border-bottom: 1px solid #f59e0b; }
-        .game-img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; border: 2px solid #f59e0b; }
-        .game-name { font-weight: 700; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .btn-order { width: 100%; padding: 12px; background: linear-gradient(95deg, #f59e0b, #d97706); border: none; color: white; font-weight: 700; border-radius: 50px; cursor: pointer; transition: 0.1s; }
+        .online-card { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 1.5rem; padding: 15px; text-align: center; margin-bottom: 20px; border: 1px solid rgba(245,158,11,0.25); }
+        .online-number { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #fff, #fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .payment-section { background: rgba(15,25,45,0.6); border-radius: 1.5rem; padding: 16px; margin: 20px 0; border: 1px solid rgba(245,158,11,0.3); }
+        .payment-methods { display: flex; flex-wrap: wrap; gap: 8px; }
+        .payment-chip { background: #0f172a; padding: 6px 12px; border-radius: 50px; font-size: 12px; border: 1px solid rgba(245,158,11,0.3); display: inline-flex; align-items: center; gap: 6px; }
+        .game-grid { display: flex; flex-direction: column; gap: 25px; margin: 20px 0; }
+        .game-card { background: rgba(10,20,35,0.6); backdrop-filter: blur(12px); border-radius: 1.5rem; border: 1px solid rgba(245,158,11,0.25); overflow: hidden; transition: 0.2s; }
+        .game-card:active { transform: scale(0.99); }
+        .game-header { display: flex; align-items: center; gap: 14px; padding: 14px; background: rgba(30,41,59,0.9); border-bottom: 1px solid #f59e0b; }
+        .game-img { width: 55px; height: 55px; border-radius: 14px; object-fit: cover; border: 2px solid #f59e0b; }
+        .game-name { font-weight: 800; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 18px; }
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .price-row { display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 13px; }
+        .price-platform { font-weight: 700; color: #fbbf24; min-width: 80px; }
+        .price-item { display: flex; gap: 15px; flex-wrap: wrap; }
+        .price-tag { background: #0f172a; padding: 4px 10px; border-radius: 20px; }
+        .btn-order { width: calc(100% - 28px); margin: 12px 14px 16px; padding: 12px; background: linear-gradient(95deg, #f59e0b, #d97706); border: none; color: white; font-weight: 700; border-radius: 50px; cursor: pointer; transition: 0.1s; }
         .btn-order:active { transform: scale(0.96); }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: linear-gradient(135deg, #1e293b, #0f172a); width: 90%; max-width: 450px; border-radius: 1.5rem; padding: 20px; border: 2px solid #f59e0b; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; }
-        .preview { background: #0f172a; padding: 10px; border-radius: 12px; font-size: 11px; border-left: 3px solid #f59e0b; margin: 15px 0; white-space: pre-wrap; font-family: monospace; }
+        .modal-content { background: linear-gradient(135deg, #1e293b, #0f172a); width: 90%; max-width: 460px; border-radius: 1.8rem; padding: 22px; border: 2px solid #f59e0b; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; font-size: 14px; }
+        .preview { background: #0f172a; padding: 12px; border-radius: 16px; font-size: 11px; border-left: 3px solid #f59e0b; margin: 18px 0; white-space: pre-wrap; font-family: monospace; }
         .btn-copy, .btn-send { width: 100%; padding: 12px; border-radius: 40px; font-weight: 700; margin: 8px 0; border: none; cursor: pointer; transition: 0.1s; }
         .btn-copy { background: #334155; color: white; }
         .btn-send { background: linear-gradient(95deg, #f59e0b, #fbbf24); color: #0f172a; }
         .btn-copy:active, .btn-send:active { transform: scale(0.96); }
-        .telegram-btn { display: inline-block; margin-top: 20px; background: #0088cc; padding: 10px 20px; border-radius: 50px; color: white; text-decoration: none; text-align: center; }
+        .telegram-btn { display: block; background: #0088cc; text-align: center; padding: 12px; border-radius: 50px; color: white; text-decoration: none; margin: 20px 0; font-weight: 600; }
         .footer { text-align: center; padding: 20px 0; font-size: 11px; color: #64748b; border-top: 1px solid rgba(245,158,11,0.2); margin-top: 20px; }
+        @media (max-width: 500px) { .price-item { flex-direction: column; gap: 5px; } }
     </style>
 </head>
 <body>
@@ -64,45 +69,50 @@
         <div class="badge-collection">
             <span class="badge"><i class="fas fa-gem"></i> Mod Premium</span>
             <span class="badge"><i class="fas fa-shield-alt"></i> Anti Ban</span>
-            <span class="badge"><i class="fas fa-clock"></i> 24/7</span>
+            <span class="badge"><i class="fas fa-clock"></i> 24/7 Support</span>
             <span class="badge"><i class="fas fa-sync-alt"></i> Auto Update</span>
         </div>
     </div>
 
-    <!-- Harga Paket -->
-    <div class="price-section">
-        <h3 style="color:#fbbf24; margin-bottom:10px;">💎 Harga MOD (Semua Game)</h3>
-        <div class="price-grid" id="priceGrid"></div>
+    <!-- ONLINE COUNT DINAMIS -->
+    <div class="online-card">
+        <div class="online-number" id="onlineCount">1,482</div>
+        <div class="online-label">Online Sekarang</div>
+        <div class="peak-time" id="peakTimeInfo" style="font-size: 11px; margin-top: 6px; color: #fbbf24;">⭐ Waktu normal, pelayanan cepat</div>
     </div>
 
-    <!-- Metode Bayar -->
+    <!-- METODE PEMBAYARAN -->
     <div class="payment-section">
         <h3 style="color:#fbbf24; margin-bottom:10px;"><i class="fas fa-credit-card"></i> Metode Pembayaran</h3>
         <div class="payment-methods" id="paymentMethods"></div>
     </div>
 
-    <!-- Daftar Game -->
-    <h3 style="color:#fbbf24; margin: 20px 0 10px;"><i class="fas fa-gamepad"></i> Pilih Game</h3>
-    <div class="game-grid" id="gameList"></div>
+    <!-- DAFTAR GAME -->
+    <div id="gameList" class="game-grid"></div>
 
-    <!-- Tombol Grup Telegram -->
-    <a href="https://t.me/llc_store" target="_blank" class="telegram-btn" style="display:block; text-align:center;">
-        <i class="fab fa-telegram"></i> Grup Telegram
-    </a>
+    <!-- GRUP TELEGRAM -->
+    <a href="https://t.me/llc_store" target="_blank" class="telegram-btn"><i class="fab fa-telegram"></i> Grup Telegram Komunitas</a>
 
     <div class="footer">© 2026 LLC STORE | MOD PREMIUM</div>
 </div>
 
-<!-- Modal Order (tanpa ID game & jumlah koin) -->
+<!-- MODAL ORDER (dengan pilihan platform Android/iPhone) -->
 <div id="orderModal" class="modal">
     <div class="modal-content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
             <h3><i class="fas fa-cart-shopping"></i> Form Order MOD</h3>
-            <span onclick="closeModal()" style="font-size:26px; cursor:pointer;">&times;</span>
+            <span onclick="closeModal()" style="font-size:28px; cursor:pointer;">&times;</span>
         </div>
         <div class="form-group">
             <label>Game</label>
             <input type="text" id="modalGame" readonly style="background:#334155;">
+        </div>
+        <div class="form-group">
+            <label>Platform</label>
+            <select id="modalPlatform">
+                <option value="Android">📱 Android</option>
+                <option value="iPhone">🍎 iPhone</option>
+            </select>
         </div>
         <div class="form-group">
             <label>Paket Masa Aktif</label>
@@ -112,7 +122,7 @@
             <label>Metode Pembayaran</label>
             <select id="modalPaymentMethod"></select>
         </div>
-        <div class="preview" id="modalPreview">⚡ Pilih game dan paket</div>
+        <div class="preview" id="modalPreview">⚡ Pilih game, platform, dan paket</div>
         <button class="btn-copy" id="copyOrderBtn"><i class="fas fa-copy"></i> Salin Pesanan</button>
         <button class="btn-send" id="sendOrderBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat APK</button>
         <div style="font-size:10px; text-align:center; margin-top:10px;">Pesanan akan disalin, buka chat APK dan paste</div>
@@ -120,107 +130,170 @@
 </div>
 
 <script>
-    // ========== DATA ==========
-    const games = [
-        { name: "PUBG Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1L1oeq0O83iQLxZPgGa0667Ppae27slZsdj_orTTxQ&s=10", desc: "ESP, Aimbot, No Recoil" },
-        { name: "Free Fire", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIanj8jNJDFOzMixdsXW9ES6L3k2h-hvvAHu1eIFtuw&s", desc: "Diamond Hack, Wallhack" },
-        { name: "Mobile Legends", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjGrXZQoyfip2gmYpnC8pMPGdQ4JkBiRd9EBbQ3saBuQ&s=10", desc: "Map Hack, Skin Unlocker" },
-        { name: "Call of Duty Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTESeKStEAEoqjIE_JGXqk5I-X1xytLcjK1DxG4Hdu91A&s=10", desc: "Radar, Aim Assist" },
-        { name: "Genshin Impact", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRguULEwY0seVomZv6CStI9KcP9rs1xxOdblgHSWFHn5g&s=10", desc: "God Mode, Damage Multi" },
-        { name: "Valorant", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTuataF1tUc9MNpLuz82cipmVwJnAKXLQpdRm6CScC4O1jPgxNX6zm2nv&s=10", desc: "TriggerBot, ESP" },
-        { name: "Farlight 84", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPqUbbk0QisICb8Arx6bPeIG9WuZfKfyIEYyfXy0BK7A&s=10", desc: "Aimbot, Fly Hack" }
-    ];
+    // ========== DATA HARGA PER GAME, PER PLATFORM, PER PAKET (MUDAH DIEDIT) ==========
+    // Format: [14, 30, 60] dalam Rupiah
+    const gamePrices = {
+        "PUBG Mobile": { Android: [50000, 70000, 100000], iPhone: [50000, 70000, 100000] },
+        "Free Fire": { Android: [45000, 65000, 95000], iPhone: [45000, 65000, 95000] },
+        "Mobile Legends": { Android: [55000, 75000, 110000], iPhone: [55000, 75000, 110000] },
+        "Call of Duty Mobile": { Android: [50000, 70000, 100000], iPhone: [50000, 70000, 100000] },
+        "Genshin Impact": { Android: [60000, 85000, 120000], iPhone: [65000, 90000, 130000] },
+        "Valorant": { Android: [40000, 60000, 90000], iPhone: [40000, 60000, 90000] },
+        "Farlight 84": { Android: [48000, 68000, 98000], iPhone: [48000, 68000, 98000] }
+    };
+    const paketLabels = ["14 Hari", "30 Hari", "60 Hari"];
 
-    const pricePlans = [
-        { label: "14 Hari", price: 50000, priceText: "Rp 50.000" },
-        { label: "30 Hari", price: 70000, priceText: "Rp 70.000" },
-        { label: "60 Hari", price: 100000, priceText: "Rp 100.000" }
-    ];
-
+    // Daftar metode pembayaran
     const paymentMethods = ["QRIS", "DANA", "OVO", "BRI", "BCA", "Mandiri", "CIMB Niaga"];
 
-    // ========== RENDER UI ==========
-    function renderPriceGrid() {
-        const container = document.getElementById("priceGrid");
-        if (!container) return;
-        container.innerHTML = pricePlans.map(p => `
-            <div class="price-card">
-                <div class="price-duration">📅 ${p.label}</div>
-                <div class="price-value">${p.priceText}</div>
-            </div>
-        `).join('');
-    }
+    // Data game: gambar, deskripsi, video YouTube (berbeda tiap game)
+    const games = [
+        { name: "PUBG Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1L1oeq0O83iQLxZPgGa0667Ppae27slZsdj_orTTxQ&s=10", desc: "ESP, Aimbot, No Recoil", video: "https://www.youtube.com/embed/_hKbJ0B2Dqc?si=abc1" },
+        { name: "Free Fire", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIanj8jNJDFOzMixdsXW9ES6L3k2h-hvvAHu1eIFtuw&s", desc: "Diamond Hack, Wallhack", video: "https://www.youtube.com/embed/reB_BvR4jHc?si=abc2" },
+        { name: "Mobile Legends", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjGrXZQoyfip2gmYpnC8pMPGdQ4JkBiRd9EBbQ3saBuQ&s=10", desc: "Map Hack, Skin Unlocker", video: "https://www.youtube.com/embed/8QZoUzi7hK4?si=abc3" },
+        { name: "Call of Duty Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTESeKStEAEoqjIE_JGXqk5I-X1xytLcjK1DxG4Hdu91A&s=10", desc: "Radar, Aim Assist", video: "https://www.youtube.com/embed/Ir3M1oJ9w70?si=abc4" },
+        { name: "Genshin Impact", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRguULEwY0seVomZv6CStI9KcP9rs1xxOdblgHSWFHn5g&s=10", desc: "God Mode, Damage Multi", video: "https://www.youtube.com/embed/G-LYkuef_xI?si=abc5" },
+        { name: "Valorant", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTuataF1tUc9MNpLuz82cipmVwJnAKXLQpdRm6CScC4O1jPgxNX6zm2nv&s=10", desc: "TriggerBot, ESP", video: "https://www.youtube.com/embed/E4hF3uZZoVo?si=abc6" },
+        { name: "Farlight 84", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPqUbbk0QisICb8Arx6bPeIG9WuZfKfyIEYyfXy0BK7A&s=10", desc: "Aimbot, Fly Hack", video: "https://www.youtube.com/embed/_FrrxuzuY40?si=abc7" }
+    ];
 
-    function renderPaymentMethods() {
-        const container = document.getElementById("paymentMethods");
-        if (!container) return;
-        container.innerHTML = paymentMethods.map(m => `
-            <div class="payment-chip"><i class="fas fa-check-circle"></i> ${m}</div>
-        `).join('');
-    }
-
+    // ========== RENDER GAME CARD ==========
     function renderGameList() {
         const container = document.getElementById("gameList");
         if (!container) return;
-        container.innerHTML = games.map(game => `
-            <div class="game-card">
-                <div class="game-header">
-                    <img class="game-img" src="${game.img}" onerror="this.src='https://via.placeholder.com/50'">
-                    <div>
-                        <div class="game-name">${game.name}</div>
-                        <div style="font-size:10px; color:#94a3b8;">${game.desc}</div>
+        container.innerHTML = games.map(game => {
+            const prices = gamePrices[game.name];
+            const androidPrices = prices.Android;
+            const iphonePrices = prices.iPhone;
+            return `
+                <div class="game-card">
+                    <div class="game-header">
+                        <img class="game-img" src="${game.img}" onerror="this.src='https://via.placeholder.com/55'">
+                        <div>
+                            <div class="game-name">${game.name}</div>
+                            <div style="font-size: 11px; color: #94a3b8;">${game.desc}</div>
+                        </div>
                     </div>
-                </div>
-                <div style="padding:12px;">
+                    <div class="video-container">
+                        <iframe src="${game.video}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="price-row">
+                        <span class="price-platform">🤖 Android</span>
+                        <div class="price-item">
+                            <span class="price-tag">14h: Rp ${androidPrices[0].toLocaleString()}</span>
+                            <span class="price-tag">30h: Rp ${androidPrices[1].toLocaleString()}</span>
+                            <span class="price-tag">60h: Rp ${androidPrices[2].toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <div class="price-row" style="border-bottom: none;">
+                        <span class="price-platform">🍏 iPhone</span>
+                        <div class="price-item">
+                            <span class="price-tag">14h: Rp ${iphonePrices[0].toLocaleString()}</span>
+                            <span class="price-tag">30h: Rp ${iphonePrices[1].toLocaleString()}</span>
+                            <span class="price-tag">60h: Rp ${iphonePrices[2].toLocaleString()}</span>
+                        </div>
+                    </div>
                     <button class="btn-order" onclick="openOrderModal('${game.name}')">
                         <i class="fas fa-cart-shopping"></i> Beli Mod
                     </button>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
-    // ========== MODAL ORDER (tanpa ID game & jumlah koin) ==========
-    let currentOrder = { game: "", paket: "", metode: "", paketObj: null };
+    // Render metode pembayaran
+    function renderPaymentMethods() {
+        const container = document.getElementById("paymentMethods");
+        if (!container) return;
+        container.innerHTML = paymentMethods.map(m => `<div class="payment-chip"><i class="fas fa-check-circle"></i> ${m}</div>`).join('');
+    }
+
+    // ========== MODAL ORDER ==========
+    let currentGameName = "";
 
     function openOrderModal(gameName) {
-        currentOrder.game = gameName;
+        currentGameName = gameName;
         document.getElementById("modalGame").value = gameName;
-        // Isi dropdown paket
-        const paketSelect = document.getElementById("modalPaket");
-        paketSelect.innerHTML = '<option value="">-- Pilih Paket --</option>' + 
-            pricePlans.map(p => `<option value='${JSON.stringify(p)}'>${p.label} - ${p.priceText}</option>`).join('');
-        // Isi dropdown metode
+        // Isi dropdown paket berdasarkan platform default (Android dulu)
+        updatePaketOptions();
+        // Isi metode pembayaran
         const metodeSelect = document.getElementById("modalPaymentMethod");
-        metodeSelect.innerHTML = '<option value="">-- Pilih Metode --</option>' + 
-            paymentMethods.map(m => `<option value="${m}">${m}</option>`).join('');
-        
+        metodeSelect.innerHTML = '<option value="">-- Pilih Metode --</option>' + paymentMethods.map(m => `<option value="${m}">${m}</option>`).join('');
         document.getElementById("orderModal").style.display = "flex";
         updatePreview();
     }
 
-    function closeModal() {
-        document.getElementById("orderModal").style.display = "none";
+    function updatePaketOptions() {
+        const platform = document.getElementById("modalPlatform").value;
+        const prices = gamePrices[currentGameName];
+        const priceArr = platform === "Android" ? prices.Android : prices.iPhone;
+        const paketSelect = document.getElementById("modalPaket");
+        paketSelect.innerHTML = paketLabels.map((label, idx) => {
+            const price = priceArr[idx];
+            return `<option value='${JSON.stringify({ label, price, days: [14,30,60][idx] })}'>${label} - Rp ${price.toLocaleString()}</option>`;
+        }).join('');
     }
 
     function updatePreview() {
         const game = document.getElementById("modalGame").value;
+        const platform = document.getElementById("modalPlatform").value;
         const paketVal = document.getElementById("modalPaket").value;
         const metode = document.getElementById("modalPaymentMethod").value;
-        let paketText = "", paketObj = null;
-        if (paketVal) {
-            paketObj = JSON.parse(paketVal);
-            paketText = `${paketObj.label} - ${paketObj.priceText}`;
+        if (!paketVal) {
+            document.getElementById("modalPreview").innerHTML = "⚠️ Pilih paket terlebih dahulu";
+            return;
         }
-        currentOrder.paket = paketText;
-        currentOrder.paketObj = paketObj;
-        currentOrder.metode = metode;
-        
-        const preview = `📋 ORDER MOD LLC STORE\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${game}\n📦 Paket: ${paketText || "Belum pilih"}\n💳 Metode: ${metode || "Belum pilih"}\n💰 Total: ${paketObj ? paketObj.priceText : "-"}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+        const paket = JSON.parse(paketVal);
+        const preview = `📋 ORDER MOD LLC STORE\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${game}\n📱 Platform: ${platform}\n📦 Paket: ${paket.label}\n💰 Harga: Rp ${paket.price.toLocaleString()}\n💳 Metode: ${metode || "Belum pilih"}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
         document.getElementById("modalPreview").innerHTML = preview.replace(/\n/g, '<br>');
     }
 
-    // ========== FUNGSI COPY & SEND (sama persis dengan mekanisme dari kode Anda) ==========
+    function getCurrentMessage() {
+        const game = document.getElementById("modalGame").value;
+        const platform = document.getElementById("modalPlatform").value;
+        const paketVal = document.getElementById("modalPaket").value;
+        const metode = document.getElementById("modalPaymentMethod").value;
+        if (!paketVal) return "⚠️ Pilih paket";
+        if (!metode) return "⚠️ Pilih metode pembayaran";
+        const paket = JSON.parse(paketVal);
+        return `🛒 ORDER MOD LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${game}\n📱 Platform: ${platform}\n📦 Paket: ${paket.label}\n💰 Harga: Rp ${paket.price.toLocaleString()}\n💳 Metode: ${metode}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+    }
+
+    function copyMessage() {
+        let msg = getCurrentMessage();
+        if (msg.startsWith("⚠️")) { showToast(msg); return; }
+        navigator.clipboard.writeText(msg);
+        showToast("✅ Pesanan disalin! Buka Chat APK dan paste.");
+    }
+
+    function sendMessage() {
+        let msg = getCurrentMessage();
+        if (msg.startsWith("⚠️")) { showToast(msg); return; }
+        // Simpan ke localStorage riwayat (opsional)
+        let riwayat = JSON.parse(localStorage.getItem('llc_riwayat_mod') || '[]');
+        riwayat.unshift({
+            tanggal: new Date().toLocaleString('id-ID'),
+            game: document.getElementById("modalGame").value,
+            platform: document.getElementById("modalPlatform").value,
+            paket: JSON.parse(document.getElementById("modalPaket").value).label,
+            metode: document.getElementById("modalPaymentMethod").value,
+            status: 'Diproses'
+        });
+        if (riwayat.length > 50) riwayat.pop();
+        localStorage.setItem('llc_riwayat_mod', JSON.stringify(riwayat));
+
+        // Kirim ke chat APK (deep link atau bridge Android)
+        if (window.Android && window.Android.sendMessageToAdmin) {
+            window.Android.sendMessageToAdmin(msg);
+            showToast("✅ Pesanan dikirim ke Admin!");
+            closeModal();
+        } else {
+            window.location.href = `llcstore://customer_chat?message=${encodeURIComponent(msg)}`;
+            showToast("✅ Membuka Chat APK...");
+            closeModal();
+        }
+    }
+
     function showToast(msg) {
         let t = document.getElementById('toastMsg');
         t.innerHTML = msg;
@@ -228,80 +301,97 @@
         setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    function getCurrentMessage() {
-        const game = document.getElementById("modalGame").value;
-        const paketVal = document.getElementById("modalPaket").value;
-        const metode = document.getElementById("modalPaymentMethod").value;
-        if (!paketVal) return "⚠️ Pilih paket terlebih dahulu!";
-        if (!metode) return "⚠️ Pilih metode pembayaran!";
-        const paketObj = JSON.parse(paketVal);
-        return `🛒 ORDER MOD LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${game}\n📦 Paket: ${paketObj.label} - ${paketObj.priceText}\n💳 Metode Bayar: ${metode}\n💰 Total: ${paketObj.priceText}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+    function closeModal() {
+        document.getElementById("orderModal").style.display = "none";
     }
 
-    function copyMessage() {
-        let msg = getCurrentMessage();
-        if (msg.startsWith("⚠️")) {
-            showToast(msg);
-            return;
-        }
-        navigator.clipboard.writeText(msg);
-        showToast("✅ Pesanan disalin! Buka Chat APK dan paste.");
+    // ========== ONLINE COUNT DINAMIS (960 - 20.068) dengan logika jam ==========
+    let currentOnline = 1482;
+    let targetOnline = 1482;
+
+    function getOnlineByHour() {
+        const hour = new Date().getHours();
+        // Jam sibuk: 19-22 => 10.000 - 20.068
+        if (hour >= 19 && hour <= 22) return Math.floor(Math.random() * (20068 - 10000 + 1) + 10000);
+        // Jam sepi: 23-04 => 960 - 3.000
+        if (hour >= 23 || hour <= 4) return Math.floor(Math.random() * (3000 - 960 + 1) + 960);
+        // Pagi: 05-10 => 3.000 - 8.000
+        if (hour >= 5 && hour <= 10) return Math.floor(Math.random() * (8000 - 3000 + 1) + 3000);
+        // Normal: 11-18 => 8.000 - 15.000
+        return Math.floor(Math.random() * (15000 - 8000 + 1) + 8000);
     }
 
-    function sendMessage() {
-        let msg = getCurrentMessage();
-        if (msg.startsWith("⚠️")) {
-            showToast(msg);
-            return;
-        }
-        // Simpan ke localStorage riwayat (opsional)
-        let riwayat = JSON.parse(localStorage.getItem('llc_riwayat_mod') || '[]');
-        riwayat.unshift({
-            tanggal: new Date().toLocaleString('id-ID'),
-            game: document.getElementById("modalGame").value,
-            paket: document.getElementById("modalPaket").options[document.getElementById("modalPaket").selectedIndex]?.text || "",
-            metode: document.getElementById("modalPaymentMethod").value,
-            status: 'Diproses'
+    function updateOnlineCount() {
+        // Setiap 15-30 detik, target berubah sedikit atau mengikuti jam
+        setInterval(() => {
+            // 30% chance ganti target berdasarkan jam
+            if (Math.random() < 0.4) {
+                targetOnline = getOnlineByHour();
+            } else {
+                // pergerakan halus +/- 50
+                let delta = Math.floor(Math.random() * 101) - 50;
+                targetOnline = Math.min(20068, Math.max(960, targetOnline + delta));
+            }
+            // Animasi smooth
+            const steps = 10;
+            const stepTime = 3000 / steps;
+            const start = currentOnline;
+            const end = targetOnline;
+            let step = 0;
+            const interval = setInterval(() => {
+                step++;
+                const newVal = Math.floor(start + (end - start) * (step / steps));
+                currentOnline = Math.min(20068, Math.max(960, newVal));
+                document.getElementById("onlineCount").innerHTML = currentOnline.toLocaleString();
+                if (step >= steps) {
+                    clearInterval(interval);
+                    currentOnline = end;
+                    document.getElementById("onlineCount").innerHTML = currentOnline.toLocaleString();
+                }
+            }, stepTime);
+        }, 30000);
+
+        // Update info jam sibuk
+        setInterval(() => {
+            const hour = new Date().getHours();
+            let txt = "";
+            if (hour >= 19 && hour <= 22) txt = "🔥 Jam sibuk! 🔥 Antrean padat, sabar ya";
+            else if (hour >= 23 || hour <= 4) txt = "🌙 Sepi, chat admin tetap aktif";
+            else if (hour >= 5 && hour <= 10) txt = "☀️ Pagi hari, mulai ramai";
+            else txt = "⭐ Waktu normal, pelayanan cepat";
+            document.getElementById("peakTimeInfo").innerHTML = `${txt} | ${hour.toString().padStart(2,'0')}:00`;
+        }, 60000);
+    }
+
+    // Inisialisasi
+    function init() {
+        renderGameList();
+        renderPaymentMethods();
+        // Event listeners untuk modal
+        document.getElementById("modalPlatform")?.addEventListener("change", () => {
+            updatePaketOptions();
+            updatePreview();
         });
-        if (riwayat.length > 50) riwayat.pop();
-        localStorage.setItem('llc_riwayat_mod', JSON.stringify(riwayat));
-
-        // ===== INI MEKANISME CHAT APK (sama persis dengan kode asli Anda) =====
-        if (window.Android && window.Android.sendMessageToAdmin) {
-            // Jika ada bridge Android (APK dengan WebView)
-            window.Android.sendMessageToAdmin(msg);
-            showToast("✅ Pesanan dikirim ke Admin!");
-            closeModal();
-        } else {
-            // Fallback: buka deep link ke chat APK (custom scheme)
-            window.location.href = `llcstore://customer_chat?message=${encodeURIComponent(msg)}`;
-            showToast("✅ Membuka Chat APK...");
-            closeModal();
-        }
+        document.getElementById("modalPaket")?.addEventListener("change", updatePreview);
+        document.getElementById("modalPaymentMethod")?.addEventListener("change", updatePreview);
+        document.getElementById("copyOrderBtn")?.addEventListener("click", copyMessage);
+        document.getElementById("sendOrderBtn")?.addEventListener("click", sendMessage);
+        window.onclick = e => { if (e.target === document.getElementById("orderModal")) closeModal(); };
+        // Mulai online count
+        currentOnline = getOnlineByHour();
+        targetOnline = currentOnline;
+        document.getElementById("onlineCount").innerHTML = currentOnline.toLocaleString();
+        updateOnlineCount();
+        // Hilangkan loading screen
+        setTimeout(() => {
+            const loader = document.getElementById("loadingScreen");
+            if (loader) {
+                loader.style.opacity = "0";
+                setTimeout(() => loader.style.display = "none", 500);
+            }
+        }, 1000);
     }
-
-    // Event listener untuk dropdown
-    document.getElementById("modalPaket")?.addEventListener("change", updatePreview);
-    document.getElementById("modalPaymentMethod")?.addEventListener("change", updatePreview);
-    document.getElementById("copyOrderBtn")?.addEventListener("click", copyMessage);
-    document.getElementById("sendOrderBtn")?.addEventListener("click", sendMessage);
-
-    // Tutup modal klik di luar
-    window.onclick = e => { if (e.target === document.getElementById("orderModal")) closeModal(); };
-
-    // Hilangkan loading screen
-    setTimeout(() => {
-        const loader = document.getElementById("loadingScreen");
-        if (loader) {
-            loader.style.opacity = "0";
-            setTimeout(() => loader.style.display = "none", 500);
-        }
-    }, 1000);
-
-    // Render semua
-    renderPriceGrid();
-    renderPaymentMethods();
-    renderGameList();
+    init();
 </script>
 </body>
 </html>

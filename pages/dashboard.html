@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>Dashboard</title><link rel="stylesheet" href="../css/style.css"></head>
-<body style="background:#0a0a1a; padding:20px">
-<div style="max-width:600px; margin:auto">
+<html lang="id">
+<head><meta charset="UTF-8"><title>Dashboard</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></head>
+<body style="background:#0a0a1a;padding:20px">
+<div style="max-width:600px;margin:auto">
     <button class="back-btn" onclick="location.href='../index.html'">← Kembali</button>
     <div class="info-card"><i class="fas fa-user-circle"></i><h3>ID Member</h3><p id="memberId"></p></div>
     <div class="info-card"><i class="fas fa-chart-line"></i><h3>Total Transaksi</h3><p id="totalTransaksi">0</p></div>
     <div class="info-card"><i class="fas fa-clock"></i><h3>Member Sejak</h3><p id="memberSince"></p></div>
     <button class="reset-btn" onclick="localStorage.removeItem('llc_member_id'); location.reload()">Reset ID Member</button>
 </div>
+<style>
+.back-btn{background:#f59e0b;border:none;padding:12px;border-radius:40px;width:100%;margin-bottom:20px;color:#0f172a;font-weight:bold;cursor:pointer}
+.info-card{background:#0f172a;border-radius:16px;padding:20px;text-align:center;margin-bottom:15px}
+.info-card i{font-size:40px;color:#f59e0b}
+.info-card h3{color:#fbbf24;margin:10px 0}
+.reset-btn{background:#ef4444;border:none;padding:10px;border-radius:40px;width:100%;color:white;cursor:pointer}
+</style>
 <script>
-    let riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
+    const riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
     document.getElementById('totalTransaksi').innerHTML = riwayat.length;
     let sejak = localStorage.getItem('llc_member_since');
     if(!sejak){ sejak = new Date().toLocaleDateString(); localStorage.setItem('llc_member_since',sejak); }
@@ -19,6 +26,5 @@
     if(!id){ id = 'MEMBER_'+Math.random().toString(36).substring(2,10).toUpperCase(); localStorage.setItem('llc_member_id',id); }
     document.getElementById('memberId').innerHTML = id;
 </script>
-<style>.back-btn{background:#f59e0b;border:none;padding:12px;border-radius:40px;width:100%;margin-bottom:20px}.info-card{background:#0f172a;border-radius:16px;padding:20px;text-align:center;margin-bottom:15px}.reset-btn{background:#ef4444;border:none;padding:10px;border-radius:40px;width:100%;color:white}</style>
 </body>
 </html>

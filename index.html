@@ -3,68 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>LLC STORE | PREMIUM MOD · PUBG · FREE FIRE · MLBB</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>LLC STORE | PREMIUM MOD GAME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
 <div id="loadingScreen" class="loading-screen">
-    <div class="loader-single">
-        <div class="loader-ring-single"></div>
-        <p>LLC STORE</p>
-    </div>
+    <div class="loader-single"><div class="loader-ring-single"></div><p>LLC STORE</p></div>
 </div>
-
 <div id="toastMsg" class="toast-msg">✅ Pesan disalin!</div>
 
-<div id="videoModal" class="modal-video">
-    <div class="modal-video-content">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-            <h3><i class="fas fa-play-circle"></i> Video Tutorial</h3>
-            <button class="close-video" onclick="closeVideoModal()">&times;</button>
-        </div>
-        <div class="video-container">
-            <iframe id="videoFrame" src="" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
-
-<div id="modalPayment" class="modal-payment">
-    <div class="modal-payment-content">
-        <h3 id="paymentTitle">QRIS</h3>
-        <div id="paymentDetail"></div>
-        <button class="close-payment" onclick="closePaymentModal()">Tutup</button>
-    </div>
-</div>
-
+<!-- Sidebar -->
 <div id="sidebar" class="sidebar-premium">
-    <div class="sidebar-header">
-        <i class="fas fa-crown" style="color:#fbbf24"></i>
-        <h3>LLC STORE</h3>
-        <button class="close-sidebar" id="closeSidebarBtn">&times;</button>
-    </div>
+    <div class="sidebar-header"><i class="fas fa-crown"></i><h3>LLC STORE</h3><button class="close-sidebar" id="closeSidebarBtn">&times;</button></div>
     <div class="sidebar-menu">
         <a href="index.html" class="sidebar-link active"><i class="fas fa-home"></i> Beranda</a>
         <a href="pages/riwayat.html" class="sidebar-link"><i class="fas fa-history"></i> Riwayat</a>
         <a href="pages/panduan.html" class="sidebar-link"><i class="fas fa-book"></i> Panduan</a>
         <a href="pages/dashboard.html" class="sidebar-link"><i class="fas fa-user"></i> Dashboard</a>
     </div>
-    <div class="sidebar-footer"><p>© 2026 LLC STORE</p></div>
+    <div class="sidebar-footer">© 2026 LLC STORE</div>
 </div>
-
 <div id="overlay" class="overlay-premium"></div>
 
-<div class="bg-master">
-    <div class="nebula-1"></div>
-    <div class="nebula-2"></div>
-    <div class="nebula-3"></div>
-</div>
+<div class="bg-master"><div class="nebula-1"></div><div class="nebula-2"></div><div class="nebula-3"></div></div>
 
 <div class="container">
     <div class="top-bar-premium">
@@ -72,136 +38,65 @@
         <div class="top-logo-premium">⚡ LLC STORE</div>
         <button id="darkModeBtn" class="dark-toggle"><i class="fas fa-moon"></i></button>
     </div>
-    
-    <div class="hero-premium">
-        <div class="badge-collection">
-            <span class="badge-premium"><i class="fas fa-gamepad"></i> Mod Premium</span>
-            <span class="badge-premium"><i class="fas fa-shield-alt"></i> Anti Ban</span>
-            <span class="badge-premium"><i class="fas fa-clock"></i> 24/7</span>
-            <span class="badge-premium"><i class="fas fa-sync-alt"></i> Auto Update</span>
-        </div>
-    </div>
 
-    <!-- Harga Mod -->
+    <!-- Badge -->
+    <div class="hero-premium"><div class="badge-collection">
+        <span class="badge-premium"><i class="fas fa-gamepad"></i> Mod Premium</span>
+        <span class="badge-premium"><i class="fas fa-shield-alt"></i> Anti Ban</span>
+        <span class="badge-premium"><i class="fas fa-clock"></i> 24/7</span>
+        <span class="badge-premium"><i class="fas fa-sync-alt"></i> Auto Update</span>
+    </div></div>
+
+    <!-- Harga Paket -->
     <div class="pricing-section">
-        <div class="payment-header">
-            <i class="fas fa-tag" style="color:#f59e0b;"></i>
-            <h3>💎 Harga Mod Semua Game</h3>
-        </div>
+        <div class="payment-header"><i class="fas fa-tag"></i><h3>💎 Harga MOD (Semua Game)</h3></div>
         <div class="pricing-grid" id="pricingGrid"></div>
     </div>
-    
-    <div class="stats-smart">
-        <div class="online-card">
-            <div class="online-icon"><i class="fas fa-users"></i></div>
-            <div class="online-number" id="onlineCount">1,482</div>
-            <div class="online-label">Online Sekarang</div>
-            <div class="peak-time" id="peakTimeInfo">⭐ Pelayanan cepat 24 jam</div>
-        </div>
-    </div>
-    
-    <div class="payment-section">
-        <div class="payment-header">
-            <i class="fas fa-credit-card" style="color:#f59e0b;"></i>
-            <h3>Metode Pembayaran</h3>
-        </div>
-        <div class="payment-methods" id="paymentMethods"></div>
-    </div>
-    
+
+    <!-- Online stats -->
+    <div class="stats-smart"><div class="online-card"><div class="online-icon"><i class="fas fa-users"></i></div><div class="online-number" id="onlineCount">1.482</div><div class="online-label">Online Sekarang</div></div></div>
+
+    <!-- Metode Pembayaran -->
+    <div class="payment-section"><div class="payment-header"><i class="fas fa-credit-card"></i><h3>Metode Pembayaran</h3></div><div class="payment-methods" id="paymentMethods"></div></div>
+
+    <!-- Quick menu -->
     <div class="quick-menu">
         <a href="pages/riwayat.html" class="quick-card"><i class="fas fa-history"></i><span>Riwayat</span></a>
         <a href="pages/panduan.html" class="quick-card"><i class="fas fa-book"></i><span>Panduan</span></a>
         <a href="pages/dashboard.html" class="quick-card"><i class="fas fa-user"></i><span>Dashboard</span></a>
     </div>
-    
-    <!-- Daftar Game dengan Gambar Asli -->
+
+    <!-- DAFTAR GAME (dengan gambar asli) -->
     <div id="gameSections"></div>
-    
-    <!-- APK Gratis -->
-    <div class="free-apk-section">
-        <h3><i class="fas fa-download"></i> APK Trial Gratis</h3>
-        <p style="margin: 8px 0; font-size: 13px;">Coba fitur mod sebelum beli! Download APK trial untuk semua game.</p>
-        <a href="#" id="freeApkLink" class="btn-free"><i class="fab fa-android"></i> Download APK Trial</a>
-    </div>
 
-    <!-- Grup Telegram -->
-    <div class="telegram-section">
-        <h3><i class="fab fa-telegram"></i> Grup Komunitas</h3>
-        <p style="margin: 8px 0; font-size: 13px;">Join grup Telegram untuk diskusi, update mod, dan bantuan</p>
-        <a href="https://t.me/llc_store" target="_blank" class="telegram-btn">
-            <i class="fab fa-telegram-plane"></i> @llc_store
-        </a>
-    </div>
+    <!-- APK Trial Gratis -->
+    <div class="free-apk-section"><h3><i class="fas fa-download"></i> APK Trial Gratis</h3><p>Coba fitur mod sebelum beli!</p><a href="#" id="freeApkLink" class="btn-free"><i class="fab fa-android"></i> Download APK Trial</a></div>
 
-    <!-- CHAT TERHUBUNG FIREBASE (LANGSUNG KE APK) -->
+    <!-- Grup Telegram (komunitas) -->
+    <div class="telegram-section"><h3><i class="fab fa-telegram"></i> Grup Komunitas</h3><p>Diskusi & update mod</p><a href="https://t.me/llc_store" target="_blank" class="telegram-btn"><i class="fab fa-telegram-plane"></i> @llc_store</a></div>
+
+    <!-- CHAT FIREBASE (terhubung ke APK) -->
     <div class="chat-firebase-section">
-        <div class="chat-header">
-            <i class="fas fa-comment-dots"></i>
-            <h3>Live Chat Support</h3>
-            <span class="chat-status" id="chatStatus">● Online</span>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-bubble admin">💬 Selamat datang di LLC Store! Silakan tanyakan harga mod atau kendala anda.</div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Tulis pesan...">
-            <button id="sendChatBtn" class="chat-send"><i class="fas fa-paper-plane"></i></button>
-        </div>
-        <p class="chat-note">Pesan akan tersimpan di database dan terhubung ke APK Anda</p>
+        <div class="chat-header"><i class="fas fa-comment-dots"></i><h3>Live Chat Support</h3><span class="chat-status" id="chatStatus">● Online</span></div>
+        <div class="chat-messages" id="chatMessages"><div class="chat-bubble admin">💬 Selamat datang! Tanyakan harga mod atau kendala anda.</div></div>
+        <div class="chat-input-area"><input type="text" id="chatInput" class="chat-input" placeholder="Tulis pesan..."><button id="sendChatBtn" class="chat-send"><i class="fas fa-paper-plane"></i></button></div>
+        <p class="chat-note">Pesan tersimpan di database & terhubung ke APK Anda</p>
     </div>
-    
-    <div class="info-premium-section">
-        <div style="text-align:center; margin-bottom:15px;">
-            <i class="fas fa-chart-line" style="font-size:1.8rem; color:#f59e0b;"></i>
-            <h3 style="color:#fbbf24; font-size:1.1rem;">LLC STORE PERFORMANCE</h3>
-        </div>
-        <div class="stats-container">
-            <div class="stat-card-pro"><i class="fas fa-bolt"></i><h4>⚡ Instant Process</h4></div>
-            <div class="stat-card-pro"><i class="fas fa-shield-alt"></i><h4>🔒 Anti Ban</h4></div>
-            <div class="stat-card-pro"><i class="fas fa-headset"></i><h4>🎧 24/7 Support</h4></div>
-            <div class="stat-card-pro"><i class="fas fa-sync-alt"></i><h4>🔄 Auto Update</h4></div>
-        </div>
-    </div>
-    
-    <div class="simple-footer">© 2026 LLC STORE | Mod PUBG · Free Fire · MLBB & More</div>
+
+    <div class="simple-footer">© 2026 LLC STORE | MOD PUBG · FREE FIRE · MLBB & More</div>
 </div>
 
+<!-- MODAL ORDER (tanpa ID game & jumlah koin) -->
 <div id="orderModal" class="modal-ultimate">
     <div class="modal-content-ultimate">
-        <div class="modal-header-ultimate">
-            <h3><i class="fas fa-file-invoice"></i> Form Pemesanan Mod</h3>
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-        </div>
-        <div class="form-group-ultimate">
-            <label>Game</label>
-            <input type="text" id="gameNameDisplay" readonly style="background:#334155;">
-        </div>
-        <div class="form-group-ultimate">
-            <label>Paket Masa Aktif</label>
-            <select id="paketSelect">
-                <option value="">-- Pilih Paket --</option>
-            </select>
-        </div>
-        <div class="form-group-ultimate">
-            <label>ID Game / Username</label>
-            <input type="text" id="idGame" placeholder="Masukkan ID Game Anda">
-        </div>
-        <div class="form-group-ultimate">
-            <label>Metode Pembayaran</label>
-            <select id="bankTransfer">
-                <option value="">Pilih Metode</option>
-                <option value="QRIS">QRIS</option>
-                <option value="DANA">DANA</option>
-                <option value="OVO">OVO</option>
-                <option value="BRI">BRI</option>
-                <option value="BCA">BCA</option>
-                <option value="Mandiri">Mandiri</option>
-            </select>
-        </div>
-        <div class="preview-msg" id="previewBox">⚡ Isi data di atas</div>
+        <div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Order MOD</h3><span class="modal-close" onclick="closeModal()">&times;</span></div>
+        <div class="form-group-ultimate"><label>Game</label><input type="text" id="gameNameDisplay" readonly></div>
+        <div class="form-group-ultimate"><label>Paket Masa Aktif</label><select id="paketSelect"></select></div>
+        <div class="form-group-ultimate"><label>Metode Pembayaran</label><select id="bankTransfer"></select></div>
+        <div class="preview-msg" id="previewBox">⚡ Pilih game dan paket</div>
         <button class="btn-copy-ultimate" id="copyBtn"><i class="fas fa-copy"></i> Salin Pesanan</button>
-        <button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat</button>
-        <div class="step-info"><i class="fas fa-info-circle"></i> Pesanan akan otomatis masuk ke chat support</div>
+        <button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat Support</button>
+        <div class="step-info"><i class="fas fa-info-circle"></i> Pesanan akan masuk ke chat support (terhubung APK)</div>
     </div>
 </div>
 

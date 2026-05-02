@@ -38,12 +38,13 @@
         .game-header { display: flex; align-items: center; gap: 14px; padding: 14px; background: rgba(30,41,59,0.9); border-bottom: 1px solid #f59e0b; }
         .game-img { width: 55px; height: 55px; border-radius: 14px; object-fit: cover; border: 2px solid #f59e0b; }
         .game-name { font-weight: 800; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 18px; }
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-radius: 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .price-row { display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(51,65,85,0.5); font-size: 13px; flex-wrap: wrap; gap: 8px; }
-        .price-platform { font-weight: 700; color: #fbbf24; min-width: 80px; }
-        .price-item { display: flex; gap: 12px; flex-wrap: wrap; }
-        .price-tag { background: #0f172a; padding: 4px 10px; border-radius: 20px; }
+        .price-row { display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(51,65,85,0.5); flex-wrap: wrap; gap: 8px; }
+        .price-row:last-child { border-bottom: none; }
+        .price-platform { font-weight: 700; color: #fbbf24; min-width: 100px; }
+        .price-item { display: flex; gap: 16px; flex-wrap: wrap; }
+        .price-tag { background: #0f172a; padding: 5px 12px; border-radius: 20px; font-size: 13px; }
         .btn-order { width: calc(100% - 28px); margin: 12px 14px 16px; padding: 12px; background: linear-gradient(95deg, #f59e0b, #d97706); border: none; color: white; font-weight: 700; border-radius: 50px; cursor: pointer; transition: 0.1s; }
         .btn-order:active { transform: scale(0.96); }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 2000; justify-content: center; align-items: center; }
@@ -56,9 +57,14 @@
         .btn-copy { background: #334155; color: white; }
         .btn-send { background: linear-gradient(95deg, #f59e0b, #fbbf24); color: #0f172a; }
         .btn-copy:active, .btn-send:active { transform: scale(0.96); }
-        .telegram-btn { display: block; background: #0088cc; text-align: center; padding: 12px; border-radius: 50px; color: white; text-decoration: none; margin: 20px 0; font-weight: 600; cursor: pointer; border: none; width: 100%; }
+        .telegram-btn { display: block; background: #0088cc; text-align: center; padding: 12px; border-radius: 50px; color: white; text-decoration: none; margin: 20px 0 10px; font-weight: 600; cursor: pointer; border: none; width: 100%; }
+        .collab-section { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 1.5rem; padding: 20px; margin: 20px 0; text-align: center; border: 1px solid rgba(245,158,11,0.4); }
+        .collab-title { color: #fbbf24; font-size: 18px; margin-bottom: 10px; font-weight: 700; }
+        .collab-desc { font-size: 12px; color: #94a3b8; margin-bottom: 15px; line-height: 1.5; }
+        .collab-email { display: inline-block; background: rgba(245,158,11,0.2); padding: 8px 20px; border-radius: 50px; color: #fbbf24; font-size: 13px; font-weight: 600; border: 1px solid rgba(245,158,11,0.4); margin-top: 5px; }
+        .collab-email i { margin-right: 8px; }
         .footer { text-align: center; padding: 20px 0; font-size: 11px; color: #64748b; border-top: 1px solid rgba(245,158,11,0.2); margin-top: 20px; }
-        @media (max-width: 550px) { .price-row { flex-direction: column; } .price-platform { margin-bottom: 5px; } }
+        @media (max-width: 550px) { .price-row { flex-direction: column; gap: 10px; } .price-platform { margin-bottom: 0; } .price-item { margin-left: 0; } }
     </style>
 </head>
 <body>
@@ -87,20 +93,35 @@
     <!-- ONLINE COUNT DINAMIS -->
     <div class="online-card">
         <div class="online-number" id="onlineCount">1,482</div>
-        <div class="online-label" id="onlineLabel">Online Now</div>
-        <div class="peak-time" id="peakTimeInfo" style="font-size: 11px; margin-top: 6px; color: #fbbf24;">⭐ Normal hours, fast service</div>
+        <div class="online-label" id="onlineLabel">Online Sekarang</div>
+        <div class="peak-time" id="peakTimeInfo" style="font-size: 11px; margin-top: 6px; color: #fbbf24;">⭐ Waktu normal, pelayanan cepat</div>
     </div>
 
     <!-- METODE PEMBAYARAN -->
     <div class="payment-section">
-        <h3 style="color:#fbbf24; margin-bottom:10px;" id="paymentTitle"><i class="fas fa-credit-card"></i> Payment Methods</h3>
+        <h3 style="color:#fbbf24; margin-bottom:10px;" id="paymentTitle"><i class="fas fa-credit-card"></i> Metode Pembayaran</h3>
         <div class="payment-methods" id="paymentMethods"></div>
     </div>
 
     <!-- DAFTAR GAME -->
     <div id="gameList" class="game-grid"></div>
 
-    <!-- GRUP TELEGRAM (perbaikan link) -->
+    <!-- SECTION KERJA SAMA -->
+    <div class="collab-section" id="collabSection">
+        <div class="collab-title" id="collabTitle">🤝 MENERIMA KERJA SAMA</div>
+        <div class="collab-desc" id="collabDesc">
+            Kami membuka peluang kerja sama untuk YouTuber, Streamer, Content Creator,<br>
+            serta para pembuat APK MOD yang ingin berkolaborasi.
+        </div>
+        <div class="collab-desc" id="collabDesc2">
+            💰 Komisi menarik • Akses eksklusif • Support penuh
+        </div>
+        <a href="mailto:llcstore92@gmail.com" class="collab-email" id="collabEmail">
+            <i class="fas fa-envelope"></i> llcstore92@gmail.com
+        </a>
+    </div>
+
+    <!-- GRUP TELEGRAM -->
     <button onclick="openTelegram()" class="telegram-btn" id="telegramBtn"><i class="fab fa-telegram"></i> <span id="telegramText">Join Telegram Group</span></button>
 
     <div class="footer" id="footerText">© 2026 LLC STORE | MOD PREMIUM</div>
@@ -110,7 +131,7 @@
 <div id="orderModal" class="modal">
     <div class="modal-content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h3 id="modalTitle"><i class="fas fa-cart-shopping"></i> Order MOD</h3>
+            <h3 id="modalTitle"><i class="fas fa-cart-shopping"></i> Form Order MOD</h3>
             <span onclick="closeModal()" style="font-size:28px; cursor:pointer;">&times;</span>
         </div>
         <div class="form-group">
@@ -125,25 +146,25 @@
             </select>
         </div>
         <div class="form-group">
-            <label id="labelPaket">Package</label>
+            <label id="labelPaket">Paket</label>
             <select id="modalPaket"></select>
         </div>
         <div class="form-group">
-            <label id="labelPayment">Payment Method</label>
+            <label id="labelPayment">Metode Pembayaran</label>
             <select id="modalPaymentMethod"></select>
         </div>
-        <div class="preview" id="modalPreview">⚡ Select game, platform & package</div>
-        <button class="btn-copy" id="copyOrderBtn"><i class="fas fa-copy"></i> <span id="copyText">Copy Order</span></button>
-        <button class="btn-send" id="sendOrderBtn"><i class="fas fa-paper-plane"></i> <span id="sendText">Send to Chat APK</span></button>
-        <div style="font-size:10px; text-align:center; margin-top:10px;" id="infoText">Order will be copied, open chat APK and paste</div>
+        <div class="preview" id="modalPreview">⚡ Pilih game, platform & paket</div>
+        <button class="btn-copy" id="copyOrderBtn"><i class="fas fa-copy"></i> <span id="copyText">Salin Pesanan</span></button>
+        <button class="btn-send" id="sendOrderBtn"><i class="fas fa-paper-plane"></i> <span id="sendText">Kirim ke Chat APK</span></button>
+        <div style="font-size:10px; text-align:center; margin-top:10px;" id="infoText">Pesanan akan disalin, buka chat APK dan paste</div>
     </div>
 </div>
 
 <script>
     // ========== DATA HARGA DALAM USD (Android base price) ==========
-    // iPhone akan otomatis +50% dari Android
+    // iPhone otomatis +50% dari Android (tanpa label (+50%) di tampilan)
     const gamePricesUSD = {
-        "PUBG Mobile": { Android: [5, 7, 10], iPhone: null }, // iPhone = x1.5
+        "PUBG Mobile": { Android: [5, 7, 10], iPhone: null },
         "Free Fire": { Android: [4.5, 6.5, 9.5], iPhone: null },
         "Mobile Legends": { Android: [5.5, 7.5, 11], iPhone: null },
         "Call of Duty Mobile": { Android: [5, 7, 10], iPhone: null },
@@ -154,26 +175,30 @@
     // Generate iPhone prices (x1.5)
     for (let game in gamePricesUSD) {
         const androidPrices = gamePricesUSD[game].Android;
-        gamePricesUSD[game].iPhone = androidPrices.map(p => Math.round(p * 1.5 * 10) / 10); // 50% lebih mahal
+        gamePricesUSD[game].iPhone = androidPrices.map(p => Math.round(p * 1.5 * 10) / 10);
     }
 
-    const paketLabels = { id: ["14 Hari", "30 Hari", "60 Hari"], en: ["14 Days", "30 Days", "60 Days"] };
+    // Label paket sesuai bahasa
+    const paketLabels = { 
+        id: ["14 Hari", "30 Hari", "60 Hari"], 
+        en: ["14 Days", "30 Days", "60 Days"] 
+    };
     
-    // Metode pembayaran baru
+    // Metode pembayaran
     const paymentMethodsList = ["PayPal", "QRIS", "Crypto"];
     
     // Data game: gambar, deskripsi, video YouTube (berbeda tiap game)
     const games = [
-        { name: "PUBG Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1L1oeq0O83iQLxZPgGa0667Ppae27slZsdj_orTTxQ&s=10", desc: { id: "ESP, Aimbot, No Recoil", en: "ESP, Aimbot, No Recoil" }, video: "https://www.youtube.com/embed/_hKbJ0B2Dqc?si=abc1" },
-        { name: "Free Fire", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIanj8jNJDFOzMixdsXW9ES6L3k2h-hvvAHu1eIFtuw&s", desc: { id: "Diamond Hack, Wallhack", en: "Diamond Hack, Wallhack" }, video: "https://www.youtube.com/embed/reB_BvR4jHc?si=abc2" },
-        { name: "Mobile Legends", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjGrXZQoyfip2gmYpnC8pMPGdQ4JkBiRd9EBbQ3saBuQ&s=10", desc: { id: "Map Hack, Skin Unlocker", en: "Map Hack, Skin Unlocker" }, video: "https://www.youtube.com/embed/8QZoUzi7hK4?si=abc3" },
-        { name: "Call of Duty Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTESeKStEAEoqjIE_JGXqk5I-X1xytLcjK1DxG4Hdu91A&s=10", desc: { id: "Radar, Aim Assist", en: "Radar, Aim Assist" }, video: "https://www.youtube.com/embed/Ir3M1oJ9w70?si=abc4" },
-        { name: "Genshin Impact", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRguULEwY0seVomZv6CStI9KcP9rs1xxOdblgHSWFHn5g&s=10", desc: { id: "God Mode, Damage Multi", en: "God Mode, Damage Multi" }, video: "https://www.youtube.com/embed/G-LYkuef_xI?si=abc5" },
-        { name: "Valorant", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTuataF1tUc9MNpLuz82cipmVwJnAKXLQpdRm6CScC4O1jPgxNX6zm2nv&s=10", desc: { id: "TriggerBot, ESP", en: "TriggerBot, ESP" }, video: "https://www.youtube.com/embed/E4hF3uZZoVo?si=abc6" },
-        { name: "Farlight 84", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPqUbbk0QisICb8Arx6bPeIG9WuZfKfyIEYyfXy0BK7A&s=10", desc: { id: "Aimbot, Fly Hack", en: "Aimbot, Fly Hack" }, video: "https://www.youtube.com/embed/_FrrxuzuY40?si=abc7" }
+        { name: "PUBG Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1L1oeq0O83iQLxZPgGa0667Ppae27slZsdj_orTTxQ&s=10", desc: { id: "ESP, Aimbot, No Recoil", en: "ESP, Aimbot, No Recoil" }, video: "https://www.youtube.com/embed/_hKbJ0B2Dqc" },
+        { name: "Free Fire", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIanj8jNJDFOzMixdsXW9ES6L3k2h-hvvAHu1eIFtuw&s", desc: { id: "Diamond Hack, Wallhack", en: "Diamond Hack, Wallhack" }, video: "https://www.youtube.com/embed/reB_BvR4jHc" },
+        { name: "Mobile Legends", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjGrXZQoyfip2gmYpnC8pMPGdQ4JkBiRd9EBbQ3saBuQ&s=10", desc: { id: "Map Hack, Skin Unlocker", en: "Map Hack, Skin Unlocker" }, video: "https://www.youtube.com/embed/8QZoUzi7hK4" },
+        { name: "Call of Duty Mobile", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTESeKStEAEoqjIE_JGXqk5I-X1xytLcjK1DxG4Hdu91A&s=10", desc: { id: "Radar, Aim Assist", en: "Radar, Aim Assist" }, video: "https://www.youtube.com/embed/Ir3M1oJ9w70" },
+        { name: "Genshin Impact", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRguULEwY0seVomZv6CStI9KcP9rs1xxOdblgHSWFHn5g&s=10", desc: { id: "God Mode, Damage Multi", en: "God Mode, Damage Multi" }, video: "https://www.youtube.com/embed/G-LYkuef_xI" },
+        { name: "Valorant", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTuataF1tUc9MNpLuz82cipmVwJnAKXLQpdRm6CScC4O1jPgxNX6zm2nv&s=10", desc: { id: "TriggerBot, ESP", en: "TriggerBot, ESP" }, video: "https://www.youtube.com/embed/E4hF3uZZoVo" },
+        { name: "Farlight 84", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPqUbbk0QisICb8Arx6bPeIG9WuZfKfyIEYyfXy0BK7A&s=10", desc: { id: "Aimbot, Fly Hack", en: "Aimbot, Fly Hack" }, video: "https://www.youtube.com/embed/_FrrxuzuY40" }
     ];
 
-    let currentLang = "id"; // id atau en
+    let currentLang = "id";
 
     // ========== TEKS MULTI BAHASA ==========
     const texts = {
@@ -184,12 +209,12 @@
             peakQuiet: "🌙 Sepi, chat admin tetap aktif",
             peakMorning: "☀️ Pagi hari, mulai ramai",
             paymentTitle: "Metode Pembayaran",
-            telegramText: "Grup Telegram Komunitas",
+            telegramText: "Join Telegram Group",
             footerText: "© 2026 LLC STORE | MOD PREMIUM",
             modalTitle: "Form Order MOD",
             labelGame: "Game",
             labelPlatform: "Platform",
-            labelPaket: "Paket Masa Aktif",
+            labelPaket: "Paket",
             labelPayment: "Metode Pembayaran",
             copyText: "Salin Pesanan",
             sendText: "Kirim ke Chat APK",
@@ -200,7 +225,10 @@
             hero2: "Anti Ban",
             hero3: "24/7 Support",
             hero4: "Auto Update",
-            previewTemplate: (g, p, plat, paket, price, method) => `📋 ORDER MOD LLC STORE\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📱 Platform: ${plat}\n📦 Paket: ${paket}\n💰 Harga: $${price}\n💳 Metode: ${method}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`
+            collabTitle: "🤝 MENERIMA KERJA SAMA",
+            collabDesc: "Kami membuka peluang kerja sama untuk YouTuber, Streamer, Content Creator, serta para pembuat APK MOD yang ingin berkolaborasi.",
+            collabDesc2: "💰 Komisi menarik • Akses eksklusif • Support penuh",
+            previewTemplate: (g, plat, paket, price, method) => `📋 ORDER MOD LLC STORE\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📱 Platform: ${plat}\n📦 Paket: ${paket}\n💰 Harga: $${price}\n💳 Metode: ${method}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`
         },
         en: {
             onlineLabel: "Online Now",
@@ -225,7 +253,10 @@
             hero2: "Anti Ban",
             hero3: "24/7 Support",
             hero4: "Auto Update",
-            previewTemplate: (g, p, plat, paket, price, method) => `📋 ORDER MOD LLC STORE\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📱 Platform: ${plat}\n📦 Package: ${paket}\n💰 Price: $${price}\n💳 Method: ${method}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Please process, thank you.`
+            collabTitle: "🤝 COLLABORATION WELCOME",
+            collabDesc: "We are open for collaboration with YouTubers, Streamers, Content Creators, and MOD APK developers who want to work together.",
+            collabDesc2: "💰 Attractive commission • Exclusive access • Full support",
+            previewTemplate: (g, plat, paket, price, method) => `📋 ORDER MOD LLC STORE\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${g}\n📱 Platform: ${plat}\n📦 Package: ${paket}\n💰 Price: $${price}\n💳 Method: ${method}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Please process, thank you.`
         }
     };
 
@@ -243,16 +274,17 @@
         document.getElementById("copyText").innerHTML = t.copyText;
         document.getElementById("sendText").innerHTML = t.sendText;
         document.getElementById("infoText").innerHTML = t.infoText;
+        document.getElementById("collabTitle").innerHTML = t.collabTitle;
+        document.getElementById("collabDesc").innerHTML = t.collabDesc;
+        document.getElementById("collabDesc2").innerHTML = t.collabDesc2;
         document.querySelectorAll(".hero-text-1").forEach(el => el.innerHTML = t.hero1);
         document.querySelectorAll(".hero-text-2").forEach(el => el.innerHTML = t.hero2);
         document.querySelectorAll(".hero-text-3").forEach(el => el.innerHTML = t.hero3);
         document.querySelectorAll(".hero-text-4").forEach(el => el.innerHTML = t.hero4);
         
-        // Update language buttons style
         document.getElementById("langID").classList.toggle("active", currentLang === "id");
         document.getElementById("langEN").classList.toggle("active", currentLang === "en");
         
-        // Re-render game list and payment methods
         renderGameList();
         renderPaymentMethods();
         updatePeakTimeText();
@@ -267,7 +299,6 @@
         const container = document.getElementById("paymentMethods");
         if (!container) return;
         container.innerHTML = paymentMethodsList.map(m => `<div class="payment-chip"><i class="fas fa-check-circle"></i> ${m}</div>`).join('');
-        // Update modal payment options
         const metodeSelect = document.getElementById("modalPaymentMethod");
         if (metodeSelect) {
             metodeSelect.innerHTML = '<option value="">-- ' + (currentLang === "id" ? "Pilih Metode" : "Select Method") + ' --</option>' + 
@@ -278,7 +309,6 @@
     function renderGameList() {
         const container = document.getElementById("gameList");
         if (!container) return;
-        const t = texts[currentLang];
         container.innerHTML = games.map(game => {
             const prices = gamePricesUSD[game.name];
             const androidPrices = prices.Android;
@@ -298,17 +328,17 @@
                     <div class="price-row">
                         <span class="price-platform">🤖 Android</span>
                         <div class="price-item">
-                            <span class="price-tag">14d: $${androidPrices[0]}</span>
-                            <span class="price-tag">30d: $${androidPrices[1]}</span>
-                            <span class="price-tag">60d: $${androidPrices[2]}</span>
+                            <span class="price-tag">${paketLabels[currentLang][0]}: $${androidPrices[0]}</span>
+                            <span class="price-tag">${paketLabels[currentLang][1]}: $${androidPrices[1]}</span>
+                            <span class="price-tag">${paketLabels[currentLang][2]}: $${androidPrices[2]}</span>
                         </div>
                     </div>
-                    <div class="price-row" style="border-bottom: none;">
-                        <span class="price-platform">🍏 iPhone (+50%)</span>
+                    <div class="price-row">
+                        <span class="price-platform">🍎 iPhone</span>
                         <div class="price-item">
-                            <span class="price-tag">14d: $${iphonePrices[0]}</span>
-                            <span class="price-tag">30d: $${iphonePrices[1]}</span>
-                            <span class="price-tag">60d: $${iphonePrices[2]}</span>
+                            <span class="price-tag">${paketLabels[currentLang][0]}: $${iphonePrices[0]}</span>
+                            <span class="price-tag">${paketLabels[currentLang][1]}: $${iphonePrices[1]}</span>
+                            <span class="price-tag">${paketLabels[currentLang][2]}: $${iphonePrices[2]}</span>
                         </div>
                     </div>
                     <button class="btn-order" onclick="openOrderModal('${game.name}')">
@@ -353,7 +383,7 @@
             return;
         }
         const paket = JSON.parse(paketVal);
-        const preview = t.previewTemplate(game, platform, platform, paket.label, paket.price, metode || (currentLang === "id" ? "Belum pilih" : "Not selected"));
+        const preview = t.previewTemplate(game, platform, paket.label, paket.price, metode || (currentLang === "id" ? "Belum pilih" : "Not selected"));
         document.getElementById("modalPreview").innerHTML = preview.replace(/\n/g, '<br>');
     }
 
@@ -366,7 +396,7 @@
         if (!paketVal) return currentLang === "id" ? "⚠️ Pilih paket" : "⚠️ Select package";
         if (!metode) return currentLang === "id" ? "⚠️ Pilih metode pembayaran" : "⚠️ Select payment method";
         const paket = JSON.parse(paketVal);
-        return t.previewTemplate(game, platform, platform, paket.label, paket.price, metode);
+        return t.previewTemplate(game, platform, paket.label, paket.price, metode);
     }
 
     function copyMessage() {
@@ -379,7 +409,6 @@
     function sendMessage() {
         let msg = getCurrentMessage();
         if (msg.startsWith("⚠️")) { showToast(msg); return; }
-        // Simpan ke localStorage riwayat
         let riwayat = JSON.parse(localStorage.getItem('llc_riwayat_mod') || '[]');
         riwayat.unshift({
             tanggal: new Date().toLocaleString(),
@@ -414,7 +443,7 @@
         document.getElementById("orderModal").style.display = "none";
     }
 
-    // ========== TELEGRAM FIX ==========
+    // ========== TELEGRAM ==========
     function openTelegram() {
         window.open("https://t.me/llc_store", "_blank");
     }

@@ -6,10 +6,714 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>LLC STORE | PREMIUM TOPUP HIGGS · ROYAL · BOS · BERFIST</title>
+    <title>LLC STORE | PREMIUM MOD GAMES · PUBG · FREE FIRE · MLBB</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #eef2ff;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .loader-single {
+            text-align: center;
+        }
+
+        .loader-ring-single {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #1e293b;
+            border-top-color: #f59e0b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 999;
+            opacity: 0;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .toast-msg.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Modal Video */
+        .modal-video {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-video-content {
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .close-video {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Modal Payment */
+        .modal-payment {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-payment-content {
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 25px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .close-payment {
+            background: #f59e0b;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar-premium {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: #0f172ad9;
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            transition: 0.3s;
+            border-right: 1px solid #2d3a5e;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-premium.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid #2d3a5e;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-header h3 {
+            color: #fbbf24;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.2s;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background: #f59e0b20;
+            color: #fbbf24;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 11px;
+            color: #64748b;
+            border-top: 1px solid #2d3a5e;
+        }
+
+        .overlay-premium {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .overlay-premium.show {
+            display: block;
+        }
+
+        /* Background Effects */
+        .bg-master {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .nebula-1, .nebula-2, .nebula-3 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .nebula-1 {
+            width: 500px;
+            height: 500px;
+            background: #8b5cf6;
+            top: -200px;
+            left: -200px;
+        }
+
+        .nebula-2 {
+            width: 600px;
+            height: 600px;
+            background: #3b82f6;
+            bottom: -200px;
+            right: -200px;
+        }
+
+        .nebula-3 {
+            width: 400px;
+            height: 400px;
+            background: #f59e0b;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 16px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Top Bar */
+        .top-bar-premium {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+        }
+
+        .menu-btn, .dark-toggle {
+            background: rgba(15,25,45,0.8);
+            border: 1px solid #2d3a5e;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            color: #fbbf24;
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .top-logo-premium {
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Hero */
+        .hero-premium {
+            margin: 20px 0;
+        }
+
+        .badge-collection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .badge-premium {
+            background: rgba(15,25,45,0.8);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #2d3a5e;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .badge-premium:hover {
+            border-color: #f59e0b;
+            color: #fbbf24;
+        }
+
+        /* Stats */
+        .stats-smart {
+            margin: 20px 0;
+        }
+
+        .online-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #2d3a5e;
+        }
+
+        .online-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+
+        .peak-time {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: rgba(15,25,45,0.6);
+            border-radius: 20px;
+            padding: 16px;
+            margin: 20px 0;
+            border: 1px solid #2d3a5e;
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .payment-method-item {
+            background: #0f172a;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Quick Menu */
+        .quick-menu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .quick-card {
+            background: rgba(15,25,45,0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 8px;
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #cbd5e1;
+            border: 1px solid #2d3a5e;
+            transition: 0.2s;
+        }
+
+        .quick-card i {
+            font-size: 24px;
+            color: #f59e0b;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .quick-card span {
+            font-size: 11px;
+        }
+
+        /* Section Title */
+        .section-title-premium {
+            margin: 25px 0 15px;
+        }
+
+        .section-title-premium h2 {
+            font-size: 18px;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Game Grid */
+        .game-grid-premium {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .game-card-premium {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #2d3a5e;
+            transition: 0.2s;
+        }
+
+        .game-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .game-icon {
+            width: 50px;
+            height: 50px;
+            background: #f59e0b20;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #f59e0b;
+        }
+
+        .game-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .game-price {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .btn-order {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* Modal Order */
+        .modal-ultimate {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content-ultimate {
+            background: #0f172a;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-header-ultimate {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2d3a5e;
+        }
+
+        .modal-close {
+            font-size: 28px;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        .form-group-ultimate {
+            margin-bottom: 16px;
+        }
+
+        .form-group-ultimate label {
+            display: block;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        .form-group-ultimate input, .form-group-ultimate select {
+            width: 100%;
+            padding: 12px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .preview-msg {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 15px 0;
+            color: #cbd5e1;
+        }
+
+        .btn-copy-ultimate, .btn-send-ultimate {
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-copy-ultimate {
+            background: #2d3a5e;
+            color: white;
+        }
+
+        .btn-send-ultimate {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .step-info {
+            font-size: 10px;
+            color: #64748b;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* Pricing Cards */
+        .pricing-section {
+            background: rgba(15,25,45,0.6);
+            border-radius: 20px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .pricing-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .pricing-duration {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .pricing-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+
+        .free-apk-section {
+            background: rgba(15,25,45,0.6);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid #2d3a5e;
+        }
+
+        .btn-free {
+            background: none;
+            border: 1px solid #10b981;
+            padding: 12px 24px;
+            border-radius: 40px;
+            color: #10b981;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .telegram-section {
+            background: rgba(15,25,45,0.6);
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .telegram-btn {
+            background: #0088cc;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .info-premium-section {
+            margin: 30px 0;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .stat-card-pro {
+            background: rgba(15,25,45,0.6);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .simple-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: #64748b;
+        }
+    </style>
 </head>
 <body>
 
@@ -50,9 +754,9 @@
     </div>
     <div class="sidebar-menu">
         <a href="#" class="sidebar-link active" id="sidebarHome"><i class="fas fa-home"></i> Beranda</a>
-        <a href="pages/riwayat.html" class="sidebar-link" id="sidebarRiwayat"><i class="fas fa-history"></i> Riwayat</a>
-        <a href="pages/panduan.html" class="sidebar-link" id="sidebarPanduan"><i class="fas fa-book"></i> Panduan</a>
-        <a href="pages/dashboard.html" class="sidebar-link" id="sidebarDashboard"><i class="fas fa-user"></i> Dashboard</a>
+        <a href="#" class="sidebar-link" id="sidebarRiwayat"><i class="fas fa-history"></i> Riwayat</a>
+        <a href="#" class="sidebar-link" id="sidebarPanduan"><i class="fas fa-book"></i> Panduan</a>
+        <a href="#" class="sidebar-link" id="sidebarDashboard"><i class="fas fa-user"></i> Dashboard</a>
     </div>
     <div class="sidebar-footer"><p>© 2026 LLC STORE</p></div>
 </div>
@@ -64,24 +768,32 @@
     <div class="nebula-2"></div>
     <div class="nebula-3"></div>
 </div>
-<div class="particle-zone" id="particleZone"></div>
 
 <div class="container">
     <div class="top-bar-premium">
         <button id="menuBtn" class="menu-btn"><i class="fas fa-bars"></i></button>
-        <div class="top-logo-premium"></div>
+        <div class="top-logo-premium">⚡ LLC STORE</div>
         <button id="darkModeBtn" class="dark-toggle"><i class="fas fa-moon"></i></button>
     </div>
     
     <div class="hero-premium">
         <div class="badge-collection">
-            <span class="badge-premium" data-game="higgs"><i class="fas fa-gamepad"></i> Higgs Domino</span>
-            <span class="badge-premium" data-game="royal"><i class="fas fa-chess-queen"></i> Royal Domino</span>
-            <span class="badge-premium" data-game="bos"><i class="fas fa-crown"></i> Bos Domino</span>
-            <span class="badge-premium" data-game="berfist"><i class="fas fa-fist-raised"></i> Berfist</span>
+            <span class="badge-premium" data-game="pubg"><i class="fas fa-gun"></i> PUBG Mobile</span>
+            <span class="badge-premium" data-game="freefire"><i class="fas fa-fire"></i> Free Fire</span>
+            <span class="badge-premium" data-game="mlbb"><i class="fas fa-skull"></i> Mobile Legends</span>
+            <span class="badge-premium" data-game="codm"><i class="fas fa-crosshairs"></i> Call of Duty</span>
+            <span class="badge-premium" data-game="genshin"><i class="fas fa-dragon"></i> Genshin Impact</span>
             <span class="badge-premium"><i class="fas fa-clock"></i> 24/7</span>
-            <span class="badge-premium"><i class="fas fa-exchange-alt"></i> Beli & Jual</span>
         </div>
+    </div>
+
+    <!-- Harga Mod -->
+    <div class="pricing-section">
+        <div class="payment-header">
+            <i class="fas fa-tag" style="color:#f59e0b;"></i>
+            <h3>💎 Harga Mod Semua Game</h3>
+        </div>
+        <div class="pricing-grid" id="pricingGrid"></div>
     </div>
     
     <div class="stats-smart">
@@ -89,7 +801,7 @@
             <div class="online-icon"><i class="fas fa-users"></i></div>
             <div class="online-number" id="onlineCount">1,482</div>
             <div class="online-label">Online Sekarang</div>
-            <div class="peak-time" id="peakTimeInfo">⭐ Waktu normal, pelayanan cepat</div>
+            <div class="peak-time" id="peakTimeInfo">⭐ Pelayanan cepat 24 jam</div>
         </div>
     </div>
     
@@ -102,22 +814,29 @@
     </div>
     
     <div class="quick-menu">
-        <a href="pages/riwayat.html" class="quick-card" id="riwayatBtn"><i class="fas fa-history"></i><span>Riwayat Transaksi</span></a>
-        <a href="pages/panduan.html" class="quick-card" id="panduanBtn"><i class="fas fa-book"></i><span>Panduan Topup</span></a>
-        <a href="pages/dashboard.html" class="quick-card" id="dashboardBtn"><i class="fas fa-user"></i><span>Dashboard Saya</span></a>
+        <a href="#" class="quick-card" id="riwayatBtn"><i class="fas fa-history"></i><span>Riwayat Transaksi</span></a>
+        <a href="#" class="quick-card" id="panduanBtn"><i class="fas fa-book"></i><span>Panduan Topup</span></a>
+        <a href="#" class="quick-card" id="dashboardBtn"><i class="fas fa-user"></i><span>Dashboard Saya</span></a>
     </div>
     
-    <div class="section-title-premium" id="section-higgs"><h2><i class="fas fa-gamepad"></i> HIGGS DOMINO</h2></div>
-    <div class="game-grid-premium" id="grid-higgs"></div>
+    <!-- Daftar Game -->
+    <div id="gameSections"></div>
     
-    <div class="section-title-premium" id="section-royal"><h2><i class="fas fa-chess-queen"></i> ROYAL DOMINO</h2></div>
-    <div class="game-grid-premium" id="grid-royal"></div>
-    
-    <div class="section-title-premium" id="section-bos"><h2><i class="fas fa-crown"></i> BOS DOMINO</h2></div>
-    <div class="game-grid-premium" id="grid-bos"></div>
-    
-    <div class="section-title-premium" id="section-berfist"><h2><i class="fas fa-fist-raised"></i> BERFIST</h2></div>
-    <div class="game-grid-premium" id="grid-berfist"></div>
+    <!-- APK Gratis -->
+    <div class="free-apk-section">
+        <h3><i class="fas fa-download"></i> APK Trial Gratis</h3>
+        <p style="margin: 8px 0; font-size: 13px;">Coba fitur mod sebelum beli! Download APK trial untuk semua game.</p>
+        <a href="#" id="freeApkLink" class="btn-free"><i class="fab fa-android"></i> Download APK Trial</a>
+    </div>
+
+    <!-- Telegram Komunitas -->
+    <div class="telegram-section">
+        <h3><i class="fab fa-telegram"></i> Grup Komunitas</h3>
+        <p style="margin: 8px 0; font-size: 13px;">Join grup Telegram untuk diskusi, update mod, dan bantuan</p>
+        <a href="https://t.me/llc_store" target="_blank" class="telegram-btn" id="telegramLink">
+            <i class="fab fa-telegram-plane"></i> @llc_store
+        </a>
+    </div>
     
     <div class="info-premium-section">
         <div style="text-align:center; margin-bottom:15px;">
@@ -126,19 +845,19 @@
         </div>
         <div class="stats-container">
             <div class="stat-card-pro"><i class="fas fa-bolt"></i><h4>⚡ Instant Process</h4></div>
-            <div class="stat-card-pro"><i class="fas fa-shield-alt"></i><h4>🔒 Full Guarantee</h4></div>
+            <div class="stat-card-pro"><i class="fas fa-shield-alt"></i><h4>🔒 Anti Ban</h4></div>
             <div class="stat-card-pro"><i class="fas fa-headset"></i><h4>🎧 24/7 Support</h4></div>
-            <div class="stat-card-pro"><i class="fas fa-exchange-alt"></i><h4>🔄 Beli & Jual</h4></div>
+            <div class="stat-card-pro"><i class="fas fa-sync-alt"></i><h4>🔄 Auto Update</h4></div>
         </div>
     </div>
     
-    <div class="simple-footer">© 2026 LLC STORE</div>
+    <div class="simple-footer">© 2026 LLC STORE | Mod PUBG · Free Fire · MLBB &更多</div>
 </div>
 
 <div id="orderModal" class="modal-ultimate">
     <div class="modal-content-ultimate">
         <div class="modal-header-ultimate">
-            <h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3>
+            <h3><i class="fas fa-file-invoice"></i> Form Pemesanan Mod</h3>
             <span class="modal-close" onclick="closeModal()">&times;</span>
         </div>
         <div class="form-group-ultimate">
@@ -146,20 +865,14 @@
             <input type="text" id="gameNameDisplay" readonly style="background:#334155;">
         </div>
         <div class="form-group-ultimate">
-            <label>Jenis Transaksi</label>
-            <select id="transaksiType">
-                <option value="">-- Pilih --</option>
-                <option value="BELI">🔰 BELI - Saya beli dari LLC</option>
-                <option value="JUAL">💰 JUAL - Saya jual ke LLC</option>
+            <label>Paket Masa Aktif</label>
+            <select id="paketSelect">
+                <option value="">-- Pilih Paket --</option>
             </select>
         </div>
         <div class="form-group-ultimate">
-            <label>Jumlah Koin/Chip</label>
-            <input type="text" id="jumlahKoin" placeholder="Contoh: 100M, 500M, 1B">
-        </div>
-        <div class="form-group-ultimate">
-            <label>ID Game</label>
-            <input type="text" id="idGame" placeholder="ID Game Anda">
+            <label>ID Game / Username</label>
+            <input type="text" id="idGame" placeholder="Masukkan ID Game Anda">
         </div>
         <div class="form-group-ultimate">
             <label>Metode Pembayaran</label>
@@ -169,22 +882,301 @@
                 <option value="DANA">DANA</option>
                 <option value="OVO">OVO</option>
                 <option value="BRI">BRI</option>
-                <option value="BNI">BNI</option>
                 <option value="BCA">BCA</option>
                 <option value="Mandiri">Mandiri</option>
-                <option value="CIMB Niaga">CIMB Niaga</option>
             </select>
         </div>
         <div class="preview-msg" id="previewBox">⚡ Isi data di atas</div>
         <button class="btn-copy-ultimate" id="copyBtn"><i class="fas fa-copy"></i> Salin Pesanan</button>
-        <button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Chat APK</button>
-        <div class="step-info"><i class="fas fa-info-circle"></i> Salin Pesanan → Buka Chat APK → Paste → Kirim ke Admin</div>
+        <button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim ke Telegram</button>
+        <div class="step-info"><i class="fas fa-info-circle"></i> Salin pesanan → Kirim ke @llc_store di Telegram</div>
     </div>
 </div>
 
-<script src="js/config.js"></script>
-<script src="js/functions.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/api.js"></script>
+<script>
+    // ==================== FIREBASE KONFIGURASI ====================
+    const firebaseConfig = {
+        apiKey: "AIzaSyDummyKeyExampleReplaceWithYourOwn12345",
+        authDomain: "llc-store-mod.firebaseapp.com",
+        projectId: "llc-store-mod",
+        storageBucket: "llc-store-mod.appspot.com",
+        messagingSenderId: "123456789012",
+        appId: "1:123456789012:web:abcdef1234567890"
+    };
+    
+    let db = null;
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        db = firebase.firestore();
+        console.log("✅ Firebase connected!");
+    } catch(e) {
+        console.warn("Firebase error, menggunakan mode offline");
+    }
+    
+    // ==================== DATA HARGA ====================
+    const PRICE_PLANS = [
+        { days: 14, price: 50000, label: "14 Hari", priceFormatted: "Rp 50.000" },
+        { days: 30, price: 70000, label: "30 Hari", priceFormatted: "Rp 70.000" },
+        { days: 60, price: 100000, label: "60 Hari", priceFormatted: "Rp 100.000" }
+    ];
+    
+    // Daftar Game
+    const GAMES = [
+        { id: "pubg", name: "PUBG Mobile", icon: "fas fa-gun", color: "#ef4444", desc: "ESP, Aimbot, No Recoil" },
+        { id: "freefire", name: "Free Fire", icon: "fas fa-fire", color: "#f97316", desc: "Diamond Hack, Wallhack" },
+        { id: "mlbb", name: "Mobile Legends", icon: "fas fa-skull", color: "#3b82f6", desc: "Map Hack, Skin Unlocker" },
+        { id: "codm", name: "Call of Duty", icon: "fas fa-crosshairs", color: "#22c55e", desc: "Radar, Aim Assist" },
+        { id: "genshin", name: "Genshin Impact", icon: "fas fa-dragon", color: "#8b5cf6", desc: "God Mode, Damage Multi" }
+    ];
+    
+    // Metode Pembayaran
+    const PAYMENT_METHODS = ["QRIS", "DANA", "OVO", "BRI", "BCA", "Mandiri"];
+    
+    // ==================== RENDER FUNCTIONS ====================
+    function renderPricing() {
+        const container = document.getElementById("pricingGrid");
+        if (!container) return;
+        container.innerHTML = PRICE_PLANS.map(plan => `
+            <div class="pricing-card">
+                <div class="pricing-duration">📅 ${plan.label}</div>
+                <div class="pricing-price">${plan.priceFormatted}</div>
+                <div style="font-size:10px; color:#94a3b8;">semua game</div>
+            </div>
+        `).join('');
+    }
+    
+    function renderPaymentMethods() {
+        const container = document.getElementById("paymentMethods");
+        if (!container) return;
+        container.innerHTML = PAYMENT_METHODS.map(method => `
+            <div class="payment-method-item">
+                <i class="fas fa-check-circle" style="color:#10b981; font-size:10px;"></i>
+                ${method}
+            </div>
+        `).join('');
+    }
+    
+    function renderGameSections() {
+        const container = document.getElementById("gameSections");
+        if (!container) return;
+        
+        container.innerHTML = GAMES.map(game => `
+            <div class="section-title-premium">
+                <h2><i class="${game.icon}" style="color:${game.color}"></i> ${game.name}</h2>
+            </div>
+            <div class="game-grid-premium">
+                <div class="game-card-premium" data-game="${game.id}" data-game-name="${game.name}">
+                    <div class="game-info">
+                        <div class="game-icon"><i class="${game.icon}"></i></div>
+                        <div>
+                            <div class="game-name">${game.name}</div>
+                            <div class="game-price">${game.desc}</div>
+                        </div>
+                    </div>
+                    <button class="btn-order" onclick="openOrderModal('${game.id}', '${game.name}')">
+                        <i class="fas fa-shopping-cart"></i> Beli Mod
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function renderPaketOptions() {
+        const select = document.getElementById("paketSelect");
+        if (!select) return;
+        select.innerHTML = '<option value="">-- Pilih Paket --</option>' + 
+            PRICE_PLANS.map(plan => `<option value='${JSON.stringify(plan)}'>${plan.label} - ${plan.priceFormatted}</option>`).join('');
+    }
+    
+    // ==================== MODAL ORDER ====================
+    let currentGame = {};
+    
+    window.openOrderModal = function(gameId, gameName) {
+        currentGame = { id: gameId, name: gameName };
+        document.getElementById("gameNameDisplay").value = gameName;
+        renderPaketOptions();
+        document.getElementById("orderModal").style.display = "flex";
+        updatePreview();
+    }
+    
+    function closeModal() {
+        document.getElementById("orderModal").style.display = "none";
+    }
+    
+    function updatePreview() {
+        const gameName = document.getElementById("gameNameDisplay").value;
+        const paketSelect = document.getElementById("paketSelect");
+        const idGame = document.getElementById("idGame").value;
+        const metode = document.getElementById("bankTransfer").value;
+        
+        let paketText = "";
+        if (paketSelect.value) {
+            const plan = JSON.parse(paketSelect.value);
+            paketText = `${plan.label} - ${plan.priceFormatted}`;
+        }
+        
+        const preview = `📋 ORDER MOD LLC STORE\n\n🎮 Game: ${gameName}\n📦 Paket: ${paketText || "Belum pilih"}\n🆔 ID: ${idGame || "Belum diisi"}\n💳 Metode: ${metode || "Belum pilih"}\n\n⏰ Mohon konfirmasi ke admin\n📱 @llc_store`;
+        document.getElementById("previewBox").innerHTML = preview.replace(/\n/g, '<br>');
+    }
+    
+    document.getElementById("paketSelect")?.addEventListener("change", updatePreview);
+    document.getElementById("idGame")?.addEventListener("input", updatePreview);
+    document.getElementById("bankTransfer")?.addEventListener("change", updatePreview);
+    
+    document.getElementById("copyBtn")?.addEventListener("click", function() {
+        const previewText = document.getElementById("previewBox").innerText;
+        navigator.clipboard.writeText(previewText).then(() => {
+            showToast("✅ Pesanan disalin!");
+        });
+    });
+    
+    document.getElementById("sendBtn")?.addEventListener("click", function() {
+        const previewText = document.getElementById("previewBox").innerText;
+        navigator.clipboard.writeText(previewText).then(() => {
+            window.open("https://t.me/llc_store", "_blank");
+            showToast("Pesanan disalin! Buka Telegram dan paste");
+        });
+    });
+    
+    // ==================== TELEGRAM & FUNGSI LAIN ====================
+    function showToast(msg) {
+        const toast = document.getElementById("toastMsg");
+        toast.textContent = msg;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+    
+    // Sidebar
+    function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("open");
+        document.getElementById("overlay").classList.toggle("show");
+    }
+    
+    document.getElementById("menuBtn")?.addEventListener("click", toggleSidebar);
+    document.getElementById("closeSidebarBtn")?.addEventListener("click", toggleSidebar);
+    document.getElementById("overlay")?.addEventListener("click", toggleSidebar);
+    
+    // Navigasi Sidebar
+    document.getElementById("sidebarHome")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleSidebar();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    
+    document.getElementById("sidebarRiwayat")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleSidebar();
+        showToast("Buka menu Riwayat");
+    });
+    
+    document.getElementById("sidebarPanduan")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleSidebar();
+        showToast("Panduan: Pilih game → isi form → copy pesan → kirim ke Telegram");
+    });
+    
+    document.getElementById("sidebarDashboard")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleSidebar();
+        showToast("Dashboard: Member ID tersimpan di lokal");
+    });
+    
+    document.getElementById("riwayatBtn")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("Riwayat transaksi akan muncul setelah order");
+    });
+    
+    document.getElementById("panduanBtn")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("Panduan: Order via form lalu kirim ke Telegram");
+    });
+    
+    document.getElementById("dashboardBtn")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("Dashboard: Gunakan menu sidebar");
+    });
+    
+    // Dark mode sederhana
+    let isDark = true;
+    document.getElementById("darkModeBtn")?.addEventListener("click", () => {
+        isDark = !isDark;
+        document.body.style.background = isDark ? "#0a0a1a" : "#f0f2f5";
+        showToast(isDark ? "Mode Gelap" : "Mode Terang");
+    });
+    
+    // Random online count
+    function updateOnlineCount() {
+        const count = Math.floor(1200 + Math.random() * 500);
+        document.getElementById("onlineCount").innerHTML = count.toLocaleString();
+    }
+    setInterval(updateOnlineCount, 30000);
+    updateOnlineCount();
+    
+    // Close modal dengan klik luar
+    window.onclick = function(event) {
+        const modal = document.getElementById("orderModal");
+        if (event.target === modal) closeModal();
+        const videoModal = document.getElementById("videoModal");
+        if (event.target === videoModal) closeVideoModal();
+        const paymentModal = document.getElementById("modalPayment");
+        if (event.target === paymentModal) closePaymentModal();
+    }
+    
+    window.closeVideoModal = function() {
+        document.getElementById("videoModal").style.display = "none";
+        document.getElementById("videoFrame").src = "";
+    }
+    
+    window.closePaymentModal = function() {
+        document.getElementById("modalPayment").style.display = "none";
+    }
+    
+    // Simpan transaksi ke localStorage (riwayat)
+    function saveTransaction(game, paket, idGame, metode) {
+        const riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
+        riwayat.unshift({
+            id: Date.now(),
+            game: game,
+            paket: paket,
+            idGame: idGame,
+            metode: metode,
+            tanggal: new Date().toLocaleString('id-ID'),
+            status: 'Diproses'
+        });
+        localStorage.setItem('llc_riwayat', JSON.stringify(riwayat.slice(0, 20)));
+    }
+    
+    // Firebase save chat
+    if (db) {
+        db.collection("messages").add({
+            type: "system",
+            message: "Store online",
+            timestamp: new Date()
+        }).catch(e => console.log);
+    }
+    
+    // Loading screen hilang
+    setTimeout(() => {
+        const loader = document.getElementById("loadingScreen");
+        if (loader) loader.style.opacity = "0";
+        setTimeout(() => {
+            if (loader) loader.style.display = "none";
+        }, 500);
+    }, 1000);
+    
+    // Inisialisasi
+    renderPricing();
+    renderPaymentMethods();
+    renderGameSections();
+    
+    // Link APK Trial
+    document.getElementById("freeApkLink")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("Link APK Trial: hubungi @llc_store di Telegram");
+        window.open("https://t.me/llc_store", "_blank");
+    });
+</script>
 </body>
 </html>

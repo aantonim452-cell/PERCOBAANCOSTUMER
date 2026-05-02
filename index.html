@@ -18,7 +18,7 @@
         .loading-screen { position: fixed; inset: 0; background: #0a0a1a; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s; }
         .loader-ring { width: 60px; height: 60px; border: 3px solid rgba(245,158,11,0.2); border-top: 3px solid #f59e0b; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; padding: 12px 24px; border-radius: 50px; z-index: 1000; transition: 0.3s; border-left: 4px solid #f59e0b; opacity: 0; font-size: 13px; }
+        .toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; padding: 12px 24px; border-radius: 50px; z-index: 9999; transition: 0.3s; border-left: 4px solid #f59e0b; opacity: 0; font-size: 13px; }
         .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         .container { max-width: 650px; margin: 0 auto; padding: 20px 16px 40px; }
         
@@ -41,22 +41,13 @@
         .game-img { width: 55px; height: 55px; border-radius: 14px; object-fit: cover; border: 2px solid #f59e0b; }
         .game-name { font-weight: 800; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 18px; }
         
-        /* Video Container - bisa play manual tapi tidak bisa redirect ke YouTube */
+        /* Video Container - BISA PLAY TANPA REDIRECT */
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; overflow: hidden; cursor: pointer; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; pointer-events: auto; }
-        /* Overlay untuk mencegah klik membuka YouTube, tapi tetap bisa play/pause */
-        .video-overlay { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            z-index: 10; 
-            background: transparent; 
-            cursor: pointer;
-            opacity: 0;
-        }
-        /* Overlay hanya aktif untuk mencegah redirect, tidak mengganggu kontrol */
+        .video-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(0,0,0,0.7); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 15; pointer-events: none; transition: 0.2s; opacity: 0; }
+        .video-play-btn i { font-size: 28px; color: white; margin-left: 4px; }
+        .video-container:hover .video-play-btn { opacity: 1; }
+        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; background: transparent; cursor: pointer; }
         
         .price-wrapper { padding: 12px 16px; }
         .price-platform-card { background: rgba(0,0,0,0.3); border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
@@ -85,7 +76,6 @@
         .collab-section { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 1.5rem; padding: 20px; margin: 20px 0; text-align: center; border: 1px solid rgba(245,158,11,0.4); }
         .collab-title { color: #fbbf24; font-size: 18px; margin-bottom: 10px; font-weight: 700; }
         .collab-desc { font-size: 12px; color: #94a3b8; margin-bottom: 15px; line-height: 1.5; }
-        /* Email tidak bisa diklik - hanya teks biasa */
         .collab-email-text { display: inline-block; background: rgba(245,158,11,0.2); padding: 8px 20px; border-radius: 50px; color: #fbbf24; font-size: 13px; font-weight: 600; border: 1px solid rgba(245,158,11,0.4); cursor: default; user-select: text; }
         .collab-email-text i { margin-right: 8px; }
         .footer { text-align: center; padding: 20px 0; font-size: 11px; color: #64748b; border-top: 1px solid rgba(245,158,11,0.2); margin-top: 20px; }
@@ -131,7 +121,6 @@
         <div class="collab-title" id="collabTitle">🤝 MENERIMA KERJA SAMA</div>
         <div class="collab-desc" id="collabDesc">Kami membuka peluang kerja sama untuk YouTuber, Streamer, Content Creator, serta para pembuat APK MOD yang ingin berkolaborasi.</div>
         <div class="collab-desc" id="collabDesc2">💰 Komisi menarik • Akses eksklusif • Support penuh</div>
-        <!-- Email TIDAK BISA DI KLIK - hanya teks -->
         <div class="collab-email-text" id="collabEmail"><i class="fas fa-envelope"></i> llcstore92@gmail.com</div>
     </div>
 
@@ -186,6 +175,7 @@
     ];
 
     let currentLang = "id";
+    let videoPlayingState = {};
 
     // TEKS MULTI BAHASA
     const texts = {
@@ -252,18 +242,27 @@
         }
     }
 
-    // Video URL - tanpa branding YouTube
-    function getVideoUrl(videoId) {
-        return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0`;
+    // Fungsi play/pause video tanpa redirect
+    function toggleVideo(iframe, videoId, index) {
+        const currentSrc = iframe.src;
+        if (videoPlayingState[index]) {
+            // Pause video
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0`;
+            videoPlayingState[index] = false;
+        } else {
+            // Play video
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0`;
+            videoPlayingState[index] = true;
+        }
     }
 
-    // Render game list
     function renderGameList() {
         const container = document.getElementById("gameList");
         if (!container) return;
         
         container.innerHTML = games.map((game, index) => {
             const prices = gamePricesUSD[game.name];
+            videoPlayingState[index] = false;
             return `
                 <div class="game-card">
                     <div class="game-header">
@@ -271,8 +270,9 @@
                         <div><div class="game-name">${game.name}</div><div style="font-size: 11px; color: #94a3b8;">${game.desc[currentLang]}</div></div>
                     </div>
                     <div class="video-container" id="video-container-${index}">
-                        <iframe id="video-${index}" data-video-id="${game.videoId}" src="${getVideoUrl(game.videoId)}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                        <div class="video-overlay" onclick="preventVideoRedirect(event, ${index})"></div>
+                        <iframe id="video-${index}" data-video-id="${game.videoId}" data-playing="false" src="https://www.youtube-nocookie.com/embed/${game.videoId}?autoplay=0&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="video-play-btn" id="play-btn-${index}"><i class="fas fa-play"></i></div>
+                        <div class="video-overlay" onclick="handleVideoClick(event, ${index}, '${game.videoId}')"></div>
                     </div>
                     <div class="price-wrapper">
                         <div class="price-platform-card">
@@ -298,29 +298,47 @@
         }).join('');
     }
 
-    // Mencegah redirect ke YouTube saat video diklik
-    window.preventVideoRedirect = function(event, index) {
+    // Event handler untuk video click
+    window.handleVideoClick = function(event, index, videoId) {
         event.preventDefault();
         event.stopPropagation();
         
         const iframe = document.getElementById(`video-${index}`);
         if (!iframe) return;
         
-        const videoId = iframe.getAttribute('data-video-id');
         const currentSrc = iframe.src;
+        const isPlaying = currentSrc.includes('autoplay=1');
         
-        // Toggle play/pause dengan mengganti autoplay parameter
-        if (currentSrc.includes('autoplay=1')) {
-            // Pause video
+        if (isPlaying) {
+            // Pause
             iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0`;
+            const playBtn = document.getElementById(`play-btn-${index}`);
+            if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i>';
         } else {
-            // Play video
+            // Play
             iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0`;
+            const playBtn = document.getElementById(`play-btn-${index}`);
+            if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
         }
         
         return false;
     };
 
+    // Update play button status saat iframe dimuat ulang
+    function updatePlayButtons() {
+        for (let i = 0; i < games.length; i++) {
+            const iframe = document.getElementById(`video-${i}`);
+            const playBtn = document.getElementById(`play-btn-${i}`);
+            if (iframe && playBtn) {
+                if (iframe.src.includes('autoplay=1')) {
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                }
+            }
+        }
+    }
+    
     // MODAL ORDER FUNCTIONS
     let currentGameName = "";
     
@@ -376,7 +394,6 @@
         let msg = getCurrentMessage();
         if (msg.startsWith("⚠️")) { showToast(msg); return; }
         
-        // Simpan ke localStorage
         let riwayat = JSON.parse(localStorage.getItem('llc_riwayat_mod') || '[]');
         riwayat.unshift({ 
             tanggal: new Date().toLocaleString(), 
@@ -388,7 +405,6 @@
         });
         localStorage.setItem('llc_riwayat_mod', JSON.stringify(riwayat.slice(0, 50)));
         
-        // Kirim ke chat APK
         if (window.Android && window.Android.sendMessageToAdmin) {
             window.Android.sendMessageToAdmin(msg);
             showToast(currentLang === "id" ? "✅ Pesanan dikirim!" : "✅ Order sent!");
@@ -411,35 +427,38 @@
         setTimeout(() => t.classList.remove('show'), 2000); 
     }
     
-    // TELEGRAM - DIPERBAIKI UNTUK APK
+    // TELEGRAM - DIPERBAIKI DENGAN 5 METODE BERURUTAN
     function openTelegram() {
-        const telegramUrl = "https://t.me/llc_store";
+        showToast("Membuka Telegram...");
         
-        // Method 1: Cek Android interface (dari APK)
+        // Method 1: Intent Telegram (paling efektif untuk APK)
+        try {
+            window.location.href = "tg://resolve?domain=llc_store";
+            return;
+        } catch(e) {}
+        
+        // Method 2: Gunakan Android interface jika ada
         if (window.Android) {
-            // Coba method openUrl jika ada (dari kode APK Anda)
             if (typeof window.Android.openUrl === 'function') {
-                window.Android.openUrl(telegramUrl);
+                window.Android.openUrl("https://t.me/llc_store");
                 return;
             }
-            // Coba method showToast sebagai indikator
-            if (typeof window.Android.showToast === 'function') {
-                window.Android.showToast("Membuka Telegram...");
-            }
         }
         
-        // Method 2: Intent untuk Telegram (coba langsung)
+        // Method 3: Redirect ke browser via WebView (akan ditangkap shouldOverrideUrlLoading)
         try {
-            // Intent khusus untuk Telegram
-            window.location.href = "tg://resolve?domain=llc_store";
-            // Fallback jika intent gagal setelah 1 detik
-            setTimeout(() => {
-                window.location.href = telegramUrl;
-            }, 500);
-        } catch(e) {
-            // Method 3: Browser biasa
-            window.open(telegramUrl, "_blank");
-        }
+            window.location.href = "https://t.me/llc_store";
+            return;
+        } catch(e) {}
+        
+        // Method 4: Buka dengan window.open
+        try {
+            window.open("https://t.me/llc_store", "_blank");
+            return;
+        } catch(e) {}
+        
+        // Method 5: Fallback terakhir
+        showToast("Klik link ini: t.me/llc_store");
     }
     
     // ONLINE COUNT DINAMIS
@@ -496,7 +515,14 @@
         targetOnline = currentOnline;
         document.getElementById("onlineCount").innerHTML = currentOnline.toLocaleString();
         updateOnlineCount();
-        setTimeout(() => { const loader = document.getElementById("loadingScreen"); if (loader) { loader.style.opacity = "0"; setTimeout(() => loader.style.display = "none", 500); } }, 1000);
+        setTimeout(() => { 
+            const loader = document.getElementById("loadingScreen"); 
+            if (loader) { 
+                loader.style.opacity = "0"; 
+                setTimeout(() => loader.style.display = "none", 500); 
+            } 
+            updatePlayButtons();
+        }, 1000);
         applyLanguage();
     }
     

@@ -1,5 +1,3 @@
-// ==================== FIREBASE KONFIGURASI ====================
-// GANTI DENGAN KONFIGURASI FIREBASE PROJECT ANDA YANG ASLI!
 const firebaseConfig = {
     apiKey: "AIzaSyDummyKeyExampleReplaceWithYourOwn12345",
     authDomain: "llc-store-mod.firebaseapp.com",
@@ -9,18 +7,11 @@ const firebaseConfig = {
     appId: "1:123456789012:web:abcdef1234567890"
 };
 
-// Inisialisasi Firebase
 let db = null;
 let isFirebaseReady = false;
-
 try {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
     isFirebaseReady = true;
-    console.log("✅ Firebase Connected!");
-} catch(e) {
-    console.warn("⚠️ Firebase Error:", e);
-    isFirebaseReady = false;
-}
+    console.log("✅ Firebase ready");
+} catch(e) { console.warn("Firebase error", e); }

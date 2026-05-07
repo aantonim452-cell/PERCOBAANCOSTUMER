@@ -1388,7 +1388,7 @@
                 <i class="fas fa-copy"></i> Salin Pesanan
             </button>
             <button class="btn-send-ultimate" id="sendBtn">
-                <i class="fas fa-paper-plane"></i> Kirim ke Chat APK
+                <i class="fas fa-paper-plane"></i> Kirim Pesanan
             </button>
             <div class="step-info">
                 <i class="fas fa-info-circle"></i> Salin Pesanan → Buka Chat APK → Paste → Kirim ke Admin
@@ -1397,46 +1397,39 @@
     </div>
 
     <script>
-        // ============================================================
-        // ========== KONFIGURASI MUDAH EDIT ==========================
-        // ============================================================
-        // EDIT SEMUA DATA DI BAWAH INI SESUAI KEBUTUHAN ANDA
-        // ============================================================
 
-        // ---------- 1. INFO BANNER (Tampil di halaman utama) ----------
         const INFO_BANNER_TITLE = "📢 INFO PERUBAHAN HARGA TERBARU!";
         const INFO_BANNER_DESKRIPSI = "Kami telah menyesuaikan harga untuk memberikan pelayanan terbaik:";
         const INFO_BANNER_ITEMS = [
             {
                 game: "🎮 Higgs Domino",
-                detail: "Harga volume discount: makin besar makin murah! 1B = Rp55.000 (sebelumnya Rp60.000)"
+                detail: "perubahan harga sebelum 1B = Rp60.000 (sesudah Rp55.000)"
             },
             {
                 game: "👑 Bos Domino",
-                detail: "Harga flat 5K/B beli & 4K/B jual (sebelumnya variatif)"
+                detail: "SEBELUM 4K /b naik menjadi 5K /b"
             },
             {
-                game: "💰 Keuntungan Member",
-                detail: "Semakin besar nominal, semakin hemat hingga 15%!"
+                game: "💰 harga berfariasi",
+                detail: "cek secara berkala harga updete otomatis"
             }
         ];
 
-        // ---------- 2. HARGA HIGGS DOMINO (Volume Discount) ----------
-        // Format: ["Jumlah", "Harga Beli", "Harga Jual"]
+        //higgs domino
         const HIGGS_PRICES = [
-            ["100M", "Rp 6.500", "Rp 6.000"],
-            ["200M", "Rp 12.500", "Rp 11.500"],
-            ["300M", "Rp 18.000", "Rp 16.500"],
-            ["400M", "Rp 23.000", "Rp 21.500"],
-            ["500M", "Rp 28.000", "Rp 26.000"],
-            ["600M", "Rp 32.500", "Rp 30.500"],
-            ["700M", "Rp 37.000", "Rp 34.500"],
-            ["800M", "Rp 41.000", "Rp 38.500"],
+            ["100M", "Rp 6.500", "Rp 4.000"],
+            ["200M", "Rp 12.500", "Rp 9.000"],
+            ["300M", "Rp 18.000", "Rp 14.000"],
+            ["400M", "Rp 23.000", "Rp 20.000"],
+            ["500M", "Rp 28.000", "Rp 25.000"],
+            ["600M", "Rp 32.500", "Rp 30.000"],
+            ["700M", "Rp 37.000", "Rp 35.000"],
+            ["800M", "Rp 41.000", "Rp 39.000"],
             ["900M", "Rp 45.000", "Rp 42.000"],
             ["1B",   "Rp 55.000", "Rp 52.000"]
         ];
 
-        // ---------- 3. HARGA BOS DOMINO (Flat: 5K/B beli, 4K/B jual) ----------
+        //bos domino
         const BOS_PRICES = [
             ["10B",  "Rp 50.000",  "Rp 40.000"],
             ["20B",  "Rp 100.000", "Rp 80.000"],
@@ -1450,7 +1443,7 @@
             ["100B", "Rp 500.000", "Rp 400.000"]
         ];
 
-        // ---------- 4. HARGA ROYAL DOMINO (Tetap) ----------
+        // royal domino
         const ROYAL_PRICES = [
             ["100M", "Rp 6.400", "Rp 6.100"],
             ["200M", "Rp 12.800", "Rp 12.200"],
@@ -1464,7 +1457,7 @@
             ["1B",   "Rp 64.000", "Rp 61.000"]
         ];
 
-        // ---------- 5. HARGA BERFIST (Tetap) ----------
+        // berfish
         const BERFIST_PRICES = [
             ["100M", "Rp 3.500", "Rp 3.100"],
             ["200M", "Rp 7.000", "Rp 6.200"],
@@ -1478,7 +1471,7 @@
             ["1B",   "Rp 35.000", "Rp 31.000"]
         ];
 
-        // ---------- 6. KONFIGURASI GAME (nama, subtitle, gambar, link) ----------
+        //KONFIGURASI GAME
         const GAME_CONFIG = {
             higgs: {
                 name: "HIGGS DOMINO",
@@ -1514,7 +1507,7 @@
             }
         };
 
-        // ---------- 7. NOMOR PEMBAYARAN (edit sesuai punya Anda) ----------
+        // NOMOR PEMBAYARAN
         const PAYMENT_NUMBERS = {
             qris: 'QRIS',
             dana: '081234567890',
@@ -1528,8 +1521,8 @@
             seabank: '333456789012'
         };
 
-        // ---------- 8. KONTEN TENTANG LLC STORE (Modal Info) ----------
-        // Edit teks di bawah ini untuk mengubah isi modal "Tentang LLC Store"
+        //KONTEN TENTANG LLC STORE
+        
         const TENTANG_CONTENT = `
             <h4><i class="fas fa-chart-line"></i> Perubahan Harga Terbaru</h4>
             <div class="price-compare">
@@ -1574,10 +1567,7 @@
             </ul>
         `;
 
-        // ========== AKHIR KONFIGURASI ==========
-        // ============================================================
-
-        // LOADING HILANG
+        // AKHIR KONFIGURASI
         setTimeout(() => {
             let loading = document.getElementById('loadingScreen');
             loading.style.opacity = '0';

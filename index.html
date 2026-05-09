@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        :root { --gold: #f59e0b; --gold-light: #fbbf24; --gold-dark: #ea580c; --purple: #8b5cf6; --dark-bg: #0a0a1a; --card-bg: rgba(15, 25, 45, 0.65); --glass: blur(20px); }
+        :root { --gold: #f59e0b; --gold-light: #fbbf24; --gold-dark: #ea580c; --purple: #8b5cf6; --dark-bg: #0a0a1a; --card-bg: rgba(15,25,45,0.65); --glass: blur(20px); }
         body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: #ffffff; min-height: 100vh; overflow-x: hidden; scroll-behavior: smooth; }
         .bg-master { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden; }
         .nebula-1 { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 20% 30%, #0a0a2a, #000); animation: pulseNebula 8s ease-in-out infinite; }
@@ -167,49 +167,67 @@
     </div>
 
     <script>
-        // HARGA PER 1B (PATOKAN PER 1 MILIAR)
+        // ==================== KONFIGURASI HARGA ====================
+        // Harga per 1B (untuk jumlah 1B ke atas)
         const PRICE_PER_1B = {
-            higgs: { beli: 55000, jual: 52000 },
-            royal: { beli: 64000, jual: 61000 },
-            bos: { beli: 5000, jual: 4000 },
-            berfist: { beli: 35000, jual: 31000 }
+            higgs: { beli: 55000, jual: 52000 },      // 1B = 55.000
+            royal: { beli: 64000, jual: 61000 },       // 1B = 64.000
+            bos: { beli: 5000, jual: 4000 },           // 1B = 5.000
+            berfist: { beli: 35000, jual: 31000 }      // 1B = 35.000
         };
 
-        // DAFTAR HARGA UNTUK TABEL (100M - 1B untuk Higgs, Royal, Berfist)
+        // Harga untuk 100M - 900M (LEBIH MAHAL PER BNYA)
+        // Biar untung toko: 100M = Rp6.000 artinya 1B = Rp60.000 (lebih mahal 5rb dari 1B yg Rp55.000)
+        const PRICE_PER_M = {
+            higgs: { beli: 6000, jual: 5200 },     // 100M = 6.000 → 1B = 60.000
+            royal: { beli: 7000, jual: 6700 },     // 100M = 7.000 → 1B = 70.000
+            berfist: { beli: 3800, jual: 3400 }    // 100M = 3.800 → 1B = 38.000
+        };
+
+        // Buat daftar harga untuk tabel (100M,200M,300M,...900M,1B)
         function generatePriceList(gameKey) {
             let list = [];
-            let pp = PRICE_PER_1B[gameKey];
-            if (!pp) return [];
-            // 100M, 200M, 300M, 400M, 500M, 600M, 700M, 800M, 900M, 1B
-            for (let i = 1; i <= 10; i++) {
-                let billions = i / 10;
-                let jumlah = i === 10 ? "1B" : (i*100) + "M";
-                let beli = Math.floor(billions * pp.beli);
-                let jual = Math.floor(billions * pp.jual);
+            let ppB = PRICE_PER_1B[gameKey];
+            let ppM = PRICE_PER_M[gameKey];
+            
+            if (gameKey === 'bos') {
+                // BOS DOMINO tetap pakai daftar khusus
+                return [
+                    ["10B", "Rp 50.000", "Rp 40.000"], ["20B", "Rp 100.000", "Rp 80.000"], ["30B", "Rp 150.000", "Rp 120.000"],
+                    ["40B", "Rp 200.000", "Rp 160.000"], ["50B", "Rp 250.000", "Rp 200.000"], ["60B", "Rp 300.000", "Rp 240.000"],
+                    ["70B", "Rp 350.000", "Rp 280.000"], ["80B", "Rp 400.000", "Rp 320.000"], ["90B", "Rp 450.000", "Rp 360.000"],
+                    ["100B", "Rp 500.000", "Rp 400.000"]
+                ];
+            }
+            
+            // 100M - 900M (harga per M lebih mahal)
+            for (let i = 1; i <= 9; i++) {
+                let jumlah = (i * 100) + "M";
+                let beli = Math.floor(i * ppM.beli);
+                let jual = Math.floor(i * ppM.jual);
                 list.push([jumlah, `Rp ${beli.toLocaleString('id-ID')}`, `Rp ${jual.toLocaleString('id-ID')}`]);
             }
+            
+            // 1B (harga per B lebih murah/diskonto)
+            let beli1B = ppB.beli;
+            let jual1B = ppB.jual;
+            list.push(["1B", `Rp ${beli1B.toLocaleString('id-ID')}`, `Rp ${jual1B.toLocaleString('id-ID')}`]);
+            
             return list;
         }
 
-        // BOS DOMINO (tetap seperti sebelumnya)
-        const BOS_PRICES = [
-            ["10B", "Rp 50.000", "Rp 40.000"], ["20B", "Rp 100.000", "Rp 80.000"], ["30B", "Rp 150.000", "Rp 120.000"],
-            ["40B", "Rp 200.000", "Rp 160.000"], ["50B", "Rp 250.000", "Rp 200.000"], ["60B", "Rp 300.000", "Rp 240.000"],
-            ["70B", "Rp 350.000", "Rp 280.000"], ["80B", "Rp 400.000", "Rp 320.000"], ["90B", "Rp 450.000", "Rp 360.000"],
-            ["100B", "Rp 500.000", "Rp 400.000"]
-        ];
-
         const GAME_CONFIG = {
-            higgs: { name:"HIGGS DOMINO", sub:"Beli 55K/B · Jual 52K/B", img:"https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY", downloadLink:"https://s.topinterface.net/data/sharePage.do", tutorialLink:"https://www.youtube.com/embed/DlMQ-SD21TU?si=eySEGPY88m55cAzC", prices: generatePriceList('higgs'), key:"higgs" },
-            royal: { name:"ROYAL DOMINO", sub:"Beli 64K/B · Jual 61K/B", img:"https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO", downloadLink:"https://api-1.chillaxgaming.com/rd14248172", tutorialLink:"https://www.youtube.com/embed/royal", prices: generatePriceList('royal'), key:"royal" },
-            bos: { name:"BOS DOMINO", sub:"Beli 5K/B · Jual 4K/B", img:"https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", downloadLink:"https://i.fordomino.com/share/sharePage?&shareType=101&languageType=2", tutorialLink:"https://www.youtube.com/embed/bosdomino", prices: BOS_PRICES, key:"bos" },
-            berfist: { name:"BERFIST", sub:"Beli 35K/B · Jual 31K/B", img:"https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg", downloadLink:"https://play.google.com/store/apps/details?id=com.neptune.bearfish", tutorialLink:"https://www.youtube.com/embed/berfish", prices: generatePriceList('berfist'), key:"berfist" }
+            higgs: { name:"HIGGS DOMINO", sub:"Beli 100M=Rp6.000 | 1B=Rp55.000", img:"https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY", downloadLink:"https://s.topinterface.net/data/sharePage.do", tutorialLink:"https://www.youtube.com/embed/DlMQ-SD21TU?si=eySEGPY88m55cAzC", key:"higgs" },
+            royal: { name:"ROYAL DOMINO", sub:"Beli 100M=Rp7.000 | 1B=Rp64.000", img:"https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO", downloadLink:"https://api-1.chillaxgaming.com/rd14248172", tutorialLink:"https://www.youtube.com/embed/royal", key:"royal" },
+            bos: { name:"BOS DOMINO", sub:"Beli 5K/B · Jual 4K/B", img:"https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", downloadLink:"https://i.fordomino.com/share/sharePage?&shareType=101&languageType=2", tutorialLink:"https://www.youtube.com/embed/bosdomino", key:"bos" },
+            berfist: { name:"BERFIST", sub:"Beli 100M=Rp3.800 | 1B=Rp35.000", img:"https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg", downloadLink:"https://play.google.com/store/apps/details?id=com.neptune.bearfish", tutorialLink:"https://www.youtube.com/embed/berfish", key:"berfist" }
         };
 
         function renderGame(gridId, gameKey) {
             let cfg = GAME_CONFIG[gameKey];
+            let prices = generatePriceList(gameKey);
             let rows = '';
-            for (let p of cfg.prices) { rows += `<tr><td class="jumlah-col">${p[0]}</td><td class="beli-col">${p[1]}</td><td class="jual-col">${p[2]}</td></tr>`; }
+            for (let p of prices) { rows += `<tr><td class="jumlah-col">${p[0]}</td><td class="beli-col">${p[1]}</td><td class="jual-col">${p[2]}</td>`; }
             let html = `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${cfg.img}" onerror="this.src='https://via.placeholder.com/55'"></div><div class="game-name-premium"><h2>${cfg.name}</h2><div class="price-sub">${cfg.sub}</div></div></div><div class="table-premium"><table class="price-table"><thead><tr><th>Jumlah</th><th>Beli</th><th>Jual</th></tr></thead><tbody>${rows}</tbody></table></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${cfg.name}', '${gameKey}')"><i class="fas fa-cart-shopping"></i> Beli/Jual</button><button class="btn-download-premium" onclick="downloadGame('${gameKey}')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${cfg.tutorialLink}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
             document.getElementById(gridId).innerHTML = html;
         }
@@ -222,7 +240,7 @@
 
         document.querySelectorAll('.badge-premium[data-game]').forEach(badge => { badge.addEventListener('click', () => { document.getElementById(`section-${badge.dataset.game}`).scrollIntoView({ behavior:'smooth', block:'start' }); }); });
 
-        // FUNGSI UNTUK FORM TRANSAKSI - JUMLAH BERURUTAN 1B,2B,3B,...100B (BELI) dan 500M,1B,2B,...100B (JUAL)
+        // ==================== FUNGSI FORM TRANSAKSI ====================
         function parseJumlahToNumber(jumlahStr) {
             let str = jumlahStr.toString().toUpperCase().replace(/\s/g, '');
             let multiplier = 1;
@@ -236,18 +254,42 @@
 
         function formatRupiah(angka) { return new Intl.NumberFormat('id-ID').format(angka); }
 
+        // Fungsi hitung harga (berlaku untuk semua nominal 100M - 100B)
         function hitungHarga(gameKey, jenis, jumlahStr) {
             let billions = parseJumlahToNumber(jumlahStr);
             if (!billions) return null;
-            let hargaPerB = PRICE_PER_1B[gameKey][jenis.toLowerCase()];
-            let total = Math.floor(billions * hargaPerB);
-            return { total, billions, hargaPerB };
+            
+            // Untuk Bos Domino tetap pakai PRICE_PER_1B
+            if (gameKey === 'bos') {
+                let hargaPerB = PRICE_PER_1B[gameKey][jenis.toLowerCase()];
+                let total = Math.floor(billions * hargaPerB);
+                return { total, billions, hargaPerB };
+            }
+            
+            // Untuk Higgs, Royal, Berfist:
+            // Jika jumlah < 1B (100M-900M), pake harga per M (lebih mahal)
+            // Jika jumlah >= 1B, pake harga per B (lebih murah)
+            if (billions < 1) {
+                // Kurang dari 1B (100M-900M) → harga per M
+                let perM = PRICE_PER_M[gameKey][jenis.toLowerCase()];
+                let total = Math.floor(billions * 1000 * perM);
+                return { total, billions, hargaPerB: perM * 1000 };
+            } else {
+                // 1B ke atas → harga per B
+                let perB = PRICE_PER_1B[gameKey][jenis.toLowerCase()];
+                let total = Math.floor(billions * perB);
+                return { total, billions, hargaPerB: perB };
+            }
         }
 
-        // Generate jumlah untuk dropdown (BELI: 1B,2B,3B,...100B) (JUAL: 500M,1B,2B,3B,...100B)
+        // Generate jumlah dropdown (BELI: 100M,200M,300M,...900M,1B,2B,...100B)
+        // JUAL: 500M,1B,2B,...100B
         function generateJumlahDropdown(jenis) {
             let list = [];
             if (jenis === 'BELI') {
+                // 100M - 900M
+                for (let i = 100; i <= 900; i += 100) { list.push(`${i}M`); }
+                // 1B - 100B
                 for (let i = 1; i <= 100; i++) { list.push(`${i}B`); }
             } else { // JUAL
                 list.push('500M');
@@ -282,7 +324,7 @@
                 document.getElementById("pricePreview").innerHTML = "⚠️ Format tidak valid";
                 return;
             }
-            document.getElementById("pricePreview").innerHTML = `💎 ${jenis} ${jumlah} = Rp ${formatRupiah(hitung.total)} (${hitung.billions.toFixed(2)}B x ${formatRupiah(hitung.hargaPerB)}/B)`;
+            document.getElementById("pricePreview").innerHTML = `💎 ${jenis} ${jumlah} = Rp ${formatRupiah(hitung.total)} (Rp ${formatRupiah(hitung.hargaPerB)}/B)`;
             
             if (!idGame) {
                 document.getElementById("previewBox").innerHTML = "⚠️ Masukkan ID Game";
@@ -338,7 +380,7 @@
         document.getElementById('sidebarRiwayat')?.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'pages/riwayat.html'; });
         document.getElementById('sidebarPanduan')?.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'pages/panduan.html'; });
         document.getElementById('sidebarDashboard')?.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'pages/dashboard.html'; });
-        document.getElementById('sidebarTentang')?.addEventListener('click', (e) => { e.preventDefault(); showToast("📢 Tentang LLC Store: Topup Cepat & Terpercaya"); });
+        document.getElementById('sidebarTentang')?.addEventListener('click', (e) => { e.preventDefault(); showToast("📢 LLC Store: Topup Cepat, Harga Bersaing, 24 Jam"); });
         
         function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
         document.getElementById('menuBtn').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); };

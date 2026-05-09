@@ -231,16 +231,33 @@
 
     <script>
         // ======================== 🟢 KONFIGURASI HARGA ========================
-        const HIGGS_BELI = { "100M":6500, "200M":12500, "300M":18000, "400M":23000, "500M":28000, "600M":32500, "700M":37000, "800M":41000, "900M":45000, "1B":55000 };
+        const HIGGS_BELI = { "100M":6500, "200M":12500, "300M":18000, "400M":23000, "500M":28000, "600M":32500, "700M":37000, "800M":41000, "900M":45000, "1B":500000 };
+        
+        
         const HIGGS_BONGKAR = { "1B":52000, "2B":104000, "3B":156000, "4B":208000, "5B":260000, "6B":312000, "7B":364000, "8B":416000, "9B":468000, "10B":520000 };
+        
+        
         const ROYAL_BELI = { "100M":6400, "200M":12800, "300M":19200, "400M":25600, "500M":32000, "600M":38400, "700M":44800, "800M":51200, "900M":57600, "1B":64000 };
+        
+        
         const ROYAL_BONGKAR = { "1B":61000, "2B":122000, "3B":183000, "4B":244000, "5B":305000, "6B":366000, "7B":427000, "8B":488000, "9B":549000, "10B":610000 };
+        
+        
         const BERFIST_BELI = { "100M":3500, "200M":7000, "300M":10500, "400M":14000, "500M":17500, "600M":21000, "700M":24500, "800M":28000, "900M":31500, "1B":35000 };
+        
+        
+        
         const BERFIST_BONGKAR = { "1B":31000, "2B":62000, "3B":93000, "4B":124000, "5B":155000, "6B":186000, "7B":217000, "8B":248000, "9B":279000, "10B":310000 };
+        
+        
         const BOS_BELI = { "1B":5000, "2B":10000, "3B":15000, "4B":20000, "5B":25000, "6B":30000, "7B":35000, "8B":40000, "9B":45000, "10B":50000 };
+        
+        
         const BOS_BONGKAR = { "10B":40000, "20B":80000, "30B":120000, "40B":160000, "50B":200000, "60B":240000, "70B":280000, "80B":320000, "90B":360000, "100B":400000 };
         
         const BELI_100M_900M = ["100M","200M","300M","400M","500M","600M","700M","800M","900M"];
+        
+        
         const BELI_1B_SAMPAI_50B = []; for(let i=1;i<=50;i++) BELI_1B_SAMPAI_50B.push(i+"B");
         const BONGKAR_1B_SAMPAI_50B = []; for(let i=1;i<=50;i++) BONGKAR_1B_SAMPAI_50B.push(i+"B");
         
@@ -251,7 +268,7 @@
             let bongkarItems = Object.entries(bongkarData);
             let beliHtml = beliItems.map(([jml, harga]) => `<div class="price-item" onclick="openModalWithData('${gameName}', '${gameKey}', 'BELI', '${jml}', ${harga})"><span class="jumlah">${jml}</span><span class="harga">${formatRupiah(harga)}</span></div>`).join('');
             let bongkarHtml = bongkarItems.map(([jml, harga]) => `<div class="price-item" onclick="openModalWithData('${gameName}', '${gameKey}', 'BONGKAR', '${jml}', ${harga})"><span class="jumlah">${jml}</span><span class="harga">${formatRupiah(harga)}</span></div>`).join('');
-            let html = `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${img}" onerror="this.src='https://via.placeholder.com/55'"></div><div class="game-name-premium"><h2>${gameName}</h2><div class="price-sub">Klik nominal untuk order</div></div></div><div class="price-sections"><div class="beli-section"><div class="section-header"><i class="fas fa-shopping-cart"></i> 🔰 BELI CHIP</div><div class="price-list">${beliHtml}</div></div><div class="bongkar-section"><div class="section-header"><i class="fas fa-exchange-alt"></i> 📤 BONGKAR CHIP (Jual)</div><div class="price-list">${bongkarHtml}</div></div></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${gameName}', '${gameKey}')"><i class="fas fa-cart-shopping"></i> Beli/Bongkar</button><button class="btn-download-premium" onclick="downloadGame('${downloadLink}')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${tutorialLink}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
+            let html = `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${img}" onerror="this.src='https://via.placeholder.com/55'"></div><div class="game-name-premium"><h2>${gameName}</h2><div class="price-sub">Klik nominal untuk order</div></div></div><div class="price-sections"><div class="beli-section"><div class="section-header"><i class="fas fa-shopping-cart"></i> 🔰 DAFTAR HARGA TOPUP</div><div class="price-list">${beliHtml}</div></div><div class="bongkar-section"><div class="section-header"><i class="fas fa-exchange-alt"></i> 📤 DAFTAR HARGA BONGKAR</div><div class="price-list">${bongkarHtml}</div></div></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${gameName}', '${gameKey}')"><i class="fas fa-cart-shopping"></i> Beli/Bongkar</button><button class="btn-download-premium" onclick="downloadGame('${downloadLink}')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${tutorialLink}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
             document.getElementById(gridId).innerHTML = html;
         }
         

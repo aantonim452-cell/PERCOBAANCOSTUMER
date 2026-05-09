@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        :root { --gold: #f59e0b; --gold-light: #fbbf24; --gold-dark: #ea580c; --purple: #8b5cf6; --dark-bg: #0a0a1a; --card-bg: rgba(15,25,45,0.65); --glass: blur(20px); }
+        :root { --gold: #f59e0b; --gold-light: #fbbf24; --dark-bg: #0a0a1a; --card-bg: rgba(15,25,45,0.65); --glass: blur(20px); }
         body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: #fff; min-height: 100vh; overflow-x: hidden; scroll-behavior: smooth; transition: background 0.3s; }
         
-        /* Dark Mode */
         body.dark-mode { background: #050510; filter: brightness(0.95); }
         body.dark-mode .card-game-premium, body.dark-mode .online-card, body.dark-mode .hero-premium,
-        body.dark-mode .info-premium-section, body.dark-mode .payment-section, body.dark-mode .quick-card,
-        body.dark-mode .sidebar-premium, body.dark-mode .price-list-container { background: rgba(5,10,25,0.9) !important; }
+        body.dark-mode .info-premium-section, body.dark-mode .payment-section, body.dark-mode .sidebar-premium,
+        body.dark-mode .price-list-container, body.dark-mode .chat-section { background: rgba(5,10,25,0.9) !important; }
         
         .bg-master { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden; }
         .nebula-1 { position: absolute; width: 100%; height: 100%; background: radial-gradient(ellipse at 20% 30%, #0a0a2a, #000); animation: pulse1 8s ease-in-out infinite; }
@@ -35,7 +34,6 @@
         .toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; transition: 0.3s; border-left: 4px solid #f59e0b; opacity: 0; font-size: 13px; backdrop-filter: blur(10px); z-index: 10000; }
         .toast-msg.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         
-        /* Sidebar */
         .sidebar-premium { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: rgba(10,20,35,0.97); backdrop-filter: blur(25px); z-index: 1001; transition: 0.4s; padding: 25px; border-right: 1px solid rgba(245,158,11,0.4); }
         .sidebar-premium.open { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; margin-bottom: 35px; border-bottom: 1px solid rgba(245,158,11,0.3); padding-bottom: 10px; }
@@ -57,11 +55,7 @@
         .badge-premium { background: rgba(51,65,85,0.5); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 60px; font-size: 12px; font-weight: 600; border-left: 3px solid #f59e0b; cursor: pointer; transition: 0.3s; }
         .badge-premium:hover { transform: translateY(-4px); background: linear-gradient(135deg, #f59e0b, #ea580c); color: black; }
         
-        .info-banner { background: linear-gradient(135deg, #1e293b, #0f172a); border-left: 6px solid #f59e0b; border-radius: 1rem; padding: 16px 20px; margin: 20px 0; font-size: 13px; }
-        .info-banner h4 { color: #fbbf24; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        
         .online-card { background: linear-gradient(135deg, rgba(15,25,45,0.8), rgba(10,20,35,0.9)); backdrop-filter: blur(12px); border-radius: 1.8rem; padding: 25px; text-align: center; margin: 25px 0; border: 1px solid rgba(245,158,11,0.25); }
-        .online-card:hover { transform: translateY(-5px); border-color: #f59e0b; }
         .online-number { font-size: 44px; font-weight: 800; background: linear-gradient(135deg, white, #fbbf24); -webkit-background-clip: text; background-clip: text; color: transparent; }
         
         .payment-section { background: rgba(15,25,45,0.6); backdrop-filter: blur(15px); border-radius: 1.8rem; padding: 20px; margin: 30px 0; border: 1px solid rgba(245,158,11,0.3); }
@@ -71,62 +65,51 @@
         .payment-chip { background: rgba(0,0,0,0.4); border-radius: 50px; padding: 8px 16px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid rgba(245,158,11,0.3); font-size: 12px; transition: 0.2s; }
         .payment-chip:hover { background: rgba(245,158,11,0.2); transform: translateY(-3px); }
         
+        /* GAME CARD */
         .section-title-premium { margin: 35px 0 20px 0; cursor: pointer; }
         .section-title-premium h2 { font-size: 1.4rem; color: #fbbf24; border-left: 4px solid #f59e0b; padding-left: 15px; }
         .game-grid-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
         .card-game-premium { background: rgba(10,20,35,0.6); backdrop-filter: blur(18px); border-radius: 1.8rem; border: 1px solid rgba(245,158,11,0.25); overflow: hidden; transition: 0.4s; }
-        .card-game-premium:hover { transform: translateY(-12px); border-color: #f59e0b; box-shadow: 0 25px 40px -20px rgba(245,158,11,0.5); }
+        .card-game-premium:hover { transform: translateY(-8px); border-color: #f59e0b; }
         .card-header-premium { padding: 14px 16px; background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98)); border-bottom: 2px solid #f59e0b; display: flex; gap: 12px; align-items: center; }
         .logo-game { width: 55px; height: 55px; background: #0f172a; border-radius: 1rem; border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .logo-game img { width: 100%; height: 100%; object-fit: cover; }
         .game-name-premium h2 { font-size: 1.1rem; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .price-sub { font-size: 10px; color: #94a3b8; margin-top: 4px; }
         
-        .table-premium { padding: 0 12px 12px 12px; overflow-x: auto; }
-        .price-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-        .price-table th { text-align: left; padding: 10px 8px; color: #fbbf24; border-bottom: 2px solid #f59e0b; }
-        .price-table td { padding: 8px 8px; border-bottom: 1px solid rgba(51,65,85,0.5); }
-        .jumlah-col { font-weight: 700; color: #fbbf24; width: 30%; }
-        .beli-col, .jual-col { font-weight: 600; cursor: pointer; width: 35%; transition: 0.1s; }
-        .beli-col:active, .jual-col:active { transform: scale(0.96); }
+        /* 4 MENU BUTTON */
+        .game-menu-buttons { display: flex; gap: 8px; padding: 12px; flex-wrap: wrap; }
+        .game-menu-btn { flex: 1; padding: 10px; border-radius: 50px; font-weight: 700; font-size: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.3s; }
+        .btn-topup-game { background: linear-gradient(95deg, #10b981, #059669); color: white; }
+        .btn-jual-game { background: linear-gradient(95deg, #f59e0b, #ea580c); color: white; }
+        .btn-download-game { background: linear-gradient(95deg, #0284c7, #0369a1); color: white; }
+        .btn-tutorial-game { background: linear-gradient(95deg, #dc2626, #ef4444); color: white; }
+        .game-menu-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
         
-        .btn-action-group { display: flex; gap: 8px; padding: 0 12px 16px 12px; flex-wrap: wrap; }
-        .btn-order-premium, .btn-download-premium, .btn-tutorial-premium { flex: 1; padding: 10px; border-radius: 50px; font-weight: 700; font-size: 11px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.3s; }
-        .btn-order-premium { background: linear-gradient(95deg, #4f46e5, #7c3aed); color: white; }
-        .btn-download-premium { background: linear-gradient(95deg, #0284c7, #0369a1); color: white; }
-        .btn-tutorial-premium { background: linear-gradient(95deg, #dc2626, #ef4444); color: white; }
-        .btn-order-premium:hover, .btn-download-premium:hover, .btn-tutorial-premium:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        /* PRICE LIST CONTAINER */
+        .price-list-container { background: rgba(10,20,35,0.9); backdrop-filter: blur(18px); border-radius: 1.5rem; border: 1px solid rgba(245,158,11,0.3); margin: 0 12px 12px 12px; overflow: hidden; display: none; }
+        .price-list-container.show { display: block; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .price-list-header { padding: 12px 16px; background: rgba(0,0,0,0.5); border-bottom: 1px solid #f59e0b; display: flex; justify-content: space-between; align-items: center; }
+        .price-list-header h4 { color: #fbbf24; font-size: 13px; }
+        .close-price-list { background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; }
+        .price-list-table { padding: 8px; max-height: 250px; overflow-y: auto; }
+        .price-table-small { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .price-table-small th { text-align: left; padding: 8px; color: #fbbf24; border-bottom: 1px solid #334155; }
+        .price-table-small td { padding: 8px; border-bottom: 1px solid rgba(51,65,85,0.3); }
+        .price-table-small .order-btn { background: linear-gradient(95deg, #4f46e5, #7c3aed); color: white; border: none; padding: 4px 10px; border-radius: 20px; font-size: 10px; cursor: pointer; }
         
-        /* MODAL ORDER - DIPERBAIKI */
-        .modal-ultimate { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 5000; justify-content: center; align-items: center; }
-        .modal-content-ultimate { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 550px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; animation: pop 0.3s ease; max-height: 85vh; overflow-y: auto; }
-        @keyframes pop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .modal-header-ultimate { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
-        .modal-header-ultimate h3 { color: #fbbf24; }
-        .modal-close { font-size: 28px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
-        .modal-close:hover { color: #f59e0b; transform: rotate(90deg); }
-        
-        .form-group-ultimate { margin-bottom: 18px; }
-        .form-group-ultimate label { font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px; font-weight: 600; }
-        .form-group-ultimate label i { margin-right: 6px; color: #f59e0b; }
-        .form-group-ultimate input, .form-group-ultimate select { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; font-size: 14px; transition: 0.2s; }
-        .form-group-ultimate input:focus, .form-group-ultimate select:focus { border-color: #f59e0b; outline: none; }
-        
-        /* Quick Nominal Buttons */
-        .quick-nominal { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
-        .quick-nom-btn { background: rgba(245,158,11,0.15); border: 1px solid #f59e0b; padding: 8px 14px; border-radius: 40px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; color: #fbbf24; }
-        .quick-nom-btn:hover { background: #f59e0b; color: #0f172a; transform: scale(1.02); }
-        
-        .price-display { background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 20px; padding: 15px; margin: 15px 0; text-align: center; border: 1px solid #f59e0b; }
-        .price-value { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        
-        .preview-msg { background: #0f172a; padding: 14px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #f59e0b; font-size: 11px; font-family: monospace; white-space: pre-wrap; max-height: 180px; overflow-y: auto; }
-        .btn-send-ultimate { width: 100%; padding: 14px; border-radius: 50px; font-weight: 800; margin: 8px 0; cursor: pointer; border: none; transition: 0.3s; font-size: 14px; background: linear-gradient(95deg, #f59e0b, #fbbf24); color: #0f172a; }
-        .btn-send-ultimate:hover { transform: scale(1.02); filter: brightness(1.05); }
-        
-        /* Area JUAL */
-        .jual-area-box { background: rgba(245,158,11,0.1); border: 1px solid #f59e0b; border-radius: 16px; padding: 12px; margin: 10px 0; }
-        .payment-detail-box { background: rgba(16,185,129,0.1); border: 1px solid #10b981; border-radius: 16px; padding: 12px; margin: 10px 0; text-align: center; }
+        /* CHAT SECTION */
+        .chat-section { background: rgba(15,25,45,0.6); backdrop-filter: blur(15px); border-radius: 1.8rem; margin: 30px 0; border: 1px solid rgba(245,158,11,0.3); overflow: hidden; }
+        .chat-header { padding: 15px 20px; background: linear-gradient(135deg, #1e293b, #0f172a); border-bottom: 1px solid #f59e0b; display: flex; align-items: center; gap: 10px; }
+        .chat-header h3 { color: #fbbf24; font-size: 1rem; }
+        .chat-messages { height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.3); }
+        .message { max-width: 80%; padding: 10px 14px; border-radius: 18px; font-size: 12px; word-wrap: break-word; }
+        .message.admin { background: linear-gradient(135deg, #1e293b, #0f172a); border-left: 3px solid #f59e0b; align-self: flex-start; }
+        .message.user { background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; align-self: flex-end; }
+        .message small { font-size: 9px; opacity: 0.7; display: block; margin-top: 4px; }
+        .chat-input-area { display: flex; gap: 10px; padding: 15px; background: rgba(0,0,0,0.5); border-top: 1px solid rgba(245,158,11,0.3); }
+        .chat-input-area input { flex: 1; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; }
+        .chat-input-area button { background: #f59e0b; border: none; width: 45px; height: 45px; border-radius: 50%; color: #0f172a; cursor: pointer; }
         
         .info-premium-section { background: rgba(15,25,45,0.55); backdrop-filter: blur(15px); border-radius: 1.8rem; padding: 20px; margin: 30px 0; }
         .stats-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
@@ -134,48 +117,40 @@
         .stat-card-pro:hover { transform: translateY(-5px); border-color: #f59e0b; }
         .stat-card-pro i { font-size: 1.5rem; color: #f59e0b; margin-bottom: 6px; display: block; }
         
-        .quick-menu { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-        .quick-card { background: rgba(10,20,35,0.5); backdrop-filter: blur(10px); border-radius: 1rem; padding: 12px 20px; text-decoration: none; color: white; transition: 0.3s; border: 1px solid rgba(245,158,11,0.2); display: flex; align-items: center; gap: 15px; }
-        .quick-card i { font-size: 20px; color: #f59e0b; width: 28px; text-align: center; }
-        .quick-card span { font-size: 13px; font-weight: 600; }
-        .quick-card:hover { transform: translateX(10px); border-color: #f59e0b; background: rgba(245,158,11,0.15); }
-        
         .simple-footer { text-align: center; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(245,158,11,0.2); font-size: 11px; color: #94a3b8; }
         
-        /* Modal Video */
-        .modal-video { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px); z-index: 3000; justify-content: center; align-items: center; }
-        .modal-video-content { background: #1e293b; max-width: 90%; width: 800px; border-radius: 1.5rem; padding: 20px; border: 2px solid #f59e0b; animation: pop 0.3s ease; }
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .close-video { background: none; border: none; font-size: 28px; color: white; cursor: pointer; float: right; }
+        /* MODAL ORDER */
+        .modal-ultimate { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 5000; justify-content: center; align-items: center; }
+        .modal-content-ultimate { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 550px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; animation: pop 0.3s ease; max-height: 85vh; overflow-y: auto; }
+        @keyframes pop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .modal-header-ultimate { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .modal-header-ultimate h3 { color: #fbbf24; }
+        .modal-close { font-size: 28px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
         
-        .modal-payment { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); backdrop-filter: blur(25px); z-index: 5000; justify-content: center; align-items: center; }
-        .modal-payment-content { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 380px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; text-align: center; animation: pop 0.3s ease; }
-        .nomor-besar { background: #0f172a; padding: 12px; border-radius: 50px; font-size: 16px; font-weight: bold; margin: 15px 0; word-break: break-all; }
-        .copy-btn-besar { background: #f59e0b; border: none; padding: 12px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
-        .close-payment { background: #334155; border: none; padding: 10px 20px; border-radius: 40px; color: white; cursor: pointer; margin-top: 15px; width: 100%; }
+        .form-group-ultimate { margin-bottom: 18px; }
+        .form-group-ultimate label { font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px; font-weight: 600; }
+        .form-group-ultimate input, .form-group-ultimate select { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; font-size: 14px; }
+        .form-group-ultimate select { cursor: pointer; }
         
-        .modal-tentang { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-tentang-content { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 600px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; animation: pop 0.3s ease; max-height: 80vh; overflow-y: auto; }
-        .price-compare { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 10px; margin: 10px 0; }
-        .price-compare table { width: 100%; font-size: 11px; border-collapse: collapse; }
-        .price-compare td { padding: 6px; border-bottom: 1px solid #334155; }
-        .price-compare .old { text-decoration: line-through; color: #ef4444; }
-        .price-compare .new { color: #22c55e; font-weight: bold; }
+        .quick-nominal { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+        .quick-nom-btn { background: rgba(245,158,11,0.15); border: 1px solid #f59e0b; padding: 6px 12px; border-radius: 40px; font-size: 10px; font-weight: bold; cursor: pointer; color: #fbbf24; }
         
-        @media (max-width: 768px) { .game-grid-premium { grid-template-columns: 1fr; } .btn-action-group { flex-direction: column; } }
+        .price-display { background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 20px; padding: 15px; margin: 15px 0; text-align: center; border: 1px solid #f59e0b; }
+        .price-value { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        
+        .preview-msg { background: #0f172a; padding: 14px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #f59e0b; font-size: 11px; font-family: monospace; white-space: pre-wrap; max-height: 180px; overflow-y: auto; }
+        .btn-send-ultimate { width: 100%; padding: 14px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; font-size: 14px; background: linear-gradient(95deg, #f59e0b, #fbbf24); color: #0f172a; transition: 0.3s; }
+        
+        .payment-detail-box { background: rgba(16,185,129,0.1); border: 1px solid #10b981; border-radius: 16px; padding: 12px; margin: 10px 0; text-align: center; }
+        .jual-area-box { background: rgba(245,158,11,0.1); border: 1px solid #f59e0b; border-radius: 16px; padding: 12px; margin: 10px 0; }
+        
+        @media (max-width: 768px) { .game-grid-premium { grid-template-columns: 1fr; } .game-menu-buttons { flex-direction: column; } .chat-messages { height: 250px; } }
     </style>
 </head>
 <body>
 
-    <!-- LOADING SCREEN -->
     <div id="loadingScreen" class="loading-screen"><div class="loader-ring"></div><div class="loading-text">LLC STORE</div></div>
     <div id="toastMsg" class="toast-msg">✅ Pesan terkirim!</div>
-
-    <!-- MODALS -->
-    <div id="videoModal" class="modal-video"><div class="modal-video-content"><div style="display:flex; justify-content:space-between; margin-bottom:15px;"><h3><i class="fas fa-play-circle"></i> Video Tutorial</h3><button class="close-video" onclick="closeVideoModal()">&times;</button></div><div class="video-container"><iframe id="videoFrame" src="" allowfullscreen></iframe></div></div></div>
-    <div id="modalPayment" class="modal-payment"><div class="modal-payment-content"><h3 id="paymentTitle">QRIS</h3><div id="paymentDetail"></div><button class="close-payment" onclick="closePaymentModal()">Tutup</button></div></div>
-    <div id="modalTentang" class="modal-tentang"><div class="modal-tentang-content"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3><i class="fas fa-info-circle"></i> Tentang LLC Store</h3><button class="modal-close" onclick="closeTentangModal()">&times;</button></div><div id="tentangContent"></div></div></div>
 
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar-premium">
@@ -184,18 +159,15 @@
             <a href="#" class="sidebar-link active" id="sidebarHome"><i class="fas fa-home"></i> Beranda</a>
             <a href="#" class="sidebar-link" id="sidebarRiwayat"><i class="fas fa-history"></i> Riwayat</a>
             <a href="#" class="sidebar-link" id="sidebarPanduan"><i class="fas fa-book"></i> Panduan</a>
-            <a href="#" class="sidebar-link" id="sidebarDashboard"><i class="fas fa-user"></i> Dashboard</a>
-            <a href="#" class="sidebar-link" id="sidebarTentang"><i class="fas fa-info-circle"></i> Tentang LLC Store</a>
+            <a href="#" class="sidebar-link" id="sidebarTentang"><i class="fas fa-info-circle"></i> Tentang</a>
         </div>
         <div class="sidebar-footer"><p>© 2026 LLC STORE</p></div>
     </div>
     <div id="overlay" class="overlay-premium"></div>
 
-    <!-- BACKGROUND -->
-    <div class="bg-master"><div class="nebula-1"></div><div class="nebula-2"></div><div class="nebula-3"></div></div>
+    <div class="bg-master"><div class="nebula-1"></div><div class="nebula-2"></div></div>
     <div class="particle-zone" id="particleZone"></div>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
         <div class="top-bar-premium">
             <button id="menuBtn" class="menu-btn"><i class="fas fa-bars"></i></button>
@@ -214,16 +186,23 @@
             </div>
         </div>
 
-        <div id="infoBanner" class="info-banner"></div>
-
-        <div class="stats-smart">
-            <div class="online-card">
-                <div class="online-icon"><i class="fas fa-users"></i></div>
-                <div class="online-number" id="onlineCount">1,482</div>
-                <div class="online-label">Online Sekarang</div>
-                <div class="peak-time" id="peakTimeInfo">⭐ Pelayanan cepat 24 jam</div>
+        <!-- CHAT ADMIN (menggantikan info banner) -->
+        <div class="chat-section">
+            <div class="chat-header">
+                <i class="fas fa-comment-dots" style="color:#10b981"></i>
+                <h3>LIVE CHAT ADMIN</h3>
+                <i class="fas fa-circle" style="font-size:10px; color:#10b981"></i><span style="font-size:10px;">Online</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message admin"><strong>🛒 Admin LLC Store:</strong> Selamat datang! Ada yang bisa dibantu?<br><small>📌 Klik TOPUP atau JUAL untuk order</small></div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Tulis pesan ke admin...">
+                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
+
+        <div class="online-card"><div class="online-number" id="onlineCount">1,482</div><div class="online-label">Online Sekarang</div></div>
 
         <div class="payment-section">
             <div class="payment-header"><i class="fas fa-credit-card" style="color:#f59e0b;"></i><h3>Metode Pembayaran</h3></div>
@@ -232,16 +211,9 @@
                 <div class="payment-chip" onclick="showPaymentDetail('dana')"><i class="fab fa-android"></i><span>DANA</span></div>
                 <div class="payment-chip" onclick="showPaymentDetail('ovo')"><i class="fab fa-android"></i><span>OVO</span></div>
                 <div class="payment-chip" onclick="showPaymentDetail('bri')"><i class="fas fa-university"></i><span>BRI</span></div>
-                <div class="payment-chip" onclick="showPaymentDetail('bni')"><i class="fas fa-university"></i><span>BNI</span></div>
                 <div class="payment-chip" onclick="showPaymentDetail('bca')"><i class="fas fa-university"></i><span>BCA</span></div>
                 <div class="payment-chip" onclick="showPaymentDetail('mandiri')"><i class="fas fa-university"></i><span>Mandiri</span></div>
             </div>
-        </div>
-
-        <div class="quick-menu">
-            <a href="#" class="quick-card" id="riwayatBtn"><i class="fas fa-history"></i><span>Riwayat Transaksi</span></a>
-            <a href="#" class="quick-card" id="panduanBtn"><i class="fas fa-book"></i><span>Panduan Topup</span></a>
-            <a href="#" class="quick-card" id="dashboardBtn"><i class="fas fa-user"></i><span>Dashboard Saya</span></a>
         </div>
 
         <!-- GAME SECTIONS -->
@@ -255,396 +227,235 @@
         <div class="game-grid-premium" id="grid-berfist"></div>
 
         <div class="info-premium-section">
-            <div style="text-align:center; margin-bottom:15px;"><i class="fas fa-chart-line" style="font-size:1.8rem; color:#f59e0b;"></i><h3 style="color:#fbbf24; font-size:1.1rem;">LLC STORE PERFORMANCE</h3></div>
             <div class="stats-container">
-                <div class="stat-card-pro"><i class="fas fa-bolt"></i><h4>⚡ Instant Process</h4></div>
-                <div class="stat-card-pro"><i class="fas fa-shield-alt"></i><h4>🔒 Full Guarantee</h4></div>
-                <div class="stat-card-pro"><i class="fas fa-headset"></i><h4>🎧 24/7 Support</h4></div>
+                <div class="stat-card-pro"><i class="fas fa-bolt"></i><h4>⚡ Proses Cepat</h4></div>
+                <div class="stat-card-pro"><i class="fas fa-shield-alt"></i><h4>🔒 Garansi 100%</h4></div>
+                <div class="stat-card-pro"><i class="fas fa-headset"></i><h4>🎧 Support 24/7</h4></div>
                 <div class="stat-card-pro"><i class="fas fa-exchange-alt"></i><h4>🔄 Beli & Jual</h4></div>
             </div>
         </div>
         <div class="simple-footer">© 2026 LLC STORE</div>
     </div>
 
-    <!-- MODAL ORDER - DIPERBAIKI DENGAN FITUR BARU -->
+    <!-- MODAL ORDER -->
     <div id="orderModal" class="modal-ultimate">
         <div class="modal-content-ultimate">
-            <div class="modal-header-ultimate">
-                <h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3>
-                <span class="modal-close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="form-group-ultimate">
-                <label><i class="fas fa-gamepad"></i> Game</label>
-                <input type="text" id="gameNameDisplay" readonly style="background:#334155;">
-            </div>
-            <div class="form-group-ultimate">
-                <label><i class="fas fa-exchange-alt"></i> Jenis Transaksi</label>
-                <select id="transaksiType">
-                    <option value="BELI">🔰 BELI (Topup Chip)</option>
-                    <option value="JUAL">💰 JUAL (Bongkar Chip)</option>
-                </select>
-            </div>
+            <div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3><span class="modal-close" onclick="closeModal()">&times;</span></div>
+            <div class="form-group-ultimate"><label><i class="fas fa-gamepad"></i> Game</label><input type="text" id="gameNameDisplay" readonly style="background:#334155;"></div>
+            <div class="form-group-ultimate"><label><i class="fas fa-exchange-alt"></i> Jenis Transaksi</label><select id="transaksiType"><option value="BELI">🔰 BELI (Topup Chip)</option><option value="JUAL">💰 JUAL (Bongkar Chip)</option></select></div>
             
-            <!-- Pilihan Jumlah Chip dengan Tombol Cepat -->
-            <div class="form-group-ultimate">
-                <label><i class="fas fa-coins"></i> Jumlah Chip</label>
+            <div class="form-group-ultimate"><label><i class="fas fa-coins"></i> Pilih Jumlah Chip</label>
                 <div class="quick-nominal" id="quickNominal"></div>
-                <input type="text" id="jumlahKoin" placeholder="Atau tulis manual: 100M, 500M, 1B, 2B, 5B, 10B, 20B" style="margin-top:10px;">
             </div>
             
-            <!-- Tampilan Harga Otomatis -->
-            <div class="price-display">
-                <div class="price-value" id="totalPriceDisplay">Rp 0</div>
-            </div>
+            <div class="price-display"><div class="price-value" id="totalPriceDisplay">Rp 0</div></div>
+            <div class="form-group-ultimate"><label><i class="fas fa-id-card"></i> ID Game</label><input type="text" id="idGame" placeholder="ID Game Anda"></div>
             
-            <div class="form-group-ultimate">
-                <label><i class="fas fa-id-card"></i> ID Game</label>
-                <input type="text" id="idGame" placeholder="ID Game Anda">
-            </div>
-            
-            <!-- AREA UNTUK BELI -->
             <div id="beliArea">
-                <div class="form-group-ultimate">
-                    <label><i class="fas fa-credit-card"></i> Metode Pembayaran</label>
-                    <select id="bankTransfer">
-                        <option value="">Pilih Metode</option>
-                        <option value="QRIS">📱 QRIS</option>
-                        <option value="DANA">💰 DANA</option>
-                        <option value="OVO">💰 OVO</option>
-                        <option value="BRI">🏦 BRI</option>
-                        <option value="BCA">🏦 BCA</option>
-                        <option value="Mandiri">🏦 Mandiri</option>
-                    </select>
-                </div>
+                <div class="form-group-ultimate"><label><i class="fas fa-credit-card"></i> Metode Pembayaran</label><select id="bankTransfer"><option value="">Pilih Metode</option><option value="QRIS">📱 QRIS</option><option value="DANA">💰 DANA</option><option value="OVO">💰 OVO</option><option value="BRI">🏦 BRI</option><option value="BCA">🏦 BCA</option><option value="Mandiri">🏦 Mandiri</option></select></div>
                 <div id="paymentDetailBox" class="payment-detail-box" style="display:none;"></div>
             </div>
             
-            <!-- AREA UNTUK JUAL - FITUR BARU: NAMA BANK, ATAS NAMA, NOMOR REKENING -->
             <div id="jualArea" style="display:none;">
                 <div class="jual-area-box">
                     <div style="font-size:11px; color:#fbbf24; margin-bottom:10px;"><i class="fas fa-university"></i> Data Rekening Penerima</div>
-                    <div class="form-group-ultimate">
-                        <label><i class="fas fa-building"></i> Nama Bank</label>
-                        <input type="text" id="namaBank" placeholder="Contoh: BCA, BRI, Mandiri, BNI, DANA, OVO">
-                    </div>
-                    <div class="form-group-ultimate">
-                        <label><i class="fas fa-user"></i> Atas Nama</label>
-                        <input type="text" id="atasNama" placeholder="Nama pemilik rekening">
-                    </div>
-                    <div class="form-group-ultimate">
-                        <label><i class="fas fa-qrcode"></i> Nomor Rekening / ID</label>
-                        <input type="text" id="nomorRekening" placeholder="Masukkan nomor rekening atau ID e-wallet">
-                    </div>
+                    <div class="form-group-ultimate"><label><i class="fas fa-building"></i> Nama Bank</label><input type="text" id="namaBank" placeholder="Contoh: BCA, BRI, Mandiri, BNI"></div>
+                    <div class="form-group-ultimate"><label><i class="fas fa-user"></i> Atas Nama</label><input type="text" id="atasNama" placeholder="Nama pemilik rekening"></div>
+                    <div class="form-group-ultimate"><label><i class="fas fa-qrcode"></i> Nomor Rekening</label><input type="text" id="nomorRekening" placeholder="Nomor rekening bank / e-wallet"></div>
                 </div>
             </div>
             
-            <div class="preview-msg" id="previewBox">⚡ Isi data di atas</div>
-            <button class="btn-send-ultimate" id="sendBtn">
-                <i class="fas fa-paper-plane"></i> Kirim Pesanan
-            </button>
-            <div class="step-info"><i class="fas fa-info-circle"></i> Pesanan akan langsung terkirim ke Admin via APK</div>
+            <div class="preview-msg" id="previewBox">⚡ Pilih jumlah chip di atas</div>
+            <button class="btn-send-ultimate" id="sendBtn"><i class="fas fa-paper-plane"></i> Kirim Pesanan</button>
         </div>
     </div>
 
+    <!-- MODAL PAYMENT & VIDEO -->
+    <div id="modalPayment" class="modal-ultimate"><div class="modal-content-ultimate" style="max-width:380px;"><h3 id="paymentTitle">QRIS</h3><div id="paymentDetail"></div><button class="btn-send-ultimate" onclick="closePaymentModal()" style="margin-top:15px;">Tutup</button></div></div>
+    <div id="videoModal" class="modal-ultimate"><div class="modal-content-ultimate"><div class="modal-header-ultimate"><h3><i class="fas fa-play-circle"></i> Tutorial</h3><span class="modal-close" onclick="closeVideoModal()">&times;</span></div><iframe id="videoFrame" width="100%" height="300" frameborder="0" allowfullscreen></iframe></div></div>
+
     <script>
         // ==================== KONFIGURASI ====================
-        const INFO_BANNER_TITLE = "📢 INFO PERUBAHAN HARGA TERBARU!";
-        const INFO_BANNER_DESKRIPSI = "Kami telah menyesuaikan harga untuk memberikan pelayanan terbaik:";
-        const INFO_BANNER_ITEMS = [
-            { game: "🎮 HIGGS DOMINO", detail: "TOPUP🔥RP60.000 MENJADI RP55.000 BONGKAR🔥 RP58.000 MENJADI RP52.000" },
-            { game: "👑 BOS DOMINO", detail: "TOPUP🔥RP4.000 MENJADI RP5.000 BONGKAR🔥 RP3.000 MENJADI RP4.000" }
-        ];
-
-        // DATA HARGA (Numeric)
-        const HIGGS_PRICES = [
-            ["100M", 6500, 4000], ["200M", 12500, 9000], ["300M", 18000, 14000], ["400M", 23000, 20000],
-            ["500M", 28000, 25000], ["600M", 32500, 30000], ["700M", 37000, 35000], ["800M", 41000, 40000],
-            ["900M", 45000, 45000], ["1B", 55000, 52000], ["2B", 110000, 104000], ["3B", 165000, 156000],
-            ["4B", 220000, 208000], ["5B", 275000, 260000], ["6B", 330000, 312000], ["7B", 385000, 364000],
-            ["8B", 440000, 416000], ["9B", 495000, 468000], ["10B", 550000, 520000], ["11B", 605000, 572000],
-            ["12B", 660000, 624000], ["13B", 715000, 676000], ["14B", 770000, 728000], ["15B", 825000, 780000],
-            ["16B", 880000, 832000], ["17B", 935000, 884000], ["18B", 990000, 936000], ["19B", 1045000, 988000], ["20B", 1100000, 1040000]
-        ];
-
-        const BOS_PRICES = [
-            ["10B", 50000, 40000], ["20B", 100000, 80000], ["30B", 150000, 120000], ["40B", 200000, 160000],
-            ["50B", 250000, 200000], ["60B", 300000, 240000], ["70B", 350000, 280000], ["80B", 400000, 320000],
-            ["90B", 450000, 360000], ["100B", 500000, 400000]
-        ];
-
-        const ROYAL_PRICES = [
-            ["100M", 6400, 5100], ["200M", 12800, 11200], ["300M", 19200, 17300], ["400M", 25600, 23400],
-            ["500M", 32000, 29500], ["600M", 38400, 35600], ["700M", 44800, 41700], ["800M", 51200, 47800],
-            ["900M", 57600, 53900], ["1B", 64000, 61000], ["2B", 128000, 122000], ["3B", 192000, 183000],
-            ["4B", 256000, 244000], ["5B", 320000, 305000], ["6B", 384000, 366000], ["7B", 448000, 427000],
-            ["8B", 512000, 488000], ["9B", 576000, 549000], ["10B", 640000, 610000], ["11B", 704000, 671000],
-            ["12B", 768000, 732000], ["13B", 832000, 793000], ["14B", 896000, 854000], ["15B", 960000, 915000],
-            ["16B", 1024000, 976000], ["17B", 1088000, 1037000], ["18B", 1152000, 1098000], ["19B", 1216000, 1159000], ["20B", 1280000, 1220000]
-        ];
-
-        const BERFIST_PRICES = [
-            ["100M", 3500, 2100], ["200M", 7000, 5200], ["300M", 10500, 8300], ["400M", 14000, 11400],
-            ["500M", 17500, 14500], ["600M", 21000, 17600], ["700M", 24500, 20700], ["800M", 28000, 23800],
-            ["900M", 31500, 26900], ["1B", 35000, 31000], ["2B", 70000, 62000], ["3B", 105000, 93000],
-            ["4B", 140000, 124000], ["5B", 175000, 155000], ["6B", 210000, 186000], ["7B", 245000, 217000],
-            ["8B", 280000, 248000], ["9B", 315000, 279000], ["10B", 350000, 310000], ["11B", 385000, 341000],
-            ["12B", 420000, 372000], ["13B", 455000, 403000], ["14B", 490000, 434000], ["15B", 525000, 465000],
-            ["16B", 560000, 496000], ["17B", 595000, 527000], ["18B", 630000, 558000], ["19B", 665000, 589000], ["20B", 700000, 620000]
-        ];
-
         const GAME_CONFIG = {
-            higgs: { name: "HIGGS DOMINO", sub: "Volume discount", img: "https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY", downloadLink: "https://s.topinterface.net/data/sharePage.do", tutorialLink: "https://www.youtube.com/embed/DlMQ-SD21TU?si=eySEGPY88m55cAzC", prices: HIGGS_PRICES },
-            royal: { name: "ROYAL DOMINO", sub: "Beli 64K/B · Jual 61K/B", img: "https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO", downloadLink: "https://api-1.chillaxgaming.com/rd14248172", tutorialLink: "https://www.youtube.com/embed/royal", prices: ROYAL_PRICES },
-            bos: { name: "BOS DOMINO", sub: "Beli 5K/B · Jual 4K/B", img: "https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", downloadLink: "https://i.fordomino.com/share/sharePage?&shareType=101&languageType=2", tutorialLink: "https://www.youtube.com/embed/bosdomino", prices: BOS_PRICES },
-            berfist: { name: "BERFIST", sub: "Beli 35K/B · Jual 31K/B", img: "https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg", downloadLink: "https://play.google.com/store/apps/details?id=com.neptune.bearfish", tutorialLink: "https://www.youtube.com/embed/berfish", prices: BERFIST_PRICES }
+            higgs: { name: "HIGGS DOMINO", img: "https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY", downloadLink: "https://s.topinterface.net/data/sharePage.do", tutorialLink: "https://www.youtube.com/embed/DlMQ-SD21TU", prices: [["100M",6500],["200M",12500],["300M",18000],["400M",23000],["500M",28000],["600M",32500],["700M",37000],["800M",41000],["900M",45000],["1B",55000]], jualPrices: [["1B",52000],["2B",104000],["3B",156000],["4B",208000],["5B",260000],["6B",312000],["7B",364000],["8B",416000],["9B",468000],["10B",520000]] },
+            royal: { name: "ROYAL DOMINO", img: "https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO", downloadLink: "https://api-1.chillaxgaming.com/rd14248172", tutorialLink: "https://www.youtube.com/embed/royal", prices: [["100M",6400],["200M",12800],["300M",19200],["400M",25600],["500M",32000],["600M",38400],["700M",44800],["800M",51200],["900M",57600],["1B",64000]], jualPrices: [["1B",61000],["2B",122000],["3B",183000],["4B",244000],["5B",305000],["6B",366000],["7B",427000],["8B",488000],["9B",549000],["10B",610000]] },
+            bos: { name: "BOS DOMINO", img: "https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png", downloadLink: "https://i.fordomino.com/share/sharePage?&shareType=101&languageType=2", tutorialLink: "https://www.youtube.com/embed/bosdomino", prices: [["10B",50000],["20B",100000],["30B",150000],["40B",200000],["50B",250000],["60B",300000],["70B",350000],["80B",400000],["90B",450000],["100B",500000]], jualPrices: [["10B",40000],["20B",80000],["30B",120000],["40B",160000],["50B",200000],["60B",240000],["70B",280000],["80B",320000],["90B",360000],["100B",400000]] },
+            berfist: { name: "BERFIST", img: "https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg", downloadLink: "https://play.google.com/store/apps/details?id=com.neptune.bearfish", tutorialLink: "https://www.youtube.com/embed/berfish", prices: [["100M",3500],["200M",7000],["300M",10500],["400M",14000],["500M",17500],["600M",21000],["700M",24500],["800M",28000],["900M",31500],["1B",35000]], jualPrices: [["1B",31000],["2B",62000],["3B",93000],["4B",124000],["5B",155000],["6B",186000],["7B",217000],["8B",248000],["9B",279000],["10B",310000]] }
         };
-
-        const PAYMENT_NUMBERS = { qris: 'QRIS', dana: '081234567890', ovo: '085678912345', bri: '88810123456789', bni: '1234567890', bca: '3940123456', mandiri: '12300987654321' };
         
-        const TENTANG_CONTENT = `<h4><i class="fas fa-chart-line"></i> Perubahan Harga</h4><div class="price-compare"><table><tr><td><strong>Game</strong></td><td><strong>Sebelumnya</strong></td><td><strong>Sekarang</strong></td></tr><tr><td>🎮 Higgs Domino 1B</td><td class="old">Rp 60.000</td><td class="new">Rp 55.000</td></tr></table></div><h4><i class="fas fa-clock"></i> Jam Operasional</h4><p>✅ 24 Jam Nonstop<br>✅ Proses cepat ±3-10 menit</p><h4><i class="fas fa-shield-alt"></i> Syarat & Ketentuan</h4><ul><li>Pastikan ID Game benar sebelum transfer</li><li>Harga dapat berubah sewaktu-waktu</li></ul>`;
-
-        // Variabel Global
+        const PAYMENT_NUMBERS = { qris: 'QRIS', dana: '081234567890', ovo: '085678912345', bri: '88810123456789', bca: '3940123456', mandiri: '12300987654321' };
+        
         let currentGameKey = 'higgs';
+        let currentJenis = 'BELI';
         let currentMsg = "";
-
+        
         function formatRupiah(angka) { return "Rp " + angka.toLocaleString("id-ID"); }
         function showToast(msg) { let t = document.getElementById('toastMsg'); t.innerHTML = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
-
-        // RENDER GAME
+        
+        // Chat functions
+        function addChatMessage(text, isUser = true) {
+            let container = document.getElementById('chatMessages');
+            let msgDiv = document.createElement('div');
+            msgDiv.className = "message " + (isUser ? "user" : "admin");
+            msgDiv.innerHTML = `<strong>${isUser ? "👤 Anda" : "🛒 Admin"}:</strong> ${text}<br><small>${new Date().toLocaleTimeString()}</small>`;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        document.getElementById('sendChatBtn')?.addEventListener('click', () => {
+            let input = document.getElementById('chatInput');
+            if (input.value.trim()) { addChatMessage(input.value.trim(), true); input.value = ""; }
+        });
+        document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('sendChatBtn').click(); });
+        
+        // Render game card dengan 4 menu
         function renderGame(gridId, gameKey) {
             let config = GAME_CONFIG[gameKey];
-            let rows = '';
-            for (let p of config.prices) {
-                rows += `<tr><td class="jumlah-col">${p[0]}</td><td class="beli-col" onclick="quickOrder('${gameKey}','BELI','${p[0]}')">${formatRupiah(p[1])}</td><td class="jual-col" onclick="quickOrder('${gameKey}','JUAL','${p[0]}')">${formatRupiah(p[2])}</td></tr>`;
-            }
-            let html = `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${config.img}" onerror="this.src='https://via.placeholder.com/55'"></div><div class="game-name-premium"><h2>${config.name}</h2><div class="price-sub">${config.sub}</div></div></div><div class="table-premium"><table class="price-table"><thead><tr><th>Jumlah</th><th>Beli</th><th>Jual</th></tr></thead><tbody>${rows}</tbody></table></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${config.name}','${gameKey}')"><i class="fas fa-cart-shopping"></i> Beli/Jual</button><button class="btn-download-premium" onclick="downloadGame('${gameKey}')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${config.tutorialLink}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
+            let priceInfo = config.prices.find(p => p[0] === '1B');
+            let jualInfo = config.jualPrices.find(p => p[0] === '1B');
+            let beliPerB = priceInfo ? formatRupiah(priceInfo[1]) : '-';
+            let jualPerB = jualInfo ? formatRupiah(jualInfo[1]) : '-';
+            
+            let html = `<div class="card-game-premium">
+                <div class="card-header-premium">
+                    <div class="logo-game"><img src="${config.img}" onerror="this.src='https://via.placeholder.com/55'"></div>
+                    <div class="game-name-premium"><h2>${config.name}</h2><div class="price-sub">🔰 ${beliPerB}/B | 💰 ${jualPerB}/B</div></div>
+                </div>
+                <div class="game-menu-buttons">
+                    <button class="game-menu-btn btn-topup-game" onclick="showPriceList('${gameKey}', 'TOPUP')"><i class="fas fa-shopping-cart"></i> TOPUP</button>
+                    <button class="game-menu-btn btn-jual-game" onclick="showPriceList('${gameKey}', 'JUAL')"><i class="fas fa-money-bill-wave"></i> JUAL</button>
+                    <button class="game-menu-btn btn-download-game" onclick="window.open('${config.downloadLink}','_blank')"><i class="fas fa-download"></i> DOWNLOAD</button>
+                    <button class="game-menu-btn btn-tutorial-game" onclick="openVideo('${config.tutorialLink}')"><i class="fas fa-play-circle"></i> TUTORIAL</button>
+                </div>
+                <div id="priceList-${gameKey}" class="price-list-container"></div>
+            </div>`;
             document.getElementById(gridId).innerHTML = html;
         }
-
-        function quickOrder(gameKey, jenis, nominal) {
+        
+        // Show price list (hanya 5 pertama + scroll)
+        function showPriceList(gameKey, jenis) {
+            let container = document.getElementById(`priceList-${gameKey}`);
+            let config = GAME_CONFIG[gameKey];
+            let prices = jenis === 'TOPUP' ? config.prices : config.jualPrices;
+            let title = jenis === 'TOPUP' ? 'DAFTAR HARGA TOPUP' : 'DAFTAR HARGA JUAL (Bongkar)';
+            let color = jenis === 'TOPUP' ? '#10b981' : '#f59e0b';
+            
+            let rows = '';
+            for (let p of prices) {
+                rows += `<tr><td class="jumlah-col">${p[0]}</td><td class="harga-col" style="color:${color}">${formatRupiah(p[1])}</td><td><button class="order-btn" onclick="openModalWithData('${gameKey}', '${jenis}', '${p[0]}')">Pesan</button></td></tr>`;
+            }
+            
+            container.innerHTML = `
+                <div class="price-list-header"><h4><i class="fas fa-list"></i> ${title}</h4><button class="close-price-list" onclick="document.getElementById('priceList-${gameKey}').classList.remove('show')">&times;</button></div>
+                <div class="price-list-table"><table class="price-table-small"><thead><tr><th>Jumlah</th><th>Harga</th><th>Aksi</th></tr></thead><tbody>${rows}</tbody></table></div>
+            `;
+            container.classList.add('show');
+        }
+        
+        function openModalWithData(gameKey, jenis, nominal) {
             currentGameKey = gameKey;
+            currentJenis = jenis === 'TOPUP' ? 'BELI' : 'JUAL';
             let config = GAME_CONFIG[gameKey];
             document.getElementById("gameNameDisplay").value = config.name;
-            document.getElementById("transaksiType").value = jenis;
-            document.getElementById("jumlahKoin").value = nominal;
+            document.getElementById("transaksiType").value = currentJenis;
+            updateNominalOptions(currentJenis);
+            let select = document.getElementById("quickNominal");
+            let btns = select.querySelectorAll('.quick-nom-btn');
+            for (let btn of btns) { if (btn.textContent === nominal) btn.click(); }
             document.getElementById("idGame").value = "";
             document.getElementById("bankTransfer").value = "";
             document.getElementById("namaBank").value = "";
             document.getElementById("atasNama").value = "";
             document.getElementById("nomorRekening").value = "";
-            toggleJualBeliArea(jenis);
-            updateHarga();
+            toggleJualBeliArea(currentJenis);
             document.getElementById("orderModal").style.display = "flex";
         }
-
-        function downloadGame(gameKey) { let link = GAME_CONFIG[gameKey].downloadLink; if(link) window.open(link, '_blank'); else showToast("Link tidak tersedia"); }
-        function openVideoTutorial(url) { document.getElementById('videoFrame').src = url; document.getElementById('videoModal').style.display = 'flex'; }
-        function closeVideoModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('videoFrame').src = ''; }
-
-        // Fungsi untuk toggle area BELI / JUAL
-        function toggleJualBeliArea(jenis) {
-            let beliArea = document.getElementById("beliArea");
-            let jualArea = document.getElementById("jualArea");
-            if (jenis === "JUAL") {
-                beliArea.style.display = "none";
-                jualArea.style.display = "block";
-            } else {
-                beliArea.style.display = "block";
-                jualArea.style.display = "none";
+        
+        function updateNominalOptions(jenis) {
+            let config = GAME_CONFIG[currentGameKey];
+            let prices = jenis === 'BELI' ? config.prices : config.jualPrices;
+            let container = document.getElementById("quickNominal");
+            if (!container) return;
+            container.innerHTML = "";
+            for (let p of prices) {
+                let btn = document.createElement("span");
+                btn.className = "quick-nom-btn";
+                btn.textContent = p[0];
+                btn.onclick = () => { selectNominal(p[0], p[1]); };
+                container.appendChild(btn);
             }
         }
-
-        // Fungsi update harga otomatis
-        function updateHarga() {
-            let config = GAME_CONFIG[currentGameKey];
-            let jenis = document.getElementById("transaksiType").value;
-            let jumlahStr = document.getElementById("jumlahKoin").value.trim();
-            
-            if (!jumlahStr) {
-                document.getElementById("totalPriceDisplay").innerHTML = "Rp 0";
-                return;
-            }
-            
-            // Parse jumlah (M atau B)
-            let qty = 0;
-            let upper = jumlahStr.toUpperCase();
-            if (upper.includes("B")) {
-                qty = parseFloat(upper.replace("B", ""));
-            } else if (upper.includes("M")) {
-                qty = parseFloat(upper.replace("M", "")) / 1000;
-            } else {
-                qty = parseFloat(jumlahStr) / 1000;
-            }
-            
-            if (isNaN(qty) || qty <= 0) {
-                document.getElementById("totalPriceDisplay").innerHTML = "Rp 0";
-                return;
-            }
-            
-            // Cari harga per 1B
-            let hargaPerB = 0;
-            for (let p of config.prices) {
-                if (p[0] === "1B") {
-                    hargaPerB = jenis === "BELI" ? p[1] : p[2];
-                    break;
-                }
-            }
-            
-            let total = Math.round(qty * hargaPerB);
-            document.getElementById("totalPriceDisplay").innerHTML = formatRupiah(total);
-            generateMessage();
+        
+        let currentHarga = 0;
+        function selectNominal(nominal, harga) {
+            currentHarga = harga;
+            document.getElementById("totalPriceDisplay").innerHTML = formatRupiah(harga);
+            generateMessageFromNominal(nominal);
         }
-
-        // Generate pesan
-        function generateMessage() {
+        
+        function generateMessageFromNominal(nominal) {
             let config = GAME_CONFIG[currentGameKey];
-            let gameName = config.name;
-            let jenis = document.getElementById("transaksiType").value;
-            let jumlah = document.getElementById("jumlahKoin").value.trim();
             let idGame = document.getElementById("idGame").value.trim();
+            if (!idGame) { document.getElementById("previewBox").innerHTML = "⚠️ Masukkan ID Game!"; currentMsg = ""; return; }
             
-            if (!jumlah || !idGame) {
-                document.getElementById("previewBox").innerHTML = "⚠️ Lengkapi jumlah dan ID Game!";
-                currentMsg = "";
-                return;
-            }
-            
-            // Hitung total harga
-            let qty = 0;
-            let upper = jumlah.toUpperCase();
-            if (upper.includes("B")) qty = parseFloat(upper.replace("B", ""));
-            else if (upper.includes("M")) qty = parseFloat(upper.replace("M", "")) / 1000;
-            else qty = parseFloat(jumlah) / 1000;
-            
-            let hargaPerB = 0;
-            for (let p of config.prices) {
-                if (p[0] === "1B") { hargaPerB = jenis === "BELI" ? p[1] : p[2]; break; }
-            }
-            let total = Math.round(qty * hargaPerB);
-            
-            if (jenis === "BELI") {
+            if (currentJenis === 'BELI') {
                 let metode = document.getElementById("bankTransfer").value;
-                if (!metode) {
-                    document.getElementById("previewBox").innerHTML = "⚠️ Pilih metode pembayaran!";
-                    currentMsg = "";
-                    return;
-                }
-                currentMsg = `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${gameName}\n📌 Jenis: BELI (Topup)\n💰 Jumlah: ${jumlah}\n💵 Total: ${formatRupiah(total)}\n🆔 ID Game: ${idGame}\n🏦 Metode: ${metode}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+                if (!metode) { document.getElementById("previewBox").innerHTML = "⚠️ Pilih metode pembayaran!"; currentMsg = ""; return; }
+                currentMsg = `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${config.name}\n📌 Jenis: BELI (Topup)\n💰 Jumlah: ${nominal}\n💵 Total: ${formatRupiah(currentHarga)}\n🆔 ID Game: ${idGame}\n🏦 Metode: ${metode}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
             } else {
                 let namaBank = document.getElementById("namaBank").value.trim();
                 let atasNama = document.getElementById("atasNama").value.trim();
                 let noRek = document.getElementById("nomorRekening").value.trim();
-                if (!namaBank || !atasNama || !noRek) {
-                    document.getElementById("previewBox").innerHTML = "⚠️ Isi Nama Bank, Atas Nama, dan Nomor Rekening!";
-                    currentMsg = "";
-                    return;
-                }
-                currentMsg = `🛒 ORDER LLC STORE (JUAL) 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${gameName}\n📌 Jenis: JUAL (Bongkar)\n💰 Jumlah: ${jumlah}\n💵 Total Diterima: ${formatRupiah(total)}\n🆔 ID Game: ${idGame}\n🏦 Rekening Tujuan:\n   Bank: ${namaBank}\n   Atas Nama: ${atasNama}\n   No. Rekening: ${noRek}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+                if (!namaBank || !atasNama || !noRek) { document.getElementById("previewBox").innerHTML = "⚠️ Isi Nama Bank, Atas Nama, dan Nomor Rekening!"; currentMsg = ""; return; }
+                currentMsg = `🛒 ORDER LLC STORE (JUAL) 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${config.name}\n📌 Jenis: JUAL (Bongkar)\n💰 Jumlah: ${nominal}\n💵 Total Diterima: ${formatRupiah(currentHarga)}\n🆔 ID Game: ${idGame}\n🏦 Rekening Tujuan:\n   Bank: ${namaBank}\n   Atas Nama: ${atasNama}\n   No. Rekening: ${noRek}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
             }
             document.getElementById("previewBox").innerHTML = currentMsg.replace(/\n/g, '<br>');
         }
-
-        // Kirim pesan
+        
+        function toggleJualBeliArea(jenis) {
+            let beliArea = document.getElementById("beliArea");
+            let jualArea = document.getElementById("jualArea");
+            if (jenis === 'JUAL') { beliArea.style.display = "none"; jualArea.style.display = "block"; }
+            else { beliArea.style.display = "block"; jualArea.style.display = "none"; }
+        }
+        
         function sendMessage() {
-            if (!currentMsg) {
-                showToast("❌ Lengkapi semua data!");
-                return;
-            }
+            if (!currentMsg) { showToast("❌ Lengkapi semua data!"); return; }
             
-            // Simpan riwayat
             let riwayat = JSON.parse(localStorage.getItem('llc_riwayat') || '[]');
-            riwayat.unshift({
-                tanggal: new Date().toLocaleString('id-ID'),
-                game: document.getElementById("gameNameDisplay").value,
-                jenis: document.getElementById("transaksiType").value,
-                jumlah: document.getElementById("jumlahKoin").value,
-                idGame: document.getElementById("idGame").value,
-                status: 'Diproses'
-            });
+            riwayat.unshift({ tanggal: new Date().toLocaleString('id-ID'), game: document.getElementById("gameNameDisplay").value, jenis: currentJenis, idGame: document.getElementById("idGame").value });
             if (riwayat.length > 50) riwayat.pop();
             localStorage.setItem('llc_riwayat', JSON.stringify(riwayat));
             
-            // Kirim ke APK
-            if (window.Android && window.Android.sendMessageToAdmin) {
-                window.Android.sendMessageToAdmin(currentMsg);
-                showToast("✅ Pesanan dikirim ke Admin!");
-                closeModal();
-            } else {
-                navigator.clipboard.writeText(currentMsg);
-                showToast("✅ Pesanan disalin! Buka APK dan paste.");
-                closeModal();
-            }
+            addChatMessage(currentMsg, true);
+            showToast("✅ Pesanan terkirim ke Admin!");
+            closeModal();
         }
-
-        // Tombol nominal cepat
-        function setupQuickNominal() {
-            let nominalList = ["100M", "200M", "500M", "1B", "2B", "5B", "10B", "20B"];
-            let container = document.getElementById("quickNominal");
-            if (!container) return;
-            container.innerHTML = "";
-            for (let nom of nominalList) {
-                let btn = document.createElement("span");
-                btn.className = "quick-nom-btn";
-                btn.textContent = nom;
-                btn.onclick = () => {
-                    document.getElementById("jumlahKoin").value = nom;
-                    updateHarga();
-                };
-                container.appendChild(btn);
-            }
-        }
-
-        function openModal(gameName, gameKey) {
-            currentGameKey = gameKey;
-            document.getElementById("gameNameDisplay").value = gameName;
-            document.getElementById("transaksiType").value = "BELI";
-            document.getElementById("jumlahKoin").value = "";
-            document.getElementById("idGame").value = "";
-            document.getElementById("bankTransfer").value = "";
-            document.getElementById("namaBank").value = "";
-            document.getElementById("atasNama").value = "";
-            document.getElementById("nomorRekening").value = "";
-            toggleJualBeliArea("BELI");
-            document.getElementById("totalPriceDisplay").innerHTML = "Rp 0";
-            document.getElementById("previewBox").innerHTML = "⚡ Isi data di atas";
-            currentMsg = "";
-            document.getElementById("orderModal").style.display = "flex";
-        }
-
+        
+        function openVideo(url) { document.getElementById('videoFrame').src = url; document.getElementById('videoModal').style.display = 'flex'; }
+        function closeVideoModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('videoFrame').src = ''; }
         function closeModal() { document.getElementById("orderModal").style.display = "none"; }
-
-        // Payment modal
+        
+        // Payment
         function showPaymentDetail(method) {
-            const modal = document.getElementById('modalPayment');
-            const title = document.getElementById('paymentTitle');
-            const detail = document.getElementById('paymentDetail');
+            let modal = document.getElementById('modalPayment');
+            let title = document.getElementById('paymentTitle');
+            let detail = document.getElementById('paymentDetail');
             if (method === 'qris') {
                 title.innerHTML = 'QRIS';
-                detail.innerHTML = `<div style="background:#fff; border-radius:20px;"><img src="https://placehold.co/250x250?text=QRIS+CODE" width="100%"></div><p>Scan QRIS via mobile banking/e-wallet</p>`;
+                detail.innerHTML = `<div style="text-align:center;"><i class="fas fa-qrcode" style="font-size:80px;"></i><p>Scan QRIS via mobile banking/e-wallet</p></div>`;
             } else {
                 title.innerHTML = method.toUpperCase();
-                detail.innerHTML = `<div class="nomor-besar">${PAYMENT_NUMBERS[method]}</div><button class="copy-btn-besar" onclick="copyNumber('${PAYMENT_NUMBERS[method]}','${method.toUpperCase()}')">Salin Nomor ${method.toUpperCase()}</button>`;
+                detail.innerHTML = `<div style="background:#0f172a; padding:12px; border-radius:40px; text-align:center; font-size:18px;">${PAYMENT_NUMBERS[method]}</div><button class="btn-send-ultimate" onclick="copyNumber('${PAYMENT_NUMBERS[method]}','${method.toUpperCase()}')" style="margin-top:10px;">Salin Nomor</button>`;
             }
             modal.style.display = 'flex';
         }
-        function copyNumber(num, bank) { navigator.clipboard.writeText(num); showToast(`✅ Nomor ${bank} disalin!`); }
+        function copyNumber(num, name) { navigator.clipboard.writeText(num); showToast(`✅ Nomor ${name} disalin!`); }
         function closePaymentModal() { document.getElementById('modalPayment').style.display = 'none'; }
-        function openTentangModal() { document.getElementById('tentangContent').innerHTML = TENTANG_CONTENT; document.getElementById('modalTentang').style.display = 'flex'; }
-        function closeTentangModal() { document.getElementById('modalTentang').style.display = 'none'; }
-
-        // Info Banner
-        function renderInfoBanner() {
-            let itemsHtml = '';
-            for (let item of INFO_BANNER_ITEMS) {
-                itemsHtml += `<div class="change-item"><strong>${item.game}</strong><br>${item.detail}</div>`;
-            }
-            document.getElementById('infoBanner').innerHTML = `<h4><i class="fas fa-bell"></i> ${INFO_BANNER_TITLE}</h4><p>${INFO_BANNER_DESKRIPSI}</p><div class="price-change">${itemsHtml}</div>`;
-        }
-
+        
         // Event Listeners
-        document.getElementById("transaksiType")?.addEventListener("change", function() { toggleJualBeliArea(this.value); updateHarga(); });
-        document.getElementById("jumlahKoin")?.addEventListener("input", updateHarga);
-        document.getElementById("idGame")?.addEventListener("input", generateMessage);
+        document.getElementById("transaksiType")?.addEventListener("change", function() { toggleJualBeliArea(this.value); updateNominalOptions(this.value); });
+        document.getElementById("idGame")?.addEventListener("input", () => { if (currentHarga > 0) generateMessageFromNominal(document.querySelector("#quickNominal .quick-nom-btn")?.textContent || ""); });
         document.getElementById("bankTransfer")?.addEventListener("change", function() { 
             let metode = this.value;
             let box = document.getElementById("paymentDetailBox");
@@ -652,65 +463,43 @@
             else if (metode === "DANA") { box.style.display = "block"; box.innerHTML = `<div><div style="font-size:18px;">${PAYMENT_NUMBERS.dana}</div><button onclick="copyNumber('${PAYMENT_NUMBERS.dana}','DANA')">Salin</button></div>`; }
             else if (metode === "OVO") { box.style.display = "block"; box.innerHTML = `<div><div style="font-size:18px;">${PAYMENT_NUMBERS.ovo}</div><button onclick="copyNumber('${PAYMENT_NUMBERS.ovo}','OVO')">Salin</button></div>`; }
             else { box.style.display = "none"; }
-            generateMessage();
+            if (currentHarga > 0) generateMessageFromNominal(document.querySelector("#quickNominal .quick-nom-btn")?.textContent || "");
         });
-        document.getElementById("namaBank")?.addEventListener("input", generateMessage);
-        document.getElementById("atasNama")?.addEventListener("input", generateMessage);
-        document.getElementById("nomorRekening")?.addEventListener("input", generateMessage);
+        document.getElementById("namaBank")?.addEventListener("input", () => { if (currentHarga > 0) generateMessageFromNominal(document.querySelector("#quickNominal .quick-nom-btn")?.textContent || ""); });
+        document.getElementById("atasNama")?.addEventListener("input", () => { if (currentHarga > 0) generateMessageFromNominal(document.querySelector("#quickNominal .quick-nom-btn")?.textContent || ""); });
+        document.getElementById("nomorRekening")?.addEventListener("input", () => { if (currentHarga > 0) generateMessageFromNominal(document.querySelector("#quickNominal .quick-nom-btn")?.textContent || ""); });
         document.getElementById("sendBtn")?.addEventListener("click", sendMessage);
-
-        // Sidebar & Navigation
+        
+        // Sidebar
         document.getElementById('menuBtn').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); };
         document.getElementById('closeSidebarBtn').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
         document.getElementById('overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); };
         document.getElementById('sidebarHome').onclick = (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-        document.getElementById('sidebarRiwayat').onclick = (e) => { e.preventDefault(); let r = JSON.parse(localStorage.getItem('llc_riwayat') || '[]'); alert("📋 Riwayat: " + (r.length || 0) + " transaksi"); };
-        document.getElementById('sidebarPanduan').onclick = (e) => { e.preventDefault(); alert("📖 PANDUAN:\n1. Pilih game\n2. Klik nominal di tabel atau isi form\n3. Pilih jenis (BELI/JUAL)\n4. Isi data & kirim"); };
-        document.getElementById('sidebarTentang').onclick = (e) => { e.preventDefault(); openTentangModal(); };
-        document.getElementById('riwayatBtn').onclick = (e) => { e.preventDefault(); let r = JSON.parse(localStorage.getItem('llc_riwayat') || '[]'); alert("📋 Riwayat: " + (r.length || 0) + " transaksi"); };
-        document.getElementById('panduanBtn').onclick = (e) => { e.preventDefault(); alert("📖 PANDUAN: Klik nominal di tabel untuk order cepat"); };
-        document.getElementById('dashboardBtn').onclick = (e) => { e.preventDefault(); alert("👤 Dashboard: " + (localStorage.getItem('llc_riwayat') ? JSON.parse(localStorage.getItem('llc_riwayat')).length : 0) + " transaksi"); };
-
+        document.getElementById('sidebarRiwayat').onclick = (e) => { e.preventDefault(); let r = JSON.parse(localStorage.getItem('llc_riwayat') || '[]'); alert("📋 RIWAYAT TRANSAKSI:\n" + (r.length ? r.map((x,i)=>`${i+1}. ${x.tanggal}\n   ${x.game} - ID: ${x.idGame}`).join('\n\n') : "Belum ada transaksi")); };
+        document.getElementById('sidebarPanduan').onclick = (e) => { e.preventDefault(); alert("📖 PANDUAN:\n1. Klik TOPUP atau JUAL di bawah game\n2. Pilih jumlah chip\n3. Isi ID Game\n4. Jika BELI: pilih metode bayar\n5. Jika JUAL: isi rekening\n6. Klik Kirim Pesanan"); };
+        document.getElementById('sidebarTentang').onclick = (e) => { e.preventDefault(); alert("🏪 LLC STORE\nTopup & Bongkar Chip\n✅ Proses Cepat\n✅ Harga Kompetitif\n✅ Support 24/7"); };
+        
         // Badge scroll
-        document.querySelectorAll('.badge-premium[data-game]').forEach(badge => {
-            badge.addEventListener('click', () => { let game = badge.dataset.game; document.getElementById(`section-${game}`).scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-        });
-
+        document.querySelectorAll('.badge-premium[data-game]').forEach(b => { b.onclick = () => { document.getElementById(`section-${b.dataset.game}`).scrollIntoView({ behavior: 'smooth' }); }; });
+        
         // Particles
-        const pz = document.getElementById('particleZone');
-        for (let i = 0; i < 100; i++) { let p = document.createElement('div'); p.classList.add('particle'); p.style.width = Math.random() * 3 + 1 + 'px'; p.style.height = p.style.width; p.style.left = Math.random() * 100 + '%'; p.style.animationDuration = Math.random() * 12 + 5 + 's'; p.style.animationDelay = Math.random() * 10 + 's'; pz.appendChild(p); }
-
-        // Dark Mode - DIPERBAIKI
+        for (let i = 0; i < 100; i++) { let p = document.createElement('div'); p.classList.add('particle'); p.style.width = Math.random() * 3 + 1 + 'px'; p.style.height = p.style.width; p.style.left = Math.random() * 100 + '%'; p.style.animationDuration = Math.random() * 12 + 5 + 's'; p.style.animationDelay = Math.random() * 10 + 's'; document.getElementById('particleZone').appendChild(p); }
+        
+        // Dark Mode
         let darkMode = localStorage.getItem('darkMode') === 'true';
         if (darkMode) { document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-sun"></i>'; }
-        document.getElementById('darkModeBtn').onclick = () => {
-            darkMode = !darkMode;
-            if (darkMode) { document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-sun"></i>'; }
-            else { document.body.classList.remove('dark-mode'); document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-moon"></i>'; }
-            localStorage.setItem('darkMode', darkMode);
-        };
-
+        document.getElementById('darkModeBtn').onclick = () => { darkMode = !darkMode; if (darkMode) { document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-sun"></i>'; } else { document.body.classList.remove('dark-mode'); document.getElementById('darkModeBtn').innerHTML = '<i class="fas fa-moon"></i>'; } localStorage.setItem('darkMode', darkMode); };
+        
         // Online Counter
-        let curOn = 1482, tarOn = 1482;
-        function getTar() { let h = new Date().getHours(); if (h >= 19 && h <= 22) return Math.floor(Math.random() * (2500 - 1900 + 1) + 1900); if (h >= 23 || h <= 4) return Math.floor(Math.random() * (750 - 450 + 1) + 450); if (h >= 5 && h <= 10) return Math.floor(Math.random() * (1150 - 750 + 1) + 750); return Math.floor(Math.random() * (1700 - 1150 + 1) + 1150); }
-        function loadStored() { let s = localStorage.getItem('llc_online_smooth'); let ts = localStorage.getItem('llc_online_time'); if (s && ts && (Date.now() - parseInt(ts)) < 3600000) { curOn = parseInt(s); tarOn = curOn; } else { curOn = getTar(); tarOn = curOn; localStorage.setItem('llc_online_smooth', curOn); localStorage.setItem('llc_online_time', Date.now()); } document.getElementById('onlineCount').innerHTML = Math.floor(curOn).toLocaleString(); }
-        function smoothUp() { if (Math.random() < 0.3) tarOn = getTar(); let d = tarOn - curOn; let stp = Math.min(Math.max(d, -10), 10); curOn += stp; if (Math.abs(d) < 5) curOn = tarOn; localStorage.setItem('llc_online_smooth', Math.floor(curOn)); localStorage.setItem('llc_online_time', Date.now()); document.getElementById('onlineCount').innerHTML = Math.floor(curOn).toLocaleString(); }
-        function updateTime() { let h = new Date().getHours(); let txt = ""; if (h >= 19 && h <= 22) txt = "🔥 Jam sibuk! 🔥"; else if (h >= 23 || h <= 4) txt = "🌙 Sepi, chat admin tetap aktif"; else if (h >= 5 && h <= 10) txt = "☀️ Pagi hari, mulai ramai"; else txt = "⭐ Waktu normal, pelayanan cepat"; document.getElementById('peakTimeInfo').innerHTML = `${txt} | ${h.toString().padStart(2, '0')}:00`; }
-        loadStored(); updateTime(); setInterval(smoothUp, 12000); setInterval(updateTime, 60000);
-
-        // Render semua
+        let online = 1482; setInterval(() => { let change = Math.floor(Math.random() * 11) - 5; online = Math.max(400, Math.min(3500, online + change)); document.getElementById('onlineCount').innerHTML = online.toLocaleString(); }, 13000);
+        
+        // Render Games
         renderGame('grid-higgs', 'higgs');
         renderGame('grid-royal', 'royal');
         renderGame('grid-bos', 'bos');
         renderGame('grid-berfist', 'berfist');
-        renderInfoBanner();
-        setupQuickNominal();
-
-        // Loading selesai
-        setTimeout(() => { let loading = document.getElementById('loadingScreen'); loading.style.opacity = '0'; setTimeout(() => loading.style.display = 'none', 500); }, 1000);
-
-        // Tutup modal klik di luar
-        window.onclick = e => { if (e.target === document.getElementById("orderModal")) closeModal(); if (e.target === document.getElementById("videoModal")) closeVideoModal(); if (e.target === document.getElementById("modalPayment")) closePaymentModal(); if (e.target === document.getElementById("modalTentang")) closeTentangModal(); };
+        
+        setTimeout(() => { let ld = document.getElementById('loadingScreen'); ld.style.opacity = '0'; setTimeout(() => ld.style.display = 'none', 500); }, 1000);
     </script>
 </body>
 </html>

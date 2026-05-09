@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        :root { --gold: #f59e0b; --gold-light: #fbbf24; --red: #ef4444; --red-dark: #dc2626; --dark-bg: #0a0a1a; --card-bg: rgba(15,25,45,0.65); --glass: blur(20px); }
+        :root { --gold: #f59e0b; --gold-light: #fbbf24; --red: #ef4444; --red-dark: #dc2626; --green: #22c55e; --dark-bg: #0a0a1a; --card-bg: rgba(15,25,45,0.65); --glass: blur(20px); }
         body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: #ffffff; min-height: 100vh; overflow-x: hidden; scroll-behavior: smooth; }
         
         /* BACKGROUND */
@@ -58,7 +58,7 @@
         .hero-premium { background: var(--card-bg); backdrop-filter: var(--glass); border-radius: 2rem; padding: 1.5rem; margin: 20px 0; text-align: center; border: 1px solid rgba(245,158,11,0.35); animation: glowHero 3s infinite alternate; }
         @keyframes glowHero { 0% { box-shadow: 0 0 15px rgba(245,158,11,0.15); } 100% { box-shadow: 0 0 45px rgba(245,158,11,0.35); } }
         
-        /* INFO TEXT (bukan tombol) */
+        /* INFO TEXT */
         .info-text { display: inline-block; cursor: pointer; font-size: 13px; color: #fbbf24; background: rgba(245,158,11,0.15); padding: 4px 12px; border-radius: 50px; transition: 0.2s; margin-left: 10px; }
         .info-text:hover { background: rgba(245,158,11,0.3); transform: scale(1.02); }
         
@@ -75,35 +75,36 @@
         /* SECTION TITLE */
         .section-title-premium { margin: 35px 0 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
         .section-title-premium h2 { font-size: 1.4rem; color: #fbbf24; border-left: 4px solid #f59e0b; padding-left: 15px; }
-        .section-title-premium .info-text { margin-left: 0; }
         
-        /* GAME GRID */
-        .game-grid-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 25px; }
+        /* GAME CARD - 2 CARD TERPISAH */
+        .game-grid-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 25px; }
         .card-game-premium { background: rgba(10,20,35,0.6); backdrop-filter: blur(18px); border-radius: 1.8rem; border: 1px solid rgba(245,158,11,0.25); overflow: hidden; transition: 0.4s; }
-        .card-game-premium:hover { transform: translateY(-12px); border-color: #f59e0b; box-shadow: 0 25px 40px -20px rgba(245,158,11,0.5); }
+        .card-game-premium:hover { transform: translateY(-8px); border-color: #f59e0b; }
+        
         .card-header-premium { padding: 14px 16px; background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98)); border-bottom: 2px solid #f59e0b; display: flex; align-items: center; gap: 12px; }
         .logo-game { width: 55px; height: 55px; background: #0f172a; border-radius: 1rem; border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .logo-game img { width: 100%; height: 100%; object-fit: cover; }
         .game-name-premium h2 { font-size: 1.1rem; font-weight: 800; background: linear-gradient(45deg, #ffd966, #f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .price-sub { font-size: 10px; color: #94a3b8; margin-top: 4px; }
         
-        /* TABLE 4 KOLOM */
-        .table-premium { padding: 0 12px 12px 12px; overflow-x: auto; }
-        .price-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-        .price-table th { text-align: left; padding: 10px 6px 6px 6px; border-bottom: 2px solid #f59e0b; }
-        .price-table td { padding: 8px 6px; border-bottom: 1px solid rgba(51,65,85,0.5); }
-        /* WARNA KOLOM 3 & 4 (Jumlah Bongkar & Harga Bongkar) = MERAH */
-        .price-table th:nth-child(3), .price-table td:nth-child(3),
-        .price-table th:nth-child(4), .price-table td:nth-child(4) {
-            color: #ef4444;
-        }
-        /* Kolom Jumlah & Beli tetap warna bawaan */
-        .price-table th:nth-child(1), .price-table td:nth-child(1),
-        .price-table th:nth-child(2), .price-table td:nth-child(2) {
-            color: #fbbf24;
-        }
+        /* 2 CARD TERPISAH */
+        .price-sections { padding: 16px; display: flex; flex-direction: column; gap: 20px; }
+        .beli-section, .bongkar-section { border-radius: 1.2rem; overflow: hidden; transition: 0.3s; }
+        .beli-section { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.3); }
+        .bongkar-section { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); }
+        .section-header { padding: 10px 14px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .beli-section .section-header { background: rgba(34,197,94,0.15); color: #22c55e; border-bottom: 1px solid rgba(34,197,94,0.3); }
+        .bongkar-section .section-header { background: rgba(239,68,68,0.15); color: #ef4444; border-bottom: 1px solid rgba(239,68,68,0.3); }
+        .price-list { padding: 6px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .price-item { background: rgba(0,0,0,0.4); border-radius: 30px; padding: 6px 12px; font-size: 11px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .beli-section .price-item:hover { background: #22c55e; color: #000; transform: scale(1.02); }
+        .bongkar-section .price-item:hover { background: #ef4444; color: #000; transform: scale(1.02); }
+        .price-item .jumlah { font-weight: 700; }
+        .price-item .harga { font-family: monospace; opacity: 0.9; }
+        .beli-section .price-item .harga { color: #22c55e; }
+        .bongkar-section .price-item .harga { color: #ef4444; }
+        .price-item:hover .harga { color: #000; }
         
-        .btn-action-group { display: flex; gap: 8px; padding: 0 12px 16px 12px; flex-wrap: wrap; }
+        .btn-action-group { display: flex; gap: 8px; padding: 0 16px 16px 16px; flex-wrap: wrap; }
         .btn-order-premium, .btn-download-premium, .btn-tutorial-premium { flex: 1; padding: 8px; border-radius: 50px; font-weight: 700; font-size: 10px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.3s; }
         .btn-order-premium { background: linear-gradient(95deg, #4f46e5, #7c3aed); color: white; }
         .btn-download-premium { background: linear-gradient(95deg, #0284c7, #0369a1); color: white; }
@@ -111,8 +112,8 @@
         .btn-order-premium:hover, .btn-download-premium:hover, .btn-tutorial-premium:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.1); }
         
         /* MODALS */
-        .modal-video, .modal-payment, .modal-tentang, .modal-ultimate, .modal-info { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 3000; justify-content: center; align-items: center; }
-        .modal-content-ultimate, .modal-video-content, .modal-payment-content, .modal-tentang-content, .modal-info-content { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 500px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; animation: modalPop 0.3s ease; }
+        .modal-video, .modal-tentang, .modal-ultimate, .modal-info { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 3000; justify-content: center; align-items: center; }
+        .modal-content-ultimate, .modal-video-content, .modal-tentang-content, .modal-info-content { background: linear-gradient(135deg, #1e293b, #0f172a); max-width: 500px; width: 90%; border-radius: 2rem; padding: 25px; border: 2px solid #f59e0b; animation: modalPop 0.3s ease; }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         .modal-header-ultimate { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
         .modal-header-ultimate h3 { color: #fbbf24; }
@@ -122,6 +123,8 @@
         .form-group-ultimate label { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 5px; }
         .form-group-ultimate input, .form-group-ultimate select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 40px; color: white; font-size: 13px; }
         .form-group-ultimate input:focus, .form-group-ultimate select:focus { border-color: #f59e0b; outline: none; }
+        .harga-display { background: #0f172a; border-radius: 40px; padding: 10px 15px; margin-top: 8px; font-size: 13px; text-align: center; border-left: 3px solid #22c55e; }
+        .harga-display span { color: #22c55e; font-weight: bold; font-size: 16px; }
         .preview-msg { background: #0f172a; padding: 12px; border-radius: 16px; margin: 15px 0; border-left: 4px solid #f59e0b; font-size: 11px; font-family: monospace; white-space: pre-wrap; max-height: 150px; overflow-y: auto; }
         .btn-send-ultimate { width: 100%; padding: 12px; border-radius: 40px; font-weight: 800; margin: 8px 0; cursor: pointer; border: none; transition: 0.3s; background: linear-gradient(95deg, #f59e0b, #fbbf24); color: #0f172a; }
         .btn-send-ultimate:hover { transform: scale(1.02); filter: brightness(1.05); }
@@ -134,10 +137,7 @@
         .simple-footer { text-align: center; padding: 20px 0; margin-top: 20px; border-top: 1px solid rgba(245,158,11,0.2); font-size: 11px; color: #94a3b8; }
         .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        @media (max-width: 768px) { .game-grid-premium { grid-template-columns: 1fr; } .btn-action-group { flex-direction: column; } }
-        
-        /* Harga di modal - info harga selected */
-        .harga-info { font-size: 11px; color: #22c55e; margin-left: 10px; }
+        @media (max-width: 768px) { .game-grid-premium { grid-template-columns: 1fr; } .price-item { font-size: 10px; padding: 4px 8px; } }
     </style>
 </head>
 <body>
@@ -145,11 +145,11 @@
     <div id="loadingScreen" class="loading-screen"><div class="loader-single"><div class="loader-ring-single"></div><p>LLC STORE</p></div></div>
     <div id="toastMsg" class="toast-msg">✅ Pesan disalin!</div>
     
-    <!-- MODAL INFO (teks INFO) -->
-    <div id="modalInfo" class="modal-info"><div class="modal-info-content"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3><i class="fas fa-bell"></i> UPDATE HARGA</h3><button class="modal-close" onclick="closeModalInfo()">&times;</button></div><div id="infoContent"><p style="color:#fbbf24; margin-bottom:10px;">🔥 UPDATE HARGA TERBARU 🔥</p><p>🎮 HIGGS DOMINO: 1B Rp55.000 (Beli) | Bongkar Rp52.000</p><p>👑 BOS DOMINO: 10B Rp50.000 (Beli) | Bongkar Rp40.000</p><p>💰 Harga dapat berubah sewaktu-waktu</p><p>✅ Cek harga terbaru di menu game</p></div></div></div>
+    <!-- MODAL INFO -->
+    <div id="modalInfo" class="modal-info"><div class="modal-info-content"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3><i class="fas fa-bell"></i> UPDATE HARGA</h3><button class="modal-close" onclick="closeModalInfo()">&times;</button></div><div id="infoContent"><p style="color:#fbbf24; margin-bottom:10px;">🔥 UPDATE HARGA TERBARU 🔥</p><p>🎮 HIGGS DOMINO: 1B Rp55.000 (Beli) | Bongkar Rp52.000</p><p>👑 BOS DOMINO: 10B Rp50.000 (Beli) | Bongkar Rp40.000</p><p>💰 Harga dapat berubah sewaktu-waktu</p></div></div></div>
     
     <div id="videoModal" class="modal-video"><div class="modal-video-content"><div style="display:flex; justify-content:space-between; margin-bottom:15px;"><h3><i class="fas fa-play-circle"></i> Video Tutorial</h3><button class="close-video" onclick="closeVideoModal()">&times;</button></div><div class="video-container"><iframe id="videoFrame" src="" allowfullscreen></iframe></div></div></div>
-    <div id="modalTentang" class="modal-tentang"><div class="modal-tentang-content"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3><i class="fas fa-info-circle"></i> Tentang LLC Store</h3><button class="modal-close" onclick="closeTentangModal()">&times;</button></div><div id="tentangContent"><p>LLC STORE - Topup Chip Domino Terpercaya 24 Jam Nonstop</p><p>✅ Proses Cepat</p><p>✅ Harga Kompetitif</p><p>✅ Customer Service Ramah</p></div></div></div>
+    <div id="modalTentang" class="modal-tentang"><div class="modal-tentang-content"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3><i class="fas fa-info-circle"></i> Tentang LLC Store</h3><button class="modal-close" onclick="closeTentangModal()">&times;</button></div><div><p>LLC STORE - Topup Chip Domino Terpercaya 24 Jam Nonstop</p><p>✅ Proses Cepat</p><p>✅ Harga Kompetitif</p><p>✅ Customer Service Ramah</p></div></div></div>
 
     <div id="sidebar" class="sidebar-premium"><div class="sidebar-header"><i class="fas fa-crown" style="color:#fbbf24"></i><h3>LLC STORE</h3><button class="close-sidebar" id="closeSidebarBtn">&times;</button></div><div class="sidebar-menu"><a href="#" class="sidebar-link active" id="sidebarHome"><i class="fas fa-home"></i> Beranda</a><a href="#" class="sidebar-link" id="sidebarRiwayat"><i class="fas fa-history"></i> Riwayat</a><a href="#" class="sidebar-link" id="sidebarPanduan"><i class="fas fa-book"></i> Panduan</a><a href="#" class="sidebar-link" id="sidebarDashboard"><i class="fas fa-user"></i> Dashboard</a><a href="#" class="sidebar-link" id="sidebarTentang"><i class="fas fa-info-circle"></i> Tentang LLC Store</a></div><div class="sidebar-footer"><p>© 2026 LLC STORE</p></div></div>
     <div id="overlay" class="overlay-premium"></div>
@@ -164,7 +164,6 @@
 
         <div class="stats-smart"><div class="online-card"><div class="online-number" id="onlineCount">1,482</div><div class="online-label">Online Sekarang</div></div></div>
 
-        <!-- SECTION GAME dengan teks INFO di samping judul -->
         <div class="section-title-premium" id="section-higgs"><h2><i class="fas fa-gamepad"></i> HIGGS DOMINO</h2><span class="info-text" onclick="openModalInfo()">ℹ️ INFO</span></div><div id="grid-higgs" class="game-grid-premium"></div>
         <div class="section-title-premium" id="section-royal"><h2><i class="fas fa-chess-queen"></i> ROYAL DOMINO</h2><span class="info-text" onclick="openModalInfo()">ℹ️ INFO</span></div><div id="grid-royal" class="game-grid-premium"></div>
         <div class="section-title-premium" id="section-bos"><h2><i class="fas fa-crown"></i> BOS DOMINO</h2><span class="info-text" onclick="openModalInfo()">ℹ️ INFO</span></div><div id="grid-bos" class="game-grid-premium"></div>
@@ -176,8 +175,9 @@
 
     <div id="orderModal" class="modal-ultimate"><div class="modal-content-ultimate"><div class="modal-header-ultimate"><h3><i class="fas fa-file-invoice"></i> Form Transaksi</h3><span class="modal-close" onclick="closeModal()">&times;</span></div>
         <div class="form-group-ultimate"><label>Game</label><input type="text" id="gameNameDisplay" readonly style="background:#334155;"></div>
-        <div class="form-group-ultimate"><label>Jenis Transaksi</label><select id="transaksiType"><option value="">-- Pilih --</option><option value="BELI">🔰 BELI</option><option value="BONGKAR">📦 BONGKAR (Jual Chip)</option></select></div>
+        <div class="form-group-ultimate"><label>Jenis Transaksi</label><select id="transaksiType"><option value="">-- Pilih --</option><option value="BELI">🔰 BELI</option><option value="BONGKAR">📤 BONGKAR (Jual Chip)</option></select></div>
         <div class="form-group-ultimate"><label>Jumlah Koin/Chip</label><select id="jumlahKoinSelect"><option value="">-- Pilih Jenis dulu --</option></select></div>
+        <div class="harga-display" id="hargaDisplay">💰 Harga akan muncul setelah pilih jumlah</div>
         <div class="form-group-ultimate"><label>ID Game</label><input type="text" id="idGame" placeholder="ID Game Anda"></div>
         <div class="form-group-ultimate"><label>Metode Pembayaran</label><select id="bankTransfer"><option value="">Pilih Metode</option><option value="QRIS">QRIS</option><option value="DANA">DANA</option><option value="OVO">OVO</option><option value="BRI">BRI</option><option value="BNI">BNI</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option></select></div>
         <div class="preview-msg" id="previewBox">⚡ Isi data di atas</div>
@@ -199,67 +199,87 @@
         const BERFIST_BELI = { "100M":3500, "200M":7000, "300M":10500, "400M":14000, "500M":17500, "600M":21000, "700M":24500, "800M":28000, "900M":31500, "1B":35000 };
         const BERFIST_BONGKAR = { "1B":31000, "2B":62000, "3B":93000, "4B":124000, "5B":155000, "6B":186000, "7B":217000, "8B":248000, "9B":279000, "10B":310000 };
         
-        // BOS DOMINO (BELI 1B-10B, BONGKAR 10B-100B)
+        // BOS DOMINO
         const BOS_BELI = { "1B":5000, "2B":10000, "3B":15000, "4B":20000, "5B":25000, "6B":30000, "7B":35000, "8B":40000, "9B":45000, "10B":50000 };
         const BOS_BONGKAR = { "10B":40000, "20B":80000, "30B":120000, "40B":160000, "50B":200000, "60B":240000, "70B":280000, "80B":320000, "90B":360000, "100B":400000 };
         
-        // LIST NOMINAL UNTUK FORM (BELI sampai 50B)
-        const BELI_NOMINAL_100M_900M = ["100M","200M","300M","400M","500M","600M","700M","800M","900M"];
-        const BELI_NOMINAL_1B_SAMPAI_50B = [];
-        for(let i=1; i<=50; i++) BELI_NOMINAL_1B_SAMPAI_50B.push(i+"B");
-        const BONGKAR_NOMINAL_1B_SAMPAI_50B = [];
-        for(let i=1; i<=50; i++) BONGKAR_NOMINAL_1B_SAMPAI_50B.push(i+"B");
-        const BOS_BONGKAR_NOMINAL = ["10B","20B","30B","40B","50B","60B","70B","80B","90B","100B"];
+        const BELI_100M_900M = ["100M","200M","300M","400M","500M","600M","700M","800M","900M"];
+        const BELI_1B_SAMPAI_50B = []; for(let i=1;i<=50;i++) BELI_1B_SAMPAI_50B.push(i+"B");
+        const BONGKAR_1B_SAMPAI_50B = []; for(let i=1;i<=50;i++) BONGKAR_1B_SAMPAI_50B.push(i+"B");
         
         function formatRupiah(angka) { return "Rp " + angka.toLocaleString('id-ID'); }
         
-        // RENDER GAME (4 kolom)
-        function renderGame(gridId, gameKey) {
-            let beliData, bongkarData, beliNominalList, bongkarNominalList, gameName, img, downloadLink, tutorialLink;
-            if(gameKey === 'higgs') {
-                beliData = HIGGS_BELI; bongkarData = HIGGS_BONGKAR;
-                beliNominalList = Object.keys(HIGGS_BELI);
-                bongkarNominalList = Object.keys(HIGGS_BONGKAR);
-                gameName = "HIGGS DOMINO"; img = "https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY"; downloadLink = "https://s.topinterface.net/data/sharePage.do"; tutorialLink = "https://www.youtube.com/embed/DlMQ-SD21TU";
-            } else if(gameKey === 'royal') {
-                beliData = ROYAL_BELI; bongkarData = ROYAL_BONGKAR;
-                beliNominalList = Object.keys(ROYAL_BELI);
-                bongkarNominalList = Object.keys(ROYAL_BONGKAR);
-                gameName = "ROYAL DOMINO"; img = "https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO"; downloadLink = "https://api-1.chillaxgaming.com/rd14248172"; tutorialLink = "https://www.youtube.com/embed/royal";
-            } else if(gameKey === 'berfist') {
-                beliData = BERFIST_BELI; bongkarData = BERFIST_BONGKAR;
-                beliNominalList = Object.keys(BERFIST_BELI);
-                bongkarNominalList = Object.keys(BERFIST_BONGKAR);
-                gameName = "BERFIST"; img = "https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg"; downloadLink = "https://play.google.com/store/apps/details?id=com.neptune.bearfish"; tutorialLink = "https://www.youtube.com/embed/berfish";
-            } else { // BOS
-                beliData = BOS_BELI; bongkarData = BOS_BONGKAR;
-                beliNominalList = Object.keys(BOS_BELI);
-                bongkarNominalList = Object.keys(BOS_BONGKAR);
-                gameName = "BOS DOMINO"; img = "https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png"; downloadLink = "https://i.fordomino.com/share/sharePage"; tutorialLink = "https://www.youtube.com/embed/bosdomino";
-            }
+        function renderGame(gridId, gameKey, gameName, img, downloadLink, tutorialLink, beliData, bongkarData, isBos = false) {
+            let beliItems = Object.entries(beliData);
+            let bongkarItems = Object.entries(bongkarData);
             
-            let rows = "";
-            let maxRows = Math.max(beliNominalList.length, bongkarNominalList.length);
-            for(let i=0; i<maxRows; i++) {
-                let beliNom = beliNominalList[i] || "";
-                let beliHarga = beliNom ? formatRupiah(beliData[beliNom]) : "-";
-                let bongkarNom = bongkarNominalList[i] || "";
-                let bongkarHarga = bongkarNom ? formatRupiah(bongkarData[bongkarNom]) : "-";
-                rows += `<tr><td class="jumlah-col">${beliNom || "-"}</td><td class="beli-col">${beliHarga}</td><td class="jual-col">${bongkarNom || "-"}</td><td class="bongkar-col">${bongkarHarga}</td></tr>`;
-            }
+            let beliHtml = beliItems.map(([jml, harga]) => `<div class="price-item" onclick="openModalWithData('${gameName}', '${gameKey}', 'BELI', '${jml}', ${harga})"><span class="jumlah">${jml}</span> <span class="harga">${formatRupiah(harga)}</span></div>`).join('');
+            let bongkarHtml = bongkarItems.map(([jml, harga]) => `<div class="price-item" onclick="openModalWithData('${gameName}', '${gameKey}', 'BONGKAR', '${jml}', ${harga})"><span class="jumlah">${jml}</span> <span class="harga">${formatRupiah(harga)}</span></div>`).join('');
             
-            let html = `<div class="card-game-premium"><div class="card-header-premium"><div class="logo-game"><img src="${img}" onerror="this.src='https://via.placeholder.com/55'"></div><div class="game-name-premium"><h2>${gameName}</h2><div class="price-sub">Beli / Bongkar</div></div></div><div class="table-premium"><table class="price-table"><thead><tr><th>Jumlah (Beli)</th><th>Harga Beli</th><th>Jumlah Bongkar</th><th>Harga Bongkar</th></tr></thead><tbody>${rows}</tbody></table></div><div class="btn-action-group"><button class="btn-order-premium" onclick="openModal('${gameName}', '${gameKey}')"><i class="fas fa-cart-shopping"></i> Beli/Bongkar</button><button class="btn-download-premium" onclick="downloadGame('${gameKey}')"><i class="fas fa-download"></i> Download</button><button class="btn-tutorial-premium" onclick="openVideoTutorial('${tutorialLink}')"><i class="fas fa-play-circle"></i> Tutorial</button></div></div>`;
+            let html = `<div class="card-game-premium">
+                <div class="card-header-premium">
+                    <div class="logo-game"><img src="${img}" onerror="this.src='https://via.placeholder.com/55'"></div>
+                    <div class="game-name-premium"><h2>${gameName}</h2><div class="price-sub">Klik nominal untuk order</div></div>
+                </div>
+                <div class="price-sections">
+                    <div class="beli-section">
+                        <div class="section-header"><i class="fas fa-shopping-cart"></i> 🔰 BELI CHIP</div>
+                        <div class="price-list">${beliHtml}</div>
+                    </div>
+                    <div class="bongkar-section">
+                        <div class="section-header"><i class="fas fa-exchange-alt"></i> 📤 BONGKAR CHIP (Jual)</div>
+                        <div class="price-list">${bongkarHtml}</div>
+                    </div>
+                </div>
+                <div class="btn-action-group">
+                    <button class="btn-order-premium" onclick="openModal('${gameName}', '${gameKey}')"><i class="fas fa-cart-shopping"></i> Beli/Bongkar</button>
+                    <button class="btn-download-premium" onclick="downloadGame('${downloadLink}')"><i class="fas fa-download"></i> Download</button>
+                    <button class="btn-tutorial-premium" onclick="openVideoTutorial('${tutorialLink}')"><i class="fas fa-play-circle"></i> Tutorial</button>
+                </div>
+            </div>`;
             document.getElementById(gridId).innerHTML = html;
         }
         
-        renderGame('grid-higgs','higgs');
-        renderGame('grid-royal','royal');
-        renderGame('grid-bos','bos');
-        renderGame('grid-berfist','berfist');
+        renderGame('grid-higgs', 'higgs', 'HIGGS DOMINO', 'https://play-lh.googleusercontent.com/0AfLM4u9VMWMwZK6jeC1ax4mWdM4eQAl3N5jWl2AParMUK65WOEXF_owy6fbtnJS5XY', 'https://s.topinterface.net/data/sharePage.do', 'https://www.youtube.com/embed/DlMQ-SD21TU', HIGGS_BELI, HIGGS_BONGKAR);
+        renderGame('grid-royal', 'royal', 'ROYAL DOMINO', 'https://ts2.mm.bing.net/th?q=ROYAL%20DREAM%20DOMINO', 'https://api-1.chillaxgaming.com/rd14248172', 'https://www.youtube.com/embed/royal', ROYAL_BELI, ROYAL_BONGKAR);
+        renderGame('grid-bos', 'bos', 'BOS DOMINO', 'https://dl.memuplay.com/new_market/img/com.vivid.domino.icon.2023-11-24-13-29-36.png', 'https://i.fordomino.com/share/sharePage', 'https://www.youtube.com/embed/bosdomino', BOS_BELI, BOS_BONGKAR);
+        renderGame('grid-berfist', 'berfist', 'BERFIST', 'https://play-lh.googleusercontent.com/mvFrMMdovquq71B-ta-JVKBdw4Zbs2RmPxe8EVFyGiXAtHAm_p0x3940NqDmFGk6vg', 'https://play.google.com/store/apps/details?id=com.neptune.bearfish', 'https://www.youtube.com/embed/berfish', BERFIST_BELI, BERFIST_BONGKAR);
         
-        // MODAL FORM
-        let currentGameKey = null;
-        let currentGameName = null;
+        // FORM MODAL
+        let currentGameKey = null, currentGameName = null;
+        let selectedJumlah = "", selectedHarga = 0, selectedTipe = "";
+        
+        function openModalWithData(name, key, tipe, jumlah, harga) {
+            currentGameName = name;
+            currentGameKey = key;
+            selectedTipe = tipe;
+            selectedJumlah = jumlah;
+            selectedHarga = harga;
+            
+            document.getElementById("gameNameDisplay").value = name;
+            document.getElementById("transaksiType").value = tipe;
+            document.getElementById("jumlahKoinSelect").innerHTML = `<option value="${jumlah}">${jumlah} - ${formatRupiah(harga)}</option>`;
+            document.getElementById("jumlahKoinSelect").disabled = true;
+            document.getElementById("hargaDisplay").innerHTML = `💰 Harga: <span>${formatRupiah(harga)}</span>`;
+            document.getElementById("idGame").value = "";
+            document.getElementById("bankTransfer").value = "";
+            updatePreview();
+            document.getElementById("orderModal").style.display = "flex";
+        }
+        
+        function openModal(name, key) {
+            currentGameName = name;
+            currentGameKey = key;
+            document.getElementById("gameNameDisplay").value = name;
+            document.getElementById("transaksiType").value = "";
+            document.getElementById("jumlahKoinSelect").disabled = false;
+            document.getElementById("jumlahKoinSelect").innerHTML = '<option value="">-- Pilih Jenis dulu --</option>';
+            document.getElementById("hargaDisplay").innerHTML = "💰 Harga akan muncul setelah pilih jumlah";
+            document.getElementById("idGame").value = "";
+            document.getElementById("bankTransfer").value = "";
+            updatePreview();
+            document.getElementById("orderModal").style.display = "flex";
+        }
         
         function populateJumlahOptions() {
             let select = document.getElementById("jumlahKoinSelect");
@@ -268,52 +288,52 @@
             let options = [];
             if(tipe === "BELI") {
                 if(currentGameKey === 'bos') options = Object.keys(BOS_BELI);
-                else {
-                    options = [...BELI_NOMINAL_100M_900M, ...BELI_NOMINAL_1B_SAMPAI_50B];
-                }
-            } else if(tipe === "BONGKAR") {
-                if(currentGameKey === 'bos') options = [...BOS_BONGKAR_NOMINAL];
-                else options = [...BONGKAR_NOMINAL_1B_SAMPAI_50B];
+                else options = [...BELI_100M_900M, ...BELI_1B_SAMPAI_50B];
+            } else {
+                if(currentGameKey === 'bos') options = Object.keys(BOS_BONGKAR);
+                else options = [...BONGKAR_1B_SAMPAI_50B];
             }
-            options.unshift("Lainnya (Chat Admin)");
             select.innerHTML = '<option value="">-- Pilih Jumlah --</option>';
-            options.forEach(opt => { let op = document.createElement('option'); op.value = opt; op.textContent = opt; select.appendChild(op); });
+            options.forEach(opt => {
+                let harga = getHargaFromNominal(opt, tipe);
+                let text = harga ? `${opt} - ${formatRupiah(harga)}` : opt;
+                let op = document.createElement('option'); op.value = opt; op.textContent = text;
+                select.appendChild(op);
+            });
         }
         
-        function getHarga(nominal, tipe) {
+        function getHargaFromNominal(nominal, tipe) {
             if(tipe === "BELI") {
-                if(currentGameKey === 'higgs' && HIGGS_BELI[nominal]) return formatRupiah(HIGGS_BELI[nominal]);
-                if(currentGameKey === 'royal' && ROYAL_BELI[nominal]) return formatRupiah(ROYAL_BELI[nominal]);
-                if(currentGameKey === 'berfist' && BERFIST_BELI[nominal]) return formatRupiah(BERFIST_BELI[nominal]);
-                if(currentGameKey === 'bos' && BOS_BELI[nominal]) return formatRupiah(BOS_BELI[nominal]);
-                // hitung otomatis untuk nominal 2B-50B berdasarkan 1B
-                if(currentGameKey === 'higgs' && nominal.includes('B')) {
+                if(currentGameKey === 'higgs' && HIGGS_BELI[nominal]) return HIGGS_BELI[nominal];
+                if(currentGameKey === 'royal' && ROYAL_BELI[nominal]) return ROYAL_BELI[nominal];
+                if(currentGameKey === 'berfist' && BERFIST_BELI[nominal]) return BERFIST_BELI[nominal];
+                if(currentGameKey === 'bos' && BOS_BELI[nominal]) return BOS_BELI[nominal];
+                if(nominal.includes('B')) {
                     let b = parseInt(nominal);
-                    return formatRupiah(HIGGS_BELI['1B'] * b);
+                    let base = currentGameKey === 'higgs' ? HIGGS_BELI['1B'] : (currentGameKey === 'royal' ? ROYAL_BELI['1B'] : BERFIST_BELI['1B']);
+                    return base * b;
                 }
-                if(currentGameKey === 'royal' && nominal.includes('B')) {
+            } else {
+                if(currentGameKey === 'higgs' && HIGGS_BONGKAR[nominal]) return HIGGS_BONGKAR[nominal];
+                if(currentGameKey === 'royal' && ROYAL_BONGKAR[nominal]) return ROYAL_BONGKAR[nominal];
+                if(currentGameKey === 'berfist' && BERFIST_BONGKAR[nominal]) return BERFIST_BONGKAR[nominal];
+                if(currentGameKey === 'bos' && BOS_BONGKAR[nominal]) return BOS_BONGKAR[nominal];
+                if(nominal.includes('B')) {
                     let b = parseInt(nominal);
-                    return formatRupiah(ROYAL_BELI['1B'] * b);
-                }
-                if(currentGameKey === 'berfist' && nominal.includes('B')) {
-                    let b = parseInt(nominal);
-                    return formatRupiah(BERFIST_BELI['1B'] * b);
-                }
-            } else if(tipe === "BONGKAR") {
-                if(currentGameKey === 'higgs' && HIGGS_BONGKAR[nominal]) return formatRupiah(HIGGS_BONGKAR[nominal]);
-                if(currentGameKey === 'royal' && ROYAL_BONGKAR[nominal]) return formatRupiah(ROYAL_BONGKAR[nominal]);
-                if(currentGameKey === 'berfist' && BERFIST_BONGKAR[nominal]) return formatRupiah(BERFIST_BONGKAR[nominal]);
-                if(currentGameKey === 'bos' && BOS_BONGKAR[nominal]) return formatRupiah(BOS_BONGKAR[nominal]);
-                if(currentGameKey !== 'bos' && nominal.includes('B')) {
-                    let b = parseInt(nominal);
-                    let harga1B = 0;
-                    if(currentGameKey === 'higgs') harga1B = HIGGS_BONGKAR['1B'];
-                    if(currentGameKey === 'royal') harga1B = ROYAL_BONGKAR['1B'];
-                    if(currentGameKey === 'berfist') harga1B = BERFIST_BONGKAR['1B'];
-                    return formatRupiah(harga1B * b);
+                    let base = currentGameKey === 'higgs' ? HIGGS_BONGKAR['1B'] : (currentGameKey === 'royal' ? ROYAL_BONGKAR['1B'] : BERFIST_BONGKAR['1B']);
+                    return base * b;
                 }
             }
             return null;
+        }
+        
+        function updateHargaDisplay() {
+            let tipe = document.getElementById("transaksiType").value;
+            let jml = document.getElementById("jumlahKoinSelect").value;
+            if(!tipe || !jml) { document.getElementById("hargaDisplay").innerHTML = "💰 Harga akan muncul setelah pilih jumlah"; return; }
+            let harga = getHargaFromNominal(jml, tipe);
+            if(harga) document.getElementById("hargaDisplay").innerHTML = `💰 Harga: <span>${formatRupiah(harga)}</span>`;
+            else document.getElementById("hargaDisplay").innerHTML = "💰 Harga: -";
         }
         
         function generateMessage() {
@@ -323,22 +343,18 @@
             let bank = document.getElementById("bankTransfer").value;
             if(!tipe) return "⚠️ Pilih jenis transaksi";
             if(!jml) return "⚠️ Pilih jumlah";
-            if(jml !== "Lainnya (Chat Admin)" && !id) return "⚠️ Masukkan ID Game";
+            if(!id) return "⚠️ Masukkan ID Game";
             if(!bank) return "⚠️ Pilih metode pembayaran";
-            if(jml === "Lainnya (Chat Admin)") {
-                return `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${currentGameName}\n📌 Jenis: ${tipe}\n📝 Jumlah: Lainnya (Chat Admin)\n🆔 ID Game: ${id || "-"}\n🏦 Metode: ${bank}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon chat admin untuk detail jumlah.`;
-            }
-            let harga = getHarga(jml, tipe);
-            return `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${currentGameName}\n📌 Jenis: ${tipe}\n💰 Jumlah: ${jml}\n💵 Harga: ${harga || "-"}\n🆔 ID Game: ${id}\n🏦 Metode Bayar: ${bank}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
+            let harga = getHargaFromNominal(jml, tipe);
+            return `🛒 ORDER LLC STORE 🛒\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ${currentGameName}\n📌 Jenis: ${tipe}\n💰 Jumlah: ${jml}\n💵 Harga: ${harga ? formatRupiah(harga) : "-"}\n🆔 ID Game: ${id}\n🏦 Metode Bayar: ${bank}\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih.`;
         }
         
         function updatePreview() { let msg = generateMessage(); let box = document.getElementById("previewBox"); if(msg.startsWith("⚠️")) box.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${msg}`; else box.innerHTML = msg.replace(/\n/g,'<br>'); }
         
         function sendMessage() { let msg = generateMessage(); if(msg.startsWith("⚠️")) { showToast("❌ Lengkapi data!"); return; } showToast("✅ Pesanan dikirim ke Admin!"); closeModal(); if(window.Android?.sendMessageToAdmin) window.Android.sendMessageToAdmin(msg); else window.location.href = `llcstore://customer_chat?message=${encodeURIComponent(msg)}`; }
         
-        function openModal(name, key) { currentGameName = name; currentGameKey = key; document.getElementById("gameNameDisplay").value = name; document.getElementById("transaksiType").value = ""; document.getElementById("idGame").value = ""; document.getElementById("bankTransfer").value = ""; document.getElementById("jumlahKoinSelect").innerHTML = '<option value="">-- Pilih Jenis dulu --</option>'; updatePreview(); document.getElementById("orderModal").style.display = "flex"; }
         function closeModal() { document.getElementById("orderModal").style.display = "none"; }
-        function downloadGame(key){ let link = key==='higgs'?'https://s.topinterface.net/data/sharePage.do':key==='royal'?'https://api-1.chillaxgaming.com/rd14248172':key==='bos'?'https://i.fordomino.com/share/sharePage':'https://play.google.com/store/apps/details?id=com.neptune.bearfish'; if(link) window.open(link,'_blank'); else showToast("Link tidak tersedia"); }
+        function downloadGame(link){ if(link) window.open(link,'_blank'); else showToast("Link tidak tersedia"); }
         function showToast(msg){ let t=document.getElementById('toastMsg'); t.innerHTML=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
         function closeVideoModal(){ document.getElementById('videoModal').style.display='none'; document.getElementById('videoFrame').src=''; }
         function openVideoTutorial(url){ document.getElementById('videoFrame').src=url; document.getElementById('videoModal').style.display='flex'; }
@@ -346,8 +362,8 @@
         function openModalInfo(){ document.getElementById('modalInfo').style.display='flex'; }
         function closeModalInfo(){ document.getElementById('modalInfo').style.display='none'; }
         
-        document.getElementById("transaksiType")?.addEventListener("change", () => { populateJumlahOptions(); updatePreview(); });
-        document.getElementById("jumlahKoinSelect")?.addEventListener("change", updatePreview);
+        document.getElementById("transaksiType")?.addEventListener("change", () => { populateJumlahOptions(); updateHargaDisplay(); updatePreview(); });
+        document.getElementById("jumlahKoinSelect")?.addEventListener("change", () => { updateHargaDisplay(); updatePreview(); });
         document.getElementById("idGame")?.addEventListener("input", updatePreview);
         document.getElementById("bankTransfer")?.addEventListener("change", updatePreview);
         document.getElementById("sendBtn")?.addEventListener("click", sendMessage);
@@ -374,7 +390,6 @@
         setTimeout(() => { let loading = document.getElementById('loadingScreen'); loading.style.opacity = '0'; setTimeout(() => { loading.style.display = 'none'; }, 500); }, 1000);
         for(let i=0;i<100;i++){ let p=document.createElement('div'); p.classList.add('particle'); let s=Math.random()*4+1; p.style.width=s+'px'; p.style.height=s+'px'; p.style.left=Math.random()*100+'%'; p.style.animationDuration=Math.random()*(14-6)+6+'s'; p.style.animationDelay=Math.random()*15+'s'; document.getElementById('particleZone').appendChild(p); }
         
-        // BADGE SCROLL
         document.querySelectorAll('.badge-premium[data-game]').forEach(b=>{ b.addEventListener('click',()=>{ let game=b.dataset.game; document.getElementById(`section-${game}`).scrollIntoView({behavior:'smooth'}); }); });
     </script>
 </body>

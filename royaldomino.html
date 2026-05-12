@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>BERFIST | LLC PREMIUM</title>
+    <title>ROYAL DOMINO | LLC PREMIUM</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -62,7 +62,7 @@
                 <span class="modal-close" onclick="closeModal()">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="form-group"><label>Game</label><input type="text" id="gameNameDisplay" value="BERFIST" readonly style="background:#334155;"></div>
+                <div class="form-group"><label>Game</label><input type="text" id="gameNameDisplay" value="ROYAL DOMINO" readonly style="background:#334155;"></div>
                 <div class="form-group"><label>Jenis Transaksi</label><select id="transaksiType"><option value="">-- Pilih --</option><option value="BELI">🔰 TOPUP (Beli Chip)</option><option value="BONGKAR">📤 BONGKAR (Jual Chip)</option></select></div>
                 <div class="form-group"><label>Jumlah Chip</label><select id="jumlahSelect"><option value="">-- Pilih Jenis dulu --</option></select></div>
                 <div class="harga-display" id="hargaDisplay">💰 Harga akan muncul setelah pilih jumlah</div>
@@ -76,18 +76,18 @@
     <div id="toastMsg" class="toast-msg">✅ Pesan dikirim!</div>
     <script>
         var HARGA_BELI = {
-            "100M": 3500, "200M": 7000, "300M": 10500, "400M": 14000, "500M": 17500,
-            "600M": 21000, "700M": 24500, "800M": 28000, "900M": 31500,
-            "1B": 35000, "2B": 70000, "3B": 105000, "4B": 140000, "5B": 175000,
-            "6B": 210000, "7B": 245000, "8B": 280000, "9B": 315000, "10B": 350000,
-            "15B": 525000, "20B": 700000, "25B": 875000, "30B": 1050000,
-            "35B": 1225000, "40B": 1400000, "45B": 1575000, "50B": 1750000
+            "100M": 6400, "200M": 12800, "300M": 19200, "400M": 25600, "500M": 32000,
+            "600M": 38400, "700M": 44800, "800M": 51200, "900M": 57600,
+            "1B": 64000, "2B": 128000, "3B": 192000, "4B": 256000, "5B": 320000,
+            "6B": 384000, "7B": 448000, "8B": 512000, "9B": 576000, "10B": 640000,
+            "15B": 960000, "20B": 1280000, "25B": 1600000, "30B": 1920000,
+            "35B": 2240000, "40B": 2560000, "45B": 2880000, "50B": 3200000
         };
         var HARGA_BONGKAR = {
-            "1B": 31000, "2B": 62000, "3B": 93000, "4B": 124000, "5B": 155000,
-            "6B": 186000, "7B": 217000, "8B": 248000, "9B": 279000, "10B": 310000,
-            "15B": 465000, "20B": 620000, "25B": 775000, "30B": 930000,
-            "35B": 1085000, "40B": 1240000, "45B": 1395000, "50B": 1550000
+            "1B": 61000, "2B": 122000, "3B": 183000, "4B": 244000, "5B": 305000,
+            "6B": 366000, "7B": 427000, "8B": 488000, "9B": 549000, "10B": 610000,
+            "15B": 915000, "20B": 1220000, "25B": 1525000, "30B": 1830000,
+            "35B": 2135000, "40B": 2440000, "45B": 2745000, "50B": 3050000
         };
         var currentJenis = "", currentJumlah = "", currentHarga = 0;
         var isSending = false;
@@ -101,7 +101,7 @@
         function openModal(jenis, jumlah, harga) { currentJenis = jenis; currentJumlah = jumlah; currentHarga = harga; document.getElementById("transaksiType").value = jenis; updateJumlahSelect(); document.getElementById("jumlahSelect").value = jumlah; document.getElementById("hargaDisplay").innerHTML = '💰 Harga: <span style="color:#10b981">' + formatRupiah(harga) + '</span>'; document.getElementById("idGame").value = ""; document.getElementById("bankTransfer").value = ""; updatePreview(); document.getElementById("orderModal").style.display = "flex"; }
         function updateJumlahSelect() { var select = document.getElementById("jumlahSelect"); var jenis = document.getElementById("transaksiType").value; var data = jenis === "BELI" ? HARGA_BELI : HARGA_BONGKAR; select.innerHTML = '<option value="">-- Pilih Jumlah --</option>'; for (var jml in data) { var option = document.createElement('option'); option.value = jml; option.textContent = jml + ' - ' + formatRupiah(data[jml]); select.appendChild(option); } }
         function updateHarga() { var jenis = document.getElementById("transaksiType").value; var jumlah = document.getElementById("jumlahSelect").value; var data = jenis === "BELI" ? HARGA_BELI : HARGA_BONGKAR; if (jumlah && data[jumlah]) { currentJenis = jenis; currentJumlah = jumlah; currentHarga = data[jumlah]; document.getElementById("hargaDisplay").innerHTML = '💰 Harga: <span style="color:#10b981">' + formatRupiah(currentHarga) + '</span>'; } else { document.getElementById("hargaDisplay").innerHTML = "💰 Harga akan muncul setelah pilih jumlah"; } }
-        function generateMessage() { var jenis = document.getElementById("transaksiType").value; var jumlah = document.getElementById("jumlahSelect").value; var id = document.getElementById("idGame").value.trim(); var bank = document.getElementById("bankTransfer").value; if (!jenis) return "⚠️ Pilih jenis transaksi"; if (!jumlah) return "⚠️ Pilih jumlah"; if (!id) return "⚠️ Masukkan ID Game"; if (!bank) return "⚠️ Pilih metode pembayaran"; var harga = jenis === "BELI" ? HARGA_BELI[jumlah] : HARGA_BONGKAR[jumlah]; var judul = (jenis === "BELI") ? "ORDER BERFIST" : "BONGKAR BERFIST"; return judul + "\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: BERFIST\n📌 Jenis: " + jenis + "\n💰 Jumlah: " + jumlah + "\n💵 Harga: " + formatRupiah(harga) + "\n🆔 ID Game: " + id + "\n🏦 Metode Bayar: " + bank + "\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih."; }
+        function generateMessage() { var jenis = document.getElementById("transaksiType").value; var jumlah = document.getElementById("jumlahSelect").value; var id = document.getElementById("idGame").value.trim(); var bank = document.getElementById("bankTransfer").value; if (!jenis) return "⚠️ Pilih jenis transaksi"; if (!jumlah) return "⚠️ Pilih jumlah"; if (!id) return "⚠️ Masukkan ID Game"; if (!bank) return "⚠️ Pilih metode pembayaran"; var harga = jenis === "BELI" ? HARGA_BELI[jumlah] : HARGA_BONGKAR[jumlah]; var judul = (jenis === "BELI") ? "ORDER ROYAL DOMINO" : "BONGKAR ROYAL DOMINO"; return judul + "\n━━━━━━━━━━━━━━━━━━━━\n🎮 Game: ROYAL DOMINO\n📌 Jenis: " + jenis + "\n💰 Jumlah: " + jumlah + "\n💵 Harga: " + formatRupiah(harga) + "\n🆔 ID Game: " + id + "\n🏦 Metode Bayar: " + bank + "\n━━━━━━━━━━━━━━━━━━━━\n⏰ Mohon diproses, terima kasih."; }
         function updatePreview() { var msg = generateMessage(); var box = document.getElementById("previewBox"); if (msg.startsWith("⚠️")) { box.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + msg; } else { box.innerHTML = msg.replace(/\n/g, '<br>'); } }
         function sendMessage() { if (isSending) { showToast("⏳ Tunggu..."); return; } var msg = generateMessage(); if (msg.startsWith("⚠️")) { showToast("❌ Lengkapi data!"); return; } isSending = true; showToast("✅ Pesanan dikirim ke Admin!"); closeModal(); if (window.Android && window.Android.sendMessageToAdmin) { window.Android.sendMessageToAdmin(msg); } else { alert("Pesan:\n\n" + msg); } setTimeout(function() { isSending = false; }, 2000); }
         function openChat() { if (window.Android && window.Android.openChat) { window.Android.openChat(); } }
